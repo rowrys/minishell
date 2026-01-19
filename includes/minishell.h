@@ -1,0 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
+/*   Updated: 2026/01/19 13:37:29 by mcolin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include "libft.h"
+
+typedef enum e_key
+{
+	KEY_END,
+	KEY_PIPE,
+	KEY_CHUNK,
+	KEY_REDIR,
+	KEY_LREDIR,
+	KEY_RREDIR,
+	KEY_APPEND,
+	KEY_HERE_DOC
+}	t_key;
+
+typedef struct t_dict_entry
+{
+	char	*key;
+	char	*value;
+}			t_dict_entry;
+
+typedef struct s_token
+{
+	char	*value;
+	t_key	type;
+}			t_token;
+
+typedef struct s_cmd
+{
+	t_list	*token;
+	int		fd_in;
+	int		fd_out;
+}			t_cmd;
+
+typedef struct s_ctx
+{
+	char	*line;
+	t_list	*cmd;
+	t_list	*env_dict;
+	int		last_error;
+}			t_ctx;
+
+#endif
