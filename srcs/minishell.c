@@ -6,22 +6,36 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/19 13:37:16 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:11:03 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
+#include <stdbool.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <strings.h>
 
-int main(void)
+int	main(int argc, char **argv, char **env)
 {
+	t_ctx	ctx;
+
+	(void)argv;
+	ft_init_ctx(&ctx, argc, env);
     while (1)
     {
-        line = readline("sdf");
-        parse_rl(&ctx);
-        parse_cmd(&ctx);
-
-        free(line);
-    }   
-    return (0);
+        ctx.line = readline("minishell>");
+		if (!ctx.line)
+			break ;
+		if (is_valid_line(ctx.line))
+		{
+			add_history(ctx.line);
+			ft_parse(&ctx);
+			// ft_execute(&ctx);
+		}
+		// ft_clean_ctx(&ctx);
+    }
+	// ft_destroy_ctx(&ctx);
+	rl_clear_history();
+	return (0);
 }

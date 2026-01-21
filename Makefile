@@ -8,7 +8,7 @@ OBJS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
 
 DEPS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.d)
 
-CFLAGS = -MP -MMD -Wall -Werror -Wextra -g
+CFLAGS = -MP -MMD -Wall -Werror -Wextra #-lreadline 
 INCLUDE = -I includes/ -I libft/includes/
 LIB = libft/libft.a
 
@@ -20,6 +20,7 @@ $(NAME): make_dir $(OBJS)
 
 make_dir:
 	@mkdir -p .build/
+	@mkdir -p .build/parse
 
 $(OBJ_DIR)%.o:  $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@

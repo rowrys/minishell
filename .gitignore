@@ -1,5 +1,7 @@
 .build
 minishell
+libft/.build
+libft/libft.a
 .vscode
 .cache
 compile_commands.json

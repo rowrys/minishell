@@ -6,12 +6,16 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/19 13:37:29 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/19 17:44:09 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define ISSPACE "\t\n\v\f\r "
+# define TOKEN_LIMITER "|<>\t\n\v\f\r \0"
+# define EXPAND_LIMITER "$|<>\t\n\v\f\r \0"
 
 # include "libft.h"
 
@@ -27,7 +31,7 @@ typedef enum e_key
 	KEY_HERE_DOC
 }	t_key;
 
-typedef struct t_dict_entry
+typedef struct s_dict_entry
 {
 	char	*key;
 	char	*value;
@@ -49,7 +53,7 @@ typedef struct s_cmd
 typedef struct s_ctx
 {
 	char	*line;
-	t_list	*cmd;
+	t_list	*cmd_lst;
 	t_list	*env_dict;
 	int		last_error;
 }			t_ctx;
