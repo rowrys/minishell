@@ -6,15 +6,37 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:54:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/21 14:03:51 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 10:27:45 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
 
-void	ft_destroy_ctx(t_ctx *ctx)
+static void	ft_env_destroy(void *content)
 {
+	if (!content)
+		return ;
+	free(((t_dict_entry *)(content))->key);
+	((t_dict_entry *)(content))->key = NULL;
+	free(((t_dict_entry *)(content))->value);
+	((t_dict_entry *)(content))->value = NULL;
+	free(content);	
+}
 
+static void	ft_token_destoy(void *content)
+{
+	free(((t_token *)(content))->value);
+	((t_token *)(content))->value = NULL;
+	free(content);
+}
+
+static void	ft_cmd_destroy(void *content)
+{
+	ft_lstclear(content, &ft_token_destoy);
+	free(content);
 }
 
 void	ft_clean_ctx(t_ctx *ctx)
@@ -22,6 +44,18 @@ void	ft_clean_ctx(t_ctx *ctx)
 	if (!ctx)
 		return ;
 	free(ctx->line);
+	ctx->line = NULL;
 	if (ctx->cmd_lst)
-		ft_lstclear(&ctx->cmd_lst, &ft_clean_cmd_lst);
+		ft_lstclear(&ctx->cmd_lst, &ft_cmd_destroy);	
+	ctx->cmd_lst = NULL;
+}
+
+void	ft_destroy_ctx(t_ctx *ctx)
+{
+	if (!ctx)
+		return ;
+	ft_clean_ctx(ctx);
+	if (ctx->env_dict)
+		ft_lstclear(&ctx->env_dict, &ft_env_destroy);
+	ctx->env_dict = NULL;		
 }

@@ -6,13 +6,12 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 10:15:49 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/21 09:25:14 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 10:31:59 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
-#include "parse.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -21,6 +20,7 @@
 
 char	*ft_expand(t_ctx *ctx, char *str, size_t size)
 {
+	// TO_DO $? 
 	t_list	*tmp_dict;
 	char	*result;
 	char	*name;

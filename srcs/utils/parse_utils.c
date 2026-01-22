@@ -6,13 +6,12 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/20 17:35:21 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 10:16:42 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
-#include "parse.h"
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -37,6 +36,7 @@ void	ft_add_token(t_ctx *ctx, t_list **token_lst, int key, char *value)
 
 	new_token = malloc(sizeof(t_token));
 	// if (!new_token)
+ctx->last_error = ctx->last_error;
 	// 	ft_error(ctx, "");
 	new_token->type = key;
 	new_token->value = value;
@@ -56,6 +56,7 @@ char	*ft_get_part(t_ctx *ctx, char *str, char end)
 		size++;
 	result = ft_substr(str, 0, size);
 	// if (!result && size)
+ctx->last_error = ctx->last_error;
 		// ft_error("malloc")
 	return (result);
 }
@@ -70,30 +71,9 @@ char	*ft_add_part(t_ctx *ctx, char *tmp, char *str)
 	free(tmp);
 	free(str);
 	// if (!result)
+ctx->last_error = ctx->last_error;
 	// 	ft_error("malloc")
 	return (result);
 }
 
-char	*ft_get_dict_value(t_ctx *ctx, t_list *tmp_dict, char *name)
-{
-	char			*result;
-	t_dict_entry	*entry;
-	
-	result = NULL;
-	while (tmp_dict)
-	{
-		entry = tmp_dict->content;
-		if (!ft_strcmp(entry->key, name))
-		{
-			result = ft_strdup(entry->value);
-			// if (!result && tmp_entry->value)
-			// {
-			// 	free(name);
-			// 	ft_error();
-			// }
-			break ;
-		}
-		tmp_dict = tmp_dict->next;
-	}
-	return (result);
-}
+

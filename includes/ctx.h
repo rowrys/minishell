@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   ctx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 14:07:23 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 10:29:28 by mcolin           ###   ########.fr       */
+/*   Created: 2026/01/21 17:07:20 by mcolin            #+#    #+#             */
+/*   Updated: 2026/01/22 10:27:51 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef INIT_H
+# define INIT_H
 
-void	ft_parse(t_ctx *ctx)
-{
-	// parse_line(ctx);
-(void)ctx;
-	// parse_cmd(ctx);
-}
+# include "minishell.h"
+
+/*ctx_init*/
+void	ft_env_init(t_ctx *ctx, char **env);
+void	ft_init_ctx(t_ctx *ctx, int argc, char **env);
+
+/*ctx_destroy*/
+void	ft_destroy_ctx(t_ctx *ctx);
+void	ft_clean_ctx(t_ctx *ctx);
+
+#endif

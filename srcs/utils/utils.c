@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 14:07:23 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 10:29:28 by mcolin           ###   ########.fr       */
+/*   Created: 2026/01/22 09:52:28 by mcolin            #+#    #+#             */
+/*   Updated: 2026/01/22 10:34:50 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
-void	ft_parse(t_ctx *ctx)
+int	ft_go_to(char *str, char c)
 {
-	// parse_line(ctx);
-(void)ctx;
-	// parse_cmd(ctx);
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
+}
+
+int	ft_skip(char *str, char *charset)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && ft_strchr(charset, str[i]))
+		i++;
+	return (i);
 }

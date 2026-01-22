@@ -2,13 +2,24 @@ CC=cc
 NAME = minishell
 SRCS_DIR = srcs/
 SOURCES =	$(SRCS_DIR)minishell.c				\
+			$(SRCS_DIR)ctx/ctx_destroy.c		\
+			$(SRCS_DIR)ctx/ctx_init.c			\
+			$(SRCS_DIR)parse/parse.c			\
+			$(SRCS_DIR)parse/valid_line.c		\
+			$(SRCS_DIR)parse/syntax_error.c		\
+			$(SRCS_DIR)utils/utils.c			\
+			$(SRCS_DIR)utils/env_utils.c		\
+			$(SRCS_DIR)utils/parse_utils.c		\
+
+#  			$(SRCS_DIR)parse/expand.c			
+
 
 OBJ_DIR = .build/
 OBJS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
 
 DEPS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.d)
 
-CFLAGS = -MP -MMD -Wall -Werror -Wextra #-lreadline 
+CFLAGS = -MP -MMD -Wall -Werror -Wextra
 INCLUDE = -I includes/ -I libft/includes/
 LIB = libft/libft.a
 
@@ -16,11 +27,13 @@ all: $(NAME)
 
 $(NAME): make_dir $(OBJS)
 	$(MAKE) --no-print-directory -C libft/
-	$(CC) $(OBJS) $(CFLAGS) $(INCLUDE) $(LIB) -o $(NAME)
+	$(CC) $(OBJS) $(CFLAGS) -lreadline  $(INCLUDE) $(LIB) -o $(NAME)
 
 make_dir:
 	@mkdir -p .build/
 	@mkdir -p .build/parse
+	@mkdir -p .build/ctx
+	@mkdir -p .build/utils
 
 $(OBJ_DIR)%.o:  $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@

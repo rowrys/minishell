@@ -6,11 +6,13 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/21 14:11:03 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 11:14:36 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ctx.h"
+#include "parse.h"
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -27,15 +29,16 @@ int	main(int argc, char **argv, char **env)
         ctx.line = readline("minishell>");
 		if (!ctx.line)
 			break ;
-		if (is_valid_line(ctx.line))
-		{
+		if (*ctx.line)
 			add_history(ctx.line);
+		if (ft_is_valid_line(&ctx, ctx.line))
+		{
 			ft_parse(&ctx);
 			// ft_execute(&ctx);
 		}
-		// ft_clean_ctx(&ctx);
+		ft_clean_ctx(&ctx);
     }
-	// ft_destroy_ctx(&ctx);
+	ft_destroy_ctx(&ctx);
 	rl_clear_history();
 	return (0);
 }
