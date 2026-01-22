@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:52:28 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 10:34:50 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 13:22:53 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_skip(char *str, char *charset)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (i);
 	while (str[i] && ft_strchr(charset, str[i]))
 		i++;
 	return (i);
