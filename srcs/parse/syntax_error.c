@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:44:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 14:32:53 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 15:52:24 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	ft_is_valid_redir_parts(char *str)
 	{
 		str += ft_skip(str, ISSPACE);
 		if (*str == '\'' || *str == '"')
-			str += ft_go_to(str + 1, *str) + 1;
+			str += ft_go_to(str + 1, *str) + 2;
 		else if (*str == '<' || *str == '>')
 		{
 			if (!ft_get_redir_key(str))
@@ -31,8 +31,6 @@ bool	ft_is_valid_redir_parts(char *str)
 			str += ft_skip(str, ISSPACE);
 			if (ft_strchr(TOKEN_LIMITER, *str))
 				return (false);
-			else
-				str++;
 		}
 		else if (*str)
 			str++;
@@ -47,7 +45,7 @@ bool	ft_is_valid_pipe_parts(char *str)
 	while (*str)
 	{	
 		if (*str == '\'' || *str == '"')
-			str += ft_go_to(str + 1, *str) + 1;
+			str += ft_go_to(str + 1, *str) + 2;
 		else if (*str == '|')
 		{
 			str++;
@@ -55,8 +53,6 @@ bool	ft_is_valid_pipe_parts(char *str)
 				str += ft_skip(str, ISSPACE);
 			if (!*str || *str == '|')
 				return (false);
-			else
-				str++;
 		}
 		else if (*str)
 			str++;

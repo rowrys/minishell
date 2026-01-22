@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 11:35:05 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:43:58 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_get_part(t_ctx *ctx, char *str, char end)
 	size_t	size;
 
 	size = 0;
-	while (str[size] != end)
+	while (str[size] && str[size] != end)
 		size++;
 	result = ft_substr(str, 0, size);
 	// if (!result && size)
@@ -65,11 +65,16 @@ char	*ft_add_part(t_ctx *ctx, char *tmp, char *str)
 {
 	char	*result;
 
+	if (!str)
+		return (tmp);
 	if (!tmp)
-		return (str);
-	result = ft_strjoin(tmp, str);
+		result = ft_strdup(str);
+	else
+		result = ft_strjoin(tmp, str);
 	free(tmp);
+	tmp = NULL;
 	free(str);
+	str = NULL;
 	// if (!result)
 ctx->last_error = ctx->last_error;
 	// 	ft_error("malloc")
