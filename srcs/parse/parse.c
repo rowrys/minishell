@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:07:23 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/23 10:09:16 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/23 16:16:57 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,5 @@
 void	ft_parse(t_ctx *ctx)
 {
 	ft_parse_line(ctx);
-(void)ctx;
-	// parse_cmd(ctx);
+	ft_parse_cmd(ctx);
 }

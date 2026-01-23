@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:52:28 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 18:38:51 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/23 16:11:18 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "minishell.h"
+#include <stdbool.h>
+
+bool	ft_is_redir_key(t_key key)
+{
+	if (key == KEY_LREDIR
+		|| key == KEY_RREDIR
+		|| key == KEY_HERE_DOC
+		|| key == KEY_APPEND)
+		return (true);
+	return (false);
+}
 
 int	ft_go_to(char *str, char c)
 {

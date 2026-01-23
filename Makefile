@@ -6,6 +6,8 @@ SOURCES =	$(SRCS_DIR)minishell.c				\
 			$(SRCS_DIR)ctx/ctx_init.c			\
 			$(SRCS_DIR)parse/parse.c			\
 			$(SRCS_DIR)parse/parse_line.c		\
+			$(SRCS_DIR)parse/parse_cmd.c		\
+			$(SRCS_DIR)parse/parse_token_list.c	\
  			$(SRCS_DIR)parse/expand.c			\
 			$(SRCS_DIR)parse/valid_line.c		\
 			$(SRCS_DIR)parse/syntax_error.c		\

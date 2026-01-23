@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:52 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/23 14:05:52 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/23 16:15:45 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	ft_parse(t_ctx *ctx);
 
 /*parse_line*/
 void	ft_parse_line(t_ctx *ctx);
+
+/*parse_cmd*/
+void	ft_parse_cmd(t_ctx *ctx);
 
 /*env_utils*/
 int		ft_get_redir_key(char *str);

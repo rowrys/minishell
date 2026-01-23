@@ -6,15 +6,23 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 16:43:58 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:26:19 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+#include "utils.h"
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
+
+bool ft_chunk_is_empty(char *chunk, size_t i)
+{
+    if ((size_t)ft_skip(&chunk[i], ISSPACE) == ft_strlen(&chunk[i]))
+        return (true);
+    return (false);
+}
 
 int	ft_get_redir_key(char *str)
 {
