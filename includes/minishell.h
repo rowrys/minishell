@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 15:47:37 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/23 09:58:16 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define ISSPACE "\t\n\v\f\r "
 # define TOKEN_LIMITER "|<>\t\n\v\f\r \0"
 # define EXPAND_LIMITER "'\"$|<>\t\n\v\f\r \0"
+# define REDIR_SKIP "<>\t\n\v\f\r "
 
 # include "libft.h"
 

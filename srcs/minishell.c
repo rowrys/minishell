@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 13:41:06 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/23 11:15:42 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,32 @@ int	main(int argc, char **argv, char **env)
 		if (ft_is_valid_line(&ctx, ctx.line))
 		{
 			ft_parse(&ctx);
+			
+
+			t_list	*cmd_lst;
+			t_list	*token_lst;
+			t_token	*token;
+			t_cmd	*cmd;
+
+			cmd_lst = ctx.cmd_lst;
+			while (cmd_lst)
+			{
+				cmd = cmd_lst->content;
+				token_lst = cmd->token;				
+				while (token_lst)
+				{
+					#include <stdio.h>
+					token = token_lst->content;
+					printf("%d:%s\n", token->type, token->value);
+					token_lst = token_lst->next;
+				}
+				cmd_lst = cmd_lst->next;
+			}
+
+
+
+
+
 			// ft_execute(&ctx);
 		}
 		ft_clean_ctx(&ctx);

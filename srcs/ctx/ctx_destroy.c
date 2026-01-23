@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:54:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 10:27:45 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/23 11:27:00 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	ft_env_destroy(void *content)
+void	ft_env_destroy(void *content)
 {
 	if (!content)
 		return ;
@@ -26,17 +26,23 @@ static void	ft_env_destroy(void *content)
 	free(content);	
 }
 
-static void	ft_token_destoy(void *content)
+void	ft_token_destoy(void *token)
 {
-	free(((t_token *)(content))->value);
-	((t_token *)(content))->value = NULL;
-	free(content);
+	char	*value;
+
+	value = ((t_token *)(token))->value;
+	free(value);
+	free(token);
 }
 
-static void	ft_cmd_destroy(void *content)
+static void	ft_cmd_destroy(void *cmd)
 {
-	ft_lstclear(content, &ft_token_destoy);
-	free(content);
+	t_list	*token_lst;
+
+	token_lst = ((t_cmd *)(cmd))->token;
+	if (token_lst)
+		ft_lstclear(&token_lst, &ft_token_destoy);
+	free(cmd);
 }
 
 void	ft_clean_ctx(t_ctx *ctx)

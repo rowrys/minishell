@@ -6,38 +6,67 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:54:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 10:31:02 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 18:28:41 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ctx.h"
 #include "libft.h"
 #include "utils.h"
+#include <unistd.h>
+
+static	void ft_manage_env_error(t_ctx *ctx, t_dict_entry *dict_entry)
+{
+	if (dict_entry)
+		ft_env_destroy(dict_entry);
+	(void)ctx;
+	// ft_error(ctx, "malloc error", 1);
+}
+
+static t_dict_entry	*ft_init_new_dict_entry(t_ctx *ctx, char *env)
+{
+	size_t			i;
+	t_dict_entry	*new_dict_entry;
+	
+	new_dict_entry = NULL;
+	i = 0;
+	if (env[i] != '\0')
+	{
+		i = ft_go_to(env, '=');
+		new_dict_entry = ft_calloc(sizeof(t_dict_entry), 1);
+		// if (!ctx->env_dict->content)
+(void)ctx;
+		// 	ft_error(ctx, "malloc error", 1);
+		new_dict_entry->key = ft_substr(env, 0, i);
+		if (!new_dict_entry->key)
+			ft_manage_env_error(ctx, new_dict_entry);
+		if (ft_strchr(env, '='))
+			new_dict_entry->value = ft_strdup(ft_strchr(env, '=') + 1);
+		if (ft_strchr(env, '=') && !new_dict_entry->value)
+			ft_manage_env_error(ctx, new_dict_entry);
+		i++;
+	}
+	return (new_dict_entry);
+}
 
 void	ft_env_init(t_ctx *ctx, char **env)
 {
 	size_t			i;
-	size_t			j;
-	t_dict_entry	*content;
-	
+	t_list			*new_node;
+	t_dict_entry	*new_dict_entry;
+
 	ctx->env_dict = NULL;
 	i = 0;
 	while (env[i])
 	{
-		content = malloc(sizeof(t_dict_entry));
-		// if (!ctx->env_dict->content)
-		// 	ft_error(ctx, "malloc error", 1);
-		ft_bzero(content, sizeof(t_dict_entry));
-		j = ft_go_to(env[i], '=');
-		if (env[i][j] != '\0')
+		new_dict_entry = ft_init_new_dict_entry(ctx, env[i]);
+		if (new_dict_entry)
 		{
-			content->key = ft_substr(env[i], 0, j);
-			// if (!ctx->env_dict->content)
-			// 	ft_error(ctx, "malloc error", 1);
-			content->value = ft_strdup(ft_strchr(env[i], '=') + 1);
-			// if (!ctx->env_dict->content)
-			// 	ft_error(ctx, "malloc error", 1);
-			ft_lstadd_back(&ctx->env_dict, ft_lstnew(content));
+			new_node = ft_lstnew(new_dict_entry);
+				// if (!new_node)
+				// 	ft_manage_env_error(ctx, new_node);
+			ft_lstadd_back(&ctx->env_dict, new_node);
 		}
 		i++;
 	}

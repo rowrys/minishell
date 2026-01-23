@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 17:07:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 10:27:51 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/22 20:19:27 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ void	ft_init_ctx(t_ctx *ctx, int argc, char **env);
 /*ctx_destroy*/
 void	ft_destroy_ctx(t_ctx *ctx);
 void	ft_clean_ctx(t_ctx *ctx);
+void	ft_env_destroy(void *content);
+void	ft_token_destoy(void *content);
 
 #endif
