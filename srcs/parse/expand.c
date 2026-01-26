@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 18:00:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 18:33:26 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/26 13:36:39 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*ft_manage_expand(t_ctx *ctx, char *str, bool skip_quote)
 		else if (*str)
 			str++;
 	}
-	if (str != origin)
+	if (str != origin || (skip_quote == false && to_free && !*to_free))
 	{
 		tmp = ft_get_part(ctx, origin, '\0');
 		result = ft_add_part(ctx, result, tmp);
