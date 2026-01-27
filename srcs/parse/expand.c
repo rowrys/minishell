@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 18:00:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/26 13:36:39 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/27 20:21:25 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_expand(t_ctx *ctx, char *str, size_t size)
 		result = ft_strdup("$");
 		return (result);
 	}
-	if (!ft_strcmp(str, "?"))
+	if (*str == '?')
 	{
 		result = ft_itoa(ctx->last_error);
 		// if (!result)
@@ -50,6 +50,8 @@ size_t	ft_explen(char *str)
 
 	if (!str)
 		return (0);
+	if (*str == '?')
+		return (1);
 	size = 0;
 	while (str[size] && !ft_strchr(EXPAND_LIMITER, str[size]))
 		size++;

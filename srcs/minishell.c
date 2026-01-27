@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/23 11:15:42 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/26 17:11:30 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,28 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <strings.h>
+
+/************************************************************* 
+ * REMOVE THIS */
+
+const char	*t_key_tostr(t_key k)
+{
+	switch (k)
+	{
+		case KEY_END: return "KEY_END";
+		case KEY_PIPE: return "KEY_PIPE";
+		case KEY_CHUNK: return "KEY_CHUNK";
+		case KEY_REDIR: return "KEY_REDIR";
+		case KEY_LREDIR: return "KEY_LREDIR";
+		case KEY_RREDIR: return "KEY_RREDIR";
+		case KEY_APPEND: return "KEY_APPEND";
+		case KEY_HERE_DOC: return "KEY_HERE_DOC";
+	}
+	return "UNKNOWN";
+}
+
+#include <stdio.h>
+/***********************************************************/
 
 int	main(int argc, char **argv, char **env)
 {
@@ -48,9 +70,8 @@ int	main(int argc, char **argv, char **env)
 				token_lst = cmd->token;				
 				while (token_lst)
 				{
-					#include <stdio.h>
 					token = token_lst->content;
-					printf("%d:%s\n", token->type, token->value);
+					printf("%s:[%s]\n", t_key_tostr(token->type), token->value);
 					token_lst = token_lst->next;
 				}
 				cmd_lst = cmd_lst->next;

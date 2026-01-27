@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:52 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/23 16:15:45 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:22:44 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ void	ft_parse_line(t_ctx *ctx);
 
 /*parse_cmd*/
 void	ft_parse_cmd(t_ctx *ctx);
+
+/*parse_block*/
+bool ft_parse_expand(t_ctx *ctx, t_list **new_list, t_token *token,
+    char **result);
+void ft_parse_block(t_ctx *ctx, t_token *token, char **result);
+void ft_parse_quote(t_ctx *ctx, t_token *token, char **result);
 
 /*env_utils*/
 int		ft_get_redir_key(char *str);

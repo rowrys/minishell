@@ -12,9 +12,11 @@ SOURCES =	$(SRCS_DIR)minishell.c				\
 			$(SRCS_DIR)parse/valid_line.c		\
 			$(SRCS_DIR)parse/syntax_error.c		\
 			$(SRCS_DIR)parse/get_next_token.c	\
+			$(SRCS_DIR)parse/parse_block.c		\
 			$(SRCS_DIR)utils/utils.c			\
 			$(SRCS_DIR)utils/env_utils.c		\
 			$(SRCS_DIR)utils/parse_utils.c		\
+			$(SRCS_DIR)utils/ft_split_expand.c	\
 
 
 

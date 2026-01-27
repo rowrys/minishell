@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/23 18:26:19 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:22:04 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-bool ft_chunk_is_empty(char *chunk, size_t i)
+bool  ft_is_inside_quote(char *str)
 {
-    if ((size_t)ft_skip(&chunk[i], ISSPACE) == ft_strlen(&chunk[i]))
+    if (*str == '"' && str[ft_strlen(str) - 1] == '"')
+        return (true);
+    if (*str == '\'' && str[ft_strlen(str) - 1] == '\'')
         return (true);
     return (false);
 }
@@ -69,24 +71,24 @@ ctx->last_error = ctx->last_error;
 	return (result);
 }
 
-char	*ft_add_part(t_ctx *ctx, char *tmp, char *str)
+char	*ft_add_part(t_ctx *ctx, char *result, char *part)
 {
-	char	*result;
+	char	*to_return;
 
-	if (!str)
-		return (tmp);
-	if (!tmp)
-		result = ft_strdup(str);
+	if (!part)
+		return (result);
+	if (!result)
+		to_return = ft_strdup(part);
 	else
-		result = ft_strjoin(tmp, str);
-	free(tmp);
-	tmp = NULL;
-	free(str);
-	str = NULL;
-	// if (!result)
+		to_return = ft_strjoin(result, part);
+	free(result);
+	result = NULL;
+	free(part);
+	part = NULL;
+	// if (!to_return)
 ctx->last_error = ctx->last_error;
 	// 	ft_error("malloc")
-	return (result);
+	return (to_return);
 }
 
 

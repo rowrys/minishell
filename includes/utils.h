@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:50:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/23 18:21:36 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:22:33 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 int		ft_get_redir_key(char *str);
 void	ft_add_token(t_ctx *ctx, t_list **token_lst, int key, char *value);
 char	*ft_get_part(t_ctx *ctx, char *str, char end);
-char	*ft_add_part(t_ctx *ctx, char *tmp, char *str);
-bool    ft_chunk_is_empty(char *chunk, size_t i);
+char	*ft_add_part(t_ctx *ctx, char *result, char *part);
+bool    ft_is_inside_quote(char *str);
+
+/*ft_split_expand*/
+char    **ft_split_expand(t_ctx *ctx, char *str);
 
 /*utils*/
 int		ft_go_to(char *str, char c);
