@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:50:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/27 19:22:33 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:47:23 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	ft_add_token(t_ctx *ctx, t_list **token_lst, int key, char *value);
 char	*ft_get_part(t_ctx *ctx, char *str, char end);
 char	*ft_add_part(t_ctx *ctx, char *result, char *part);
 bool    ft_is_inside_quote(char *str);
+
+/*ft_split_readline*/
+void	ft_split_readline(t_ctx *ctx);
 
 /*ft_split_expand*/
 char    **ft_split_expand(t_ctx *ctx, char *str);

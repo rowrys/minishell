@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:54:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/23 11:27:00 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/28 10:35:38 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ void	ft_destroy_ctx(t_ctx *ctx)
 	if (!ctx)
 		return ;
 	ft_clean_ctx(ctx);
+	if (ctx->line_split)
+		ft_free_double(&ctx->line_split);
+	ctx->line_split = NULL;
 	if (ctx->env_dict)
 		ft_lstclear(&ctx->env_dict, &ft_env_destroy);
 	ctx->env_dict = NULL;		

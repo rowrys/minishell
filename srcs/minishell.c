@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/26 17:11:30 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:53:37 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ctx.h"
+#include "libft.h"
 #include "parse.h"
+#include "utils.h"
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <string.h>
 #include <strings.h>
 
 /************************************************************* 
@@ -40,52 +43,74 @@ const char	*t_key_tostr(t_key k)
 #include <stdio.h>
 /***********************************************************/
 
-int	main(int argc, char **argv, char **env)
+int    main(int argc, char **argv, char **env)
 {
-	t_ctx	ctx;
+    t_ctx    ctx;
+    size_t    i;
 
-	(void)argv;
-	ft_init_ctx(&ctx, argc, env);
+    (void)argv;
+    ft_init_ctx(&ctx, argc, env);
+
+        //////////////////////
+        int j = 0;
+        ////////////////////////
+
     while (1)
     {
-        ctx.line = readline("minishell>");
-		if (!ctx.line)
-			break ;
-		if (*ctx.line)
-			add_history(ctx.line);
-		if (ft_is_valid_line(&ctx, ctx.line))
+        ctx.line = readline("minishell$ ");
+        if (!ctx.line)
+            break ;
+        ft_split_readline(&ctx);
+		i = 0;
+        while (ctx.line_split[i])
 		{
-			ft_parse(&ctx);
-			
-
-			t_list	*cmd_lst;
-			t_list	*token_lst;
-			t_token	*token;
-			t_cmd	*cmd;
-
-			cmd_lst = ctx.cmd_lst;
-			while (cmd_lst)
+			ctx.line = ft_strdup(ctx.line_split[i]);
+			// if (!ctx.line)
+				// ft_error(&ctx,"malloc error", 1);
+			if (*ctx.line)
+           		add_history(ctx.line);
+			if (ft_is_valid_line(&ctx, ctx.line))
 			{
-				cmd = cmd_lst->content;
-				token_lst = cmd->token;				
-				while (token_lst)
+				ft_parse(&ctx);
+				
+
+				t_list    *cmd_lst;
+				t_list    *token_lst;
+				t_token    *token;
+				t_cmd    *cmd;
+
+				cmd_lst = ctx.cmd_lst;
+				while (cmd_lst)
 				{
-					token = token_lst->content;
-					printf("%s:[%s]\n", t_key_tostr(token->type), token->value);
-					token_lst = token_lst->next;
+					cmd = cmd_lst->content;
+					token_lst = cmd->token;                
+					while (token_lst)
+					{
+						token = token_lst->content;
+						printf("%d:%s:[%s]\n", j, t_key_tostr(token->type), token->value);
+						token_lst = token_lst->next;
+					}
+					cmd_lst = cmd_lst->next;
 				}
-				cmd_lst = cmd_lst->next;
+
+
+
+
+				// ft_execute(&ctx);
 			}
+			ft_clean_ctx(&ctx);
 
+			
+			/////////////////
+			j++;
+			///////////////////////
 
-
-
-
-			// ft_execute(&ctx);
+			
+			i++;
 		}
-		ft_clean_ctx(&ctx);
+		ft_free_double(&ctx.line_split);
     }
-	ft_destroy_ctx(&ctx);
-	rl_clear_history();
-	return (0);
+    ft_destroy_ctx(&ctx);
+    rl_clear_history();
+    return (0);
 }

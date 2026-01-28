@@ -1,22 +1,23 @@
 CC=cc
 NAME = minishell
 SRCS_DIR = srcs/
-SOURCES =	$(SRCS_DIR)minishell.c				\
-			$(SRCS_DIR)ctx/ctx_destroy.c		\
-			$(SRCS_DIR)ctx/ctx_init.c			\
-			$(SRCS_DIR)parse/parse.c			\
-			$(SRCS_DIR)parse/parse_line.c		\
-			$(SRCS_DIR)parse/parse_cmd.c		\
-			$(SRCS_DIR)parse/parse_token_list.c	\
- 			$(SRCS_DIR)parse/expand.c			\
-			$(SRCS_DIR)parse/valid_line.c		\
-			$(SRCS_DIR)parse/syntax_error.c		\
-			$(SRCS_DIR)parse/get_next_token.c	\
-			$(SRCS_DIR)parse/parse_block.c		\
-			$(SRCS_DIR)utils/utils.c			\
-			$(SRCS_DIR)utils/env_utils.c		\
-			$(SRCS_DIR)utils/parse_utils.c		\
-			$(SRCS_DIR)utils/ft_split_expand.c	\
+SOURCES =	$(SRCS_DIR)minishell.c					\
+			$(SRCS_DIR)ctx/ctx_destroy.c			\
+			$(SRCS_DIR)ctx/ctx_init.c				\
+			$(SRCS_DIR)parse/parse.c				\
+			$(SRCS_DIR)parse/parse_line.c			\
+			$(SRCS_DIR)parse/parse_cmd.c			\
+			$(SRCS_DIR)parse/parse_token_list.c		\
+ 			$(SRCS_DIR)parse/expand.c				\
+			$(SRCS_DIR)parse/valid_line.c			\
+			$(SRCS_DIR)parse/syntax_error.c			\
+			$(SRCS_DIR)parse/get_next_token.c		\
+			$(SRCS_DIR)parse/parse_block.c			\
+			$(SRCS_DIR)utils/utils.c				\
+			$(SRCS_DIR)utils/env_utils.c			\
+			$(SRCS_DIR)utils/parse_utils.c			\
+			$(SRCS_DIR)utils/ft_split_expand.c		\
+			$(SRCS_DIR)utils/ft_split_readline.c	\
 
 
 
