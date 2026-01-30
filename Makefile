@@ -18,8 +18,10 @@ SOURCES =	$(SRCS_DIR)minishell.c					\
 			$(SRCS_DIR)utils/parse_utils.c			\
 			$(SRCS_DIR)utils/ft_split_expand.c		\
 			$(SRCS_DIR)utils/ft_split_readline.c	\
-
-
+			$(SRCS_DIR)sig/sig_mini_shell.c			\
+			$(SRCS_DIR)sig/sig_here_doc.c			\
+			$(SRCS_DIR)here_doc/here_doc.c			\
+			$(SRCS_DIR)here_doc/parse_limiter.c		\
 
 OBJ_DIR = .build/
 OBJS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
@@ -41,6 +43,8 @@ make_dir:
 	@mkdir -p .build/parse
 	@mkdir -p .build/ctx
 	@mkdir -p .build/utils
+	@mkdir -p .build/sig
+	@mkdir -p .build/here_doc
 
 $(OBJ_DIR)%.o:  $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@

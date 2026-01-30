@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:52 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/27 19:22:44 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/29 14:53:36 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,9 @@ bool	ft_is_empty(t_ctx *ctx, char *str);
 bool	ft_is_valid_line(t_ctx *ctx, char *str);
 
 /*syntax_error*/
-bool	ft_have_syntax_error(char *str);
-bool	ft_is_valid_quote_parts(char *str);
-bool	ft_is_valid_pipe_parts(char *str);
-bool	ft_is_valid_redir_parts(char *str);
+bool	ft_is_syntax_error_quote(char *str);
+bool	ft_is_syntax_error_pipe(char *str);
+bool	ft_is_syntax_error_redir(char *str);
 
 /*expand*/
 char	*ft_manage_expand(t_ctx *ctx, char *str, bool skip_quote);

@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:59:51 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 13:40:17 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/29 14:14:17 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ bool	ft_is_valid_line(t_ctx *ctx, char *str)
 	is_valid = true;
 	if (!*str)
 		return (false);
-	if (ft_have_syntax_error(str))
+	if (ft_is_syntax_error_quote(str))
 	{
-		ft_putendl_fd("minishell: syntax error", 2);		
+		ft_putendl_fd("minishell: syntax error near unexpected token 'quote'", 2);		
 		ctx->last_error = 2;
 		is_valid = false;
 	}

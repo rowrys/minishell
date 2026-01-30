@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/28 10:53:37 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/30 16:15:28 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 #include "libft.h"
 #include "parse.h"
 #include "utils.h"
+#include "here_doc.h"
+#include "sig.h"
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdint.h>
 #include <string.h>
 #include <strings.h>
 
-/************************************************************* 
- * REMOVE THIS */
+/*************************************************************/ 
+	// chech the file utils.c !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/*************************************************************/
+//  * REMOVE THIS */
 
 const char	*t_key_tostr(t_key k)
 {
@@ -55,6 +60,7 @@ int    main(int argc, char **argv, char **env)
         int j = 0;
         ////////////////////////
 
+	sig_mini_shell();
     while (1)
     {
         ctx.line = readline("minishell$ ");
@@ -94,8 +100,11 @@ int    main(int argc, char **argv, char **env)
 				}
 
 
-
-
+				if (ft_here_doc(&ctx))
+				{
+					ft_clean_ctx(&ctx);
+					break ;
+				}
 				// ft_execute(&ctx);
 			}
 			ft_clean_ctx(&ctx);
@@ -112,5 +121,5 @@ int    main(int argc, char **argv, char **env)
     }
     ft_destroy_ctx(&ctx);
     rl_clear_history();
-    return (0);
+    return (ctx.last_error);
 }

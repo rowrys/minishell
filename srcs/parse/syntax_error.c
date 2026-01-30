@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:44:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/22 15:52:24 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/01/29 14:51:39 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include "parse.h"
 #include "utils.h"
 
-bool	ft_is_valid_redir_parts(char *str)
+bool	ft_is_syntax_error_redir(char *str)
 {
+	str += ft_skip(str, ISSPACE);
 	while (*str)
 	{
 		str += ft_skip(str, ISSPACE);
@@ -26,22 +27,23 @@ bool	ft_is_valid_redir_parts(char *str)
 		else if (*str == '<' || *str == '>')
 		{
 			if (!ft_get_redir_key(str))
-				return (false);
+				return (true);
 			str += ft_skip(str, "<>");
 			str += ft_skip(str, ISSPACE);
 			if (ft_strchr(TOKEN_LIMITER, *str))
-				return (false);
+				return (true);
 		}
 		else if (*str)
 			str++;
 	}
-	return (true);
+	return (false);
 }
 
-bool	ft_is_valid_pipe_parts(char *str)
+bool	ft_is_syntax_error_pipe(char *str)
 {
+	str += ft_skip(str, ISSPACE);
 	if (*str == '|')
-		return (false);
+		return (true);
 	while (*str)
 	{	
 		if (*str == '\'' || *str == '"')
@@ -52,18 +54,16 @@ bool	ft_is_valid_pipe_parts(char *str)
 			if (ft_strchr(ISSPACE, *str))
 				str += ft_skip(str, ISSPACE);
 			if (!*str || *str == '|')
-				return (false);
+				return (true);
 		}
 		else if (*str)
 			str++;
 	}
-	return (true);
+	return (false);
 }
 
-bool	ft_is_valid_quote_parts(char *str)
+bool	ft_is_syntax_error_quote(char *str)
 {
-	if (!str)
-		return (true);
 	while (*str)
 	{
 		str += ft_skip(str, ISSPACE);
@@ -73,22 +73,10 @@ bool	ft_is_valid_quote_parts(char *str)
 			if (*str == '\'' || *str == '"')
 				str++;
 			else
-				return (false);
+				return (true);
 		}
 		else if (*str)
 			str++;
 	}
-	return (true);
-}
-
-bool	ft_have_syntax_error(char *str)
-{
-	str += ft_skip(str, ISSPACE);
-	if (ft_is_valid_quote_parts(str) == false)
-		return (true);
-	if (ft_is_valid_pipe_parts(str) == false)
-		return (true);
-	if (ft_is_valid_redir_parts(str) == false)
-		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/28 10:20:54 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/01/30 15:02:21 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_cmd
 	t_list	*token;
 	int		fd_in;
 	int		fd_out;
+	int		pipe_hd[2];
+	int		pipe_cmd[2];
 }			t_cmd;
 
 typedef struct s_ctx
