@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/30 15:02:21 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/02 14:59:33 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ typedef enum e_key
 	KEY_HERE_DOC
 }	t_key;
 
+typedef enum e_built_in
+{
+	BUILT_IN_ECHO = 1,
+	BUILT_IN_CD,
+	BUILT_IN_PWD,
+	BUILT_IN_EXPORT,
+	BUILT_IN_UNSET,
+	BUILT_IN_ENV,
+	BUILT_IN_EXIT
+}	t_built_in;
+
 typedef struct s_dict_entry
 {
 	char	*key;
@@ -52,6 +63,7 @@ typedef struct s_cmd
 	int		fd_out;
 	int		pipe_hd[2];
 	int		pipe_cmd[2];
+	pid_t	cpid;
 }			t_cmd;
 
 typedef struct s_ctx

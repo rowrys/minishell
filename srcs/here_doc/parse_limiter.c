@@ -6,13 +6,14 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 11:35:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/30 19:23:11 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/03 15:01:39 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "utils.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
 bool    ft_check_limiter(char *line, char *limiter, int *total_size_write)
 {
@@ -49,11 +50,11 @@ static void ft_parse_limiter_block(t_ctx *ctx, char *block, size_t *i, char **li
     while (block[*i + size] && block[*i + size] != '"' && block[*i + size] != '\'')
         size++;
     part = ft_substr(block + *i , 0, size);
-    // if (!part)
-	//{
-    //	free(limiter);  
-	//	ft_error(malloc);
-	//}
+    if (!part)
+	{
+    	free(limiter);  
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+	}
     *limiter = ft_add_part(ctx, *limiter, part);
     *i += size;
 }
@@ -87,8 +88,8 @@ char	*ft_get_limiter(t_ctx *ctx, char *block, bool *do_expand)
 	else
     {
 		limiter = ft_strdup(block);
-        // if (!limiter)
-        //     ft_error(ctx, "malloc error", 1);
+        if (!limiter)
+            ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     }
 	return (limiter);
 }

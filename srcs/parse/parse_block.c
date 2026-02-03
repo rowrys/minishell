@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_block.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 18:20:36 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/01/27 20:21:26 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:05:05 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void ft_parse_block(t_ctx *ctx, t_token *token, char **result)
     while (!ft_strchr(PART_LIMITER, token->value[size]))
         size++;
     part = ft_substr(token->value, 0, size);
-    // if (!part)
-    //     ft_error(malloc);
+    if (!part)
+        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     *result = ft_add_part(ctx, *result, part);
     token->value += size;
 }

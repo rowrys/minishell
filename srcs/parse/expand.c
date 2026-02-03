@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 18:00:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/27 20:21:25 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:03:16 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,20 @@ char	*ft_expand(t_ctx *ctx, char *str, size_t size)
 	if (!size)
 	{
 		result = ft_strdup("$");
+		if (!result)
+			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 		return (result);
 	}
 	if (*str == '?')
 	{
 		result = ft_itoa(ctx->last_error);
-		// if (!result)
-		// 	ft_error(ctx, "malloc error", 1);
+		if (!result)
+			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 		return (result);
 	}
 	name = ft_substr(str, 0, size);
-	// if (name)
-	// 	ft_error()
+	if (name)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	result = ft_get_dict_value(ctx, ctx->env_dict, name);
 	free(name);
 	return (result);
@@ -64,8 +66,8 @@ static void	ft_insert_expand(t_ctx *ctx, char **str, char **origin, char **resul
 	size_t	size;
 
 	tmp = ft_substr(*origin, 0, *str - *origin);
-	// if(*origin != *str && !tmp)
-	// 	ft_error(malloc)
+	if (*origin != *str && !tmp)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	*result = ft_add_part(ctx, *result, tmp);
 	size = ft_explen(*str + 1);
 	tmp = ft_expand(ctx, *str + 1, size);

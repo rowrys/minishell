@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 14:03:48 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/27 19:53:07 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:07:18 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static bool ft_is_ambigous(t_ctx *ctx, t_list **new_list, t_token *old_token)
     char *value;
     
     value = ft_strdup(old_token->value);
-    // if (!value)
-    //     ft_error(malloc);
+    if (!value)
+        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     value = ft_manage_expand(ctx, value, 1);
 	if ((size_t)ft_skip(value, ISSPACE) == ft_strlen(value))
 	{
@@ -71,12 +71,12 @@ static void ft_parse_token(t_ctx *ctx, t_list **new_list, t_token *old_token)
         return ;
     }
     tmp_token = malloc(sizeof(t_token));
-    // if (!tmp_token)
-    //     ft_error(malloc);
+    if (!tmp_token)
+        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     tmp_token->type = old_token->type;
     tmp_value= ft_strdup(old_token->value);
-    // if (!tmp_value)
-    //     ft_error(malloc);
+    if (!tmp_value)
+        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     tmp_token->value = tmp_value;
     ft_add_parsed_token(ctx, new_list, tmp_token);
     free(tmp_value);
@@ -98,8 +98,8 @@ t_list *ft_parse_token_list(t_ctx *ctx, t_list *old_lst)
         else if (old_token->type == KEY_HERE_DOC)
         {
             value = ft_strdup(old_token->value);
-            // if (!value)
-            //     ft_error(malloc);
+            if (!value)
+                ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
             ft_add_token(ctx, &new_list, KEY_HERE_DOC, value);
         }
         else

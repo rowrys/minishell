@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:17:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/01/27 18:43:34 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:13:14 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,8 @@ char    **ft_split_expand(t_ctx *ctx, char *str)
 
 	nb_array = ft_count_array(str);
 	result = ft_calloc(sizeof(char *), (nb_array + 1));
-	// if (!result)
-(void)ctx;
-	// 	ft_error(malloc);
+	if (!result)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	i = 0;
 	while (i < nb_array)
 	{
@@ -71,7 +70,7 @@ char    **ft_split_expand(t_ctx *ctx, char *str)
 		if (!result[i])
         {
 			ft_free_double(&result);
-	        // 	ft_error(malloc);
+	        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
         }
 		str += size;
         i++;

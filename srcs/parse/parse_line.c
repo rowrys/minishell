@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:52:15 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/23 13:42:06 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/03 16:01:33 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,15 @@ static	t_cmd	*ft_init_cmd(t_ctx *ctx)
 	t_cmd	*new_cmd;
 	
 	new_cmd = ft_calloc(1, sizeof(t_cmd));
-	// if (!new_cmd)
-(void)ctx;
-	// 	ft_error(ctx, "malloc error", 1);
+	if (!new_cmd)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	new_cmd->fd_in = -1;
 	new_cmd->fd_out = -1;
+	new_cmd->pipe_hd[0] = -1;
+	new_cmd->pipe_hd[1] = -1;
+	new_cmd->pipe_cmd[0] = -1;
+	new_cmd->pipe_cmd[1] = -1;
+	new_cmd->cpid = -2;
 	return (new_cmd); 
 }
 
@@ -87,8 +91,8 @@ void	ft_parse_line(t_ctx *ctx)
 	{
 		new_cmd = ft_get_next_cmd(ctx, &i);
 		new_node = ft_lstnew(new_cmd);
-		// if (!new_node)
-		// 	ft_error(ctx, "malloc error", 1);
+		if (!new_node)
+			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 		ft_lstadd_back(&ctx->cmd_lst, new_node);
 	}
 }

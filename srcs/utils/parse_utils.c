@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/27 19:22:04 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:15:08 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,13 @@ void	ft_add_token(t_ctx *ctx, t_list **token_lst, int key, char *value)
 	t_list	*new_entry;
 
 	new_token = malloc(sizeof(t_token));
-	// if (!new_token)
-ctx->last_error = ctx->last_error;
-	// 	ft_error(ctx, "");
+	if (!new_token)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	new_token->type = key;
 	new_token->value = value;
 	new_entry = ft_lstnew(new_token);
-	// if (!new_entry)
-	// 	ft_error(ctx, "malloc"))
+	if (!new_entry)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	ft_lstadd_back(token_lst, new_entry);
 }
 
@@ -65,9 +64,8 @@ char	*ft_get_part(t_ctx *ctx, char *str, char end)
 	while (str[size] && str[size] != end)
 		size++;
 	result = ft_substr(str, 0, size);
-	// if (!result && size)
-ctx->last_error = ctx->last_error;
-		// ft_error("malloc")
+	if (!result && size)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	return (result);
 }
 
@@ -85,9 +83,8 @@ char	*ft_add_part(t_ctx *ctx, char *result, char *part)
 	result = NULL;
 	free(part);
 	part = NULL;
-	// if (!to_return)
-ctx->last_error = ctx->last_error;
-	// 	ft_error("malloc")
+	if (!to_return)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	return (to_return);
 }
 

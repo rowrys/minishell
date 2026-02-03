@@ -6,7 +6,6 @@ SOURCES =	$(SRCS_DIR)minishell.c					\
 			$(SRCS_DIR)ctx/ctx_init.c				\
 			$(SRCS_DIR)parse/parse.c				\
 			$(SRCS_DIR)parse/parse_line.c			\
-			$(SRCS_DIR)parse/parse_cmd.c			\
 			$(SRCS_DIR)parse/parse_token_list.c		\
  			$(SRCS_DIR)parse/expand.c				\
 			$(SRCS_DIR)parse/valid_line.c			\
@@ -18,10 +17,18 @@ SOURCES =	$(SRCS_DIR)minishell.c					\
 			$(SRCS_DIR)utils/parse_utils.c			\
 			$(SRCS_DIR)utils/ft_split_expand.c		\
 			$(SRCS_DIR)utils/ft_split_readline.c	\
+			$(SRCS_DIR)utils/close.c				\
+			$(SRCS_DIR)utils/error.c				\
 			$(SRCS_DIR)sig/sig_mini_shell.c			\
 			$(SRCS_DIR)sig/sig_here_doc.c			\
 			$(SRCS_DIR)here_doc/here_doc.c			\
 			$(SRCS_DIR)here_doc/parse_limiter.c		\
+			$(SRCS_DIR)execute/cmd_to_arg.c			\
+			$(SRCS_DIR)execute/execute.c			\
+			$(SRCS_DIR)execute/execute_chunk.c		\
+			$(SRCS_DIR)execute/execute_cmd.c		\
+			$(SRCS_DIR)execute/forgotten_child.c	\
+			$(SRCS_DIR)execute/manage_redir.c		\
 
 OBJ_DIR = .build/
 OBJS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
@@ -45,6 +52,7 @@ make_dir:
 	@mkdir -p .build/utils
 	@mkdir -p .build/sig
 	@mkdir -p .build/here_doc
+	@mkdir -p .build/execute
 
 $(OBJ_DIR)%.o:  $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@

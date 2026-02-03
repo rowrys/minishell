@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/30 16:15:28 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/03 15:28:47 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "utils.h"
 #include "here_doc.h"
 #include "sig.h"
+#include "execute.h"
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -71,8 +72,8 @@ int    main(int argc, char **argv, char **env)
         while (ctx.line_split[i])
 		{
 			ctx.line = ft_strdup(ctx.line_split[i]);
-			// if (!ctx.line)
-				// ft_error(&ctx,"malloc error", 1);
+			if (!ctx.line)
+				ft_error(&ctx, MALLOC_ERROR, EXIT_FAILURE);
 			if (*ctx.line)
            		add_history(ctx.line);
 			if (ft_is_valid_line(&ctx, ctx.line))
@@ -105,7 +106,7 @@ int    main(int argc, char **argv, char **env)
 					ft_clean_ctx(&ctx);
 					break ;
 				}
-				// ft_execute(&ctx);
+				ft_execute(&ctx);
 			}
 			ft_clean_ctx(&ctx);
 

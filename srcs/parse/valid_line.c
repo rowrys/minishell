@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:59:51 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/29 14:14:17 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/03 15:11:15 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ bool	ft_is_empty(t_ctx *ctx, char *str)
 	int		i;
 
 	line = ft_strdup(str);
-	//if (!line)
-ctx->last_error = ctx->last_error;
-	//	ft_error(malloc);
-	
+	if (!line)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	line = ft_manage_expand(ctx, line, 1);
 	i = ft_skip(line, ISSPACE);
 	if (line && line[i])
@@ -45,7 +43,8 @@ bool	ft_is_valid_line(t_ctx *ctx, char *str)
 		return (false);
 	if (ft_is_syntax_error_quote(str))
 	{
-		ft_putendl_fd("minishell: syntax error near unexpected token 'quote'", 2);		
+		ft_putendl_fd(
+			"minishell: syntax error near unexpected token 'quote'", 2);		
 		ctx->last_error = 2;
 		is_valid = false;
 	}

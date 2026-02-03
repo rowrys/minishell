@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:52 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/29 14:53:36 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/03 15:09:23 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,11 @@ void	ft_parse(t_ctx *ctx);
 /*parse_line*/
 void	ft_parse_line(t_ctx *ctx);
 
-/*parse_cmd*/
-void	ft_parse_cmd(t_ctx *ctx);
-
 /*parse_block*/
 bool ft_parse_expand(t_ctx *ctx, t_list **new_list, t_token *token,
     char **result);
 void ft_parse_block(t_ctx *ctx, t_token *token, char **result);
 void ft_parse_quote(t_ctx *ctx, t_token *token, char **result);
-
-/*env_utils*/
-int		ft_get_redir_key(char *str);
 
 /*valid_line*/
 bool	ft_is_empty(t_ctx *ctx, char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 09:59:30 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/26 10:34:58 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:04:03 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static char *ft_get_value(t_ctx *ctx, t_key key, size_t *i)
             size++;
     }
     value = ft_substr(ctx->line, *i, size);
-    // if (!value)
-    //     ft_error(malloc);
+    if (!value)
+        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     *i += size;
     return (value);
 }
@@ -44,16 +44,16 @@ t_list *ft_get_next_token(t_ctx *ctx, t_key key, size_t *i)
     t_token *new_token;
 
     new_token = ft_calloc(1, sizeof(t_token));
-    // if (!new_token)
-    //     ft_error(malloc);
+    if (!new_token)
+        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     new_token->type = key;
     if (key == KEY_REDIR)
         new_token->type = ft_get_redir_key(ctx->line + *i);
     if (key != KEY_PIPE)
         new_token->value = ft_get_value(ctx, key, i);
     new_node = ft_lstnew(new_token);
-    // if (!new_node)
-    //     ft_error(malloc);
+    if (!new_node)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     if (key == KEY_PIPE)
         (*i)++;
     return (new_node);

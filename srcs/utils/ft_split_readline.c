@@ -6,12 +6,13 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 10:40:00 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/28 10:47:16 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/03 15:14:23 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+#include "utils.h"
 
 static int    ft_count_array(char const *s, char c)
 {
@@ -43,8 +44,8 @@ static char    **ft_split_error(t_ctx *ctx, char *line, char sep)
 
     nb_array = ft_count_array(line, sep);
     ptr = ft_calloc(sizeof(char **), (nb_array + 1));
-    // if (!ptr)
-    //     ft_error(malloc);
+    if (!ptr)
+        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     i = -1;
     while (++i < nb_array)
     {
@@ -56,9 +57,8 @@ static char    **ft_split_error(t_ctx *ctx, char *line, char sep)
         ptr[i] = ft_substr(line, 0, size);
         if (!ptr[i])
             ft_free_double(&ptr);
-        // if (!ptr || !ptr[i])
-(void)ctx;
-        //     ft_error(malloc);
+        if (!ptr || !ptr[i])
+            ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
         line += size;
     }
     return (ptr);
@@ -70,8 +70,8 @@ void	ft_split_readline(t_ctx *ctx)
     char    *line;
 
     line = ft_strdup(ctx->line);
-    // if (!line)
-    // ft_error(malloc);
+    if (!line)
+        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     line_split = ft_split_error(ctx, line, '\n');
     ctx->line_split = line_split;
     free(line);
