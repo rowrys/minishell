@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 16:36:41 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 21:34:05 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/04 09:49:07 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 #include "minishell.h"
 #include "execute.h"
 #include "utils.h"
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
 #include <sys/wait.h>
 
 static char    **ft_get_path_split(t_ctx *ctx)
@@ -88,7 +91,7 @@ static char	*ft_get_bin(t_ctx *ctx, char *binary, char **env)
 	have_access_denied = false;
 	result = ft_get_bin_path(ctx, splited_path, binary, &have_access_denied);
 	if (!result && have_access_denied)
-		ft_access_denied(ctx, splited_path, NULL, env);
+		ft_access_denied(ctx, splited_path, binary, env);
 	else if (!result)
 	{
 		ft_cmd_not_found(ctx, binary, env);
@@ -105,17 +108,23 @@ static char	*ft_get_bin(t_ctx *ctx, char *binary, char **env)
 
 static char	*ft_is_valid_binary(t_ctx *ctx, char *binary, char **env)
 {
-	char	*result;
+    char    *result;
+    int        fd_temp;
 
-	if (access(binary, F_OK) == 0)
-	{
-		if (access(binary, X_OK) == 0)
-			return (binary);
-		else
-			ft_access_denied(ctx, NULL, NULL, env);
-	}
-	result = ft_get_bin(ctx, binary, env);
-	return (result);
+    fd_temp = open(binary, O_RDWR);
+    if (fd_temp < 0 && errno == EISDIR)
+        ft_free_and_error(env, ctx, binary, EXIT_FAILURE);
+    else
+        close(fd_temp);
+    if (access(binary, F_OK) == 0)
+    {
+        if (access(binary, X_OK) == 0)
+            return (binary);
+        else
+            ft_access_denied(ctx, NULL, binary, env);
+    }
+    result = ft_get_bin(ctx, binary, env);
+    return (result);
 }
 
 static int	ft_dup(int fd, int fd2)

@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:54:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 15:45:04 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/04 09:55:35 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_env_init(t_ctx *ctx, char **env)
 void	ft_init_ctx(t_ctx *ctx, int argc, char **env)
 {
 	if (argc != 1)
-		ft_error(NULL, "format: ./minishell: do not add arguments", 0);
+		ft_error(NULL, "format: ./minishell: do not add arguments", 2);
 	ft_bzero(ctx, sizeof(t_ctx));
 	ft_env_init(ctx, env);
 }
