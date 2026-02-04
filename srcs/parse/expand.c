@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 18:00:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 15:03:16 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/04 11:08:43 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -24,22 +25,18 @@ char	*ft_expand(t_ctx *ctx, char *str, size_t size)
 	char	*result;
 	char	*name;
 
-	if (!size)
+	if (!size || *str == '?')
 	{
-		result = ft_strdup("$");
+		if (!size)
+			result = ft_strdup("$");
+		else
+			result = ft_itoa(ctx->last_error);
 		if (!result)
-			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-		return (result);
-	}
-	if (*str == '?')
-	{
-		result = ft_itoa(ctx->last_error);
-		if (!result)
-			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+			ft_free_and_error(str, ctx, MALLOC_ERROR, EXIT_FAILURE);
 		return (result);
 	}
 	name = ft_substr(str, 0, size);
-	if (name)
+	if (!name)
 		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	result = ft_get_dict_value(ctx, ctx->env_dict, name);
 	free(name);
@@ -67,7 +64,7 @@ static void	ft_insert_expand(t_ctx *ctx, char **str, char **origin, char **resul
 
 	tmp = ft_substr(*origin, 0, *str - *origin);
 	if (*origin != *str && !tmp)
-		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+		ft_free_and_error(*result, ctx, MALLOC_ERROR, EXIT_FAILURE);
 	*result = ft_add_part(ctx, *result, tmp);
 	size = ft_explen(*str + 1);
 	tmp = ft_expand(ctx, *str + 1, size);

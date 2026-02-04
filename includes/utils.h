@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:50:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 20:48:05 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/04 10:26:33 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void    ft_error(t_ctx *ctx, char *msg, int code);
 void    ft_error(t_ctx *ctx, char *msg, int code);
 void	ft_access_denied(t_ctx *ctx, char **splited_path, char *binary, char **env);
 void    ft_cmd_not_found(t_ctx *ctx, char *binary, char **env);
-void	ft_free_and_error(char **to_free, t_ctx *ctx, char *msg, int code);
+
+/*free*/
+void	ft_free_and_error(char *to_free, t_ctx *ctx, char *msg, int code);
+void	ft_free_db_and_error(char **to_free, t_ctx *ctx, char *msg, int code);
 
 /*env_utils*/
 char	*ft_get_dict_value(t_ctx *ctx, t_list *tmp_dict, char *name);

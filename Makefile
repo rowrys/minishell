@@ -19,6 +19,7 @@ SOURCES =	$(SRCS_DIR)minishell.c					\
 			$(SRCS_DIR)utils/ft_split_readline.c	\
 			$(SRCS_DIR)utils/close.c				\
 			$(SRCS_DIR)utils/error.c				\
+			$(SRCS_DIR)utils/free.c					\
 			$(SRCS_DIR)sig/sig_mini_shell.c			\
 			$(SRCS_DIR)sig/sig_here_doc.c			\
 			$(SRCS_DIR)here_doc/here_doc.c			\

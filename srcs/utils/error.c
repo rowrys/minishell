@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/04 09:51:00 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/04 10:22:00 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@ static char	**ft_get_bin_tmp(t_ctx *ctx, char *binary, char **env)
 	return (result);
 }
 
-void	ft_free_and_error(char **to_free, t_ctx *ctx, char *msg, int code)
-{
-	ft_free_double(&to_free);
-	ft_error(ctx, msg, code);
-}
-
 void    ft_cmd_not_found(t_ctx *ctx, char *binary, char **env)
 {
     pid_t   cpid;
@@ -68,7 +62,7 @@ void    ft_cmd_not_found(t_ctx *ctx, char *binary, char **env)
 	}
 	cpid = fork();
     if (cpid == -1)
-        ft_free_and_error(env, ctx, "Fork :", EXIT_FAILURE);
+        ft_free_db_and_error(env, ctx, "Fork :", EXIT_FAILURE);
     if (cpid == 0)
     {
         bin_tmp = ft_get_bin_tmp(ctx, binary, env);

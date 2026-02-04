@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 16:36:41 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/04 09:49:07 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/04 10:22:00 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ static char    *ft_get_bin_path(t_ctx *ctx, char **splited_path, char *binary, b
     {
         path_part = ft_strjoin(splited_path[i], "/");
 		if (!path_part)
-			ft_free_and_error(splited_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
+			ft_free_db_and_error(splited_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
 		bin = ft_strjoin(path_part, binary);
 		free(path_part);
 		if (!bin)
-			ft_free_and_error(splited_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
+			ft_free_db_and_error(splited_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
         if (bin && access(bin,X_OK) == 0)
 			return (bin);
 		if (bin && access(bin, F_OK) == 0)
@@ -113,7 +113,7 @@ static char	*ft_is_valid_binary(t_ctx *ctx, char *binary, char **env)
 
     fd_temp = open(binary, O_RDWR);
     if (fd_temp < 0 && errno == EISDIR)
-        ft_free_and_error(env, ctx, binary, EXIT_FAILURE);
+        ft_free_db_and_error(env, ctx, binary, EXIT_FAILURE);
     else
         close(fd_temp);
     if (access(binary, F_OK) == 0)
