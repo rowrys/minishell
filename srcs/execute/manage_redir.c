@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:04:57 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 18:28:59 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 10:00:00 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void ft_redir_error(t_ctx *ctx, char *value, int mode)
     else
     {
         if (mode == REDIR_FORKED)
-            ft_error(ctx, "minishell: ambiguous redirect", 0);
+            ft_error(ctx, "minishell: ambiguous redirect", 2);
         ft_putendl_fd("minishell: ambiguous redirect", 2);
     }
     ctx->last_error = EXIT_FAILURE;

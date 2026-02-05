@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 10:48:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 17:35:33 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 14:17:16 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 /*execute*/
 void    ft_execute(t_ctx *ctx);
+int		ft_check_status(int status);
 
 /*execute_cmd*/
 void	ft_execute_cmd(t_ctx *ctx, t_cmd *cmd);

@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/05 15:32:18 by mcolin            #+#    #+#             */
+/*   Updated: 2026/02/05 15:32:22 by mcolin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "utils.h"
 #include "execute.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,7 +23,7 @@
 
 #define DELTA_SIG_STATUS 0xFF - 0x7F
 
-static int ft_check_status(int status)
+int ft_check_status(int status)
 {
     if (WIFSIGNALED(status))
         return (WTERMSIG(status) + DELTA_SIG_STATUS);

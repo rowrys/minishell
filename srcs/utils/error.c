@@ -6,14 +6,17 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/04 10:22:00 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 14:54:16 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execute.h"
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
 #include "ctx.h"
+
+#include <errno.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -29,69 +32,77 @@ static char	**ft_get_bin_tmp(t_ctx *ctx, char *binary, char **env)
 	if (!result)
 	{
 		ft_free_double(&env);
-		ft_error(ctx, "Malloc exploded, how did you do that???", EXIT_FAILURE);
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	}
 	result[0] = ft_strdup("command-not-found");
 	if (!*result)
 	{
 		free(result);
 		ft_free_double(&env);
-		ft_error(ctx, "Malloc exploded, how did you do that???", EXIT_FAILURE);
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	}
 	result[1] = ft_strdup(binary);
 	if (!*result)
 	{
 		ft_free_double(&result);
 		ft_free_double(&env);
-		ft_error(ctx, "Malloc exploded, how did you do that???", EXIT_FAILURE);
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	}
 	return (result);
 }
 
 void    ft_cmd_not_found(t_ctx *ctx, char *binary, char **env)
 {
-    pid_t   cpid;
-    char    **bin_tmp;
-	int		status;
-
+	pid_t   cpid;
+	char    **bin_tmp;
+	int		status;	
 	if (access("/usr/lib/command-not-found", X_OK) != 0)
 	{
-		ft_free_double(&env);
 		ft_putstr_fd("minishell: ", 2);
-		ft_error(ctx, binary, EXIT_CMD_NOT_FOUND);
+		ft_free_db_and_error(env, ctx, binary, EXIT_CMD_NOT_FOUND);
 	}
 	cpid = fork();
-    if (cpid == -1)
-        ft_free_db_and_error(env, ctx, "Fork :", EXIT_FAILURE);
-    if (cpid == 0)
-    {
-        bin_tmp = ft_get_bin_tmp(ctx, binary, env);
-        ft_destroy_ctx(ctx);
-        execve("/usr/lib/command-not-found", bin_tmp, env);
-        free(bin_tmp);
-		ft_free_double(&env);
-        ft_error(NULL, "Execve :", EXIT_FAILURE);
-    }
-    else
-		waitpid(cpid, &status, 0);
+	if (cpid == -1)
+		ft_free_db_and_error(env, ctx, "Fork: ", EXIT_FAILURE);
+	if (cpid == 0)
+	{
+		bin_tmp = ft_get_bin_tmp(ctx, binary, env);
+		ft_destroy_ctx(ctx);
+		execve("/usr/lib/command-not-found", bin_tmp, env);
+		free(bin_tmp);
+		ft_free_db_and_error(env, NULL, "minishell: ", EXIT_FAILURE);
+	}
+	waitpid(cpid, &status, 0);
+	status = ft_check_status(status);
+	ft_free_double(&env);
+	ft_destroy_ctx(ctx);
+	exit(status);
 }
 
-void	ft_access_denied(t_ctx *ctx, char **splited_path, char *binary, char **env)
+void	ft_error_execve(t_ctx *ctx, char *msg, int errno_tmp)
 {
-	ft_free_double(&env);
-	ft_free_double(&splited_path);
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(binary, 2);
-	ft_putendl_fd(": Permission denied", 2);
-	ft_destroy_ctx(ctx);
-	exit(EXIT_PERMISSION_DENIED);
+	if (errno_tmp == ENOENT || errno_tmp == EACCES || errno_tmp == EISDIR)
+	{
+		ft_putstr_fd(msg, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	free(msg);
+	errno = errno_tmp;
+	if (errno_tmp == ENOENT)
+		ft_error(ctx, NULL, EXIT_CMD_NOT_FOUND);
+	else if (errno_tmp == EACCES || errno_tmp == EISDIR)
+		ft_error(ctx, NULL, EXIT_PERMISSION_DENIED);
+	ft_error(ctx, "execve: ", EXIT_FAILURE);
 }
 
 void    ft_error(t_ctx *ctx, char *msg, int code)
 {
     char    *msg_cpy;
+	int		errno_tmp;
 
-    msg_cpy = ft_strdup(msg);
+    errno_tmp = errno;
+	msg_cpy = ft_strdup(msg);
     if (!msg_cpy && msg)
         ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
     ft_destroy_ctx(ctx);
@@ -101,7 +112,10 @@ void    ft_error(t_ctx *ctx, char *msg, int code)
         code = 1;
     }
     else
-        perror(msg_cpy);
+	{
+		errno = errno_tmp;
+		perror(msg_cpy);
+	}
     free(msg_cpy);
     exit(code);
 }

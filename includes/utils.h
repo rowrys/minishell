@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:50:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/04 10:26:33 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 11:38:34 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void    ft_error(t_ctx *ctx, char *msg, int code);
 
 /*error*/
 void    ft_error(t_ctx *ctx, char *msg, int code);
-void	ft_access_denied(t_ctx *ctx, char **splited_path, char *binary, char **env);
+void	ft_error_execve(t_ctx *ctx, char *msg, int errno_tmp);
 void    ft_cmd_not_found(t_ctx *ctx, char *binary, char **env);
 
 /*free*/

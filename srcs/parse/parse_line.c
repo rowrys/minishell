@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:52:15 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 16:01:33 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 10:02:58 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	ft_add_command(t_ctx *ctx)
 	t_list	*new_node;
 
 	new_cmd = ft_calloc(sizeof(t_cmd), 1);
-	// if (!new_cmd)
-	// 	ft_error(ctx, "malloc error", 1);
+	if (!new_cmd)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	new_node = ft_lstnew(new_cmd);
-	// if (!new_node->content)
-	// 	ft_error(ctx, "malloc error", 1);
+	if (!new_node->content)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	ft_lstadd_back(&ctx->cmd_lst, new_node);
 }
 
