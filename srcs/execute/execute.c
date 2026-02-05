@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:32:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 15:32:22 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 19:51:28 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "utils.h"
 #include "execute.h"
 
+#include <signal.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -38,19 +39,30 @@ static void    ft_wait(t_ctx *ctx)
 {
     t_list  *cmd_lst;
     t_cmd   *cmd;
+    bool    have_sigint;
     int     status;
 
+    /* à insérer dans le code pour de potentielle conditional jump*/
+    // status = 0;
+    /*                                                            */
     cmd_lst = ctx->cmd_lst;
+    have_sigint = false;
     while (cmd_lst)
     {
         cmd = cmd_lst->content;
         if (cmd->cpid != -2)
         {
             waitpid(cmd->cpid, &status, 0);
+            if (status == SIGINT)
+                have_sigint = true;
             ctx->last_error = ft_check_status(status);
         }
         cmd_lst = cmd_lst->next;
     }
+    if (have_sigint)
+        write(1, "\n", 1);
+    if (ctx->last_error == SIGQUIT + DELTA_SIG_STATUS)
+        write(2, "Quit\n", 5);
 }
 
 static void    ft_fork(t_ctx *ctx, t_cmd *cmd)
@@ -59,9 +71,13 @@ static void    ft_fork(t_ctx *ctx, t_cmd *cmd)
     if (cmd->cpid == -1)
         ft_error(ctx, "fork: ", EXIT_FAILURE);
     else if (cmd->cpid == 0)
+    {
+        signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
         ft_execute_cmd(ctx, cmd);
-    else
-        ft_close_cmd_fds(cmd);
+    }
+    cmd->pipe_cmd[0] = -1;
+    ft_close_cmd_fds(cmd);
 }
 
 static void    ft_pipe(t_ctx *ctx, t_cmd *cmd, t_cmd *next_cmd)
@@ -70,7 +86,6 @@ static void    ft_pipe(t_ctx *ctx, t_cmd *cmd, t_cmd *next_cmd)
         ft_error(ctx, "pipe: ", EXIT_FAILURE);
     cmd->fd_out = cmd->pipe_cmd[1];
     next_cmd->fd_in = cmd->pipe_cmd[0];
-    cmd->pipe_cmd[0] = -1;
     cmd->pipe_cmd[1] = -1;
 }
 

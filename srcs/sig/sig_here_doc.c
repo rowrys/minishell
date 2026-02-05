@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 14:25:34 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/30 19:01:02 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 19:10:35 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@ static void	handler_sigint_sigquit(int sig)
 
 void	sig_here_doc(void)
 {
-	struct sigaction act;
-
-	rl_catch_signals = 0;
-	sigemptyset(&act.sa_mask);
-	act.sa_handler = &handler_sigint_sigquit;
-	act.sa_flags = 0;
-	sigaction(SIGINT, &act, NULL);
-	sigaction(SIGQUIT , &act, NULL);
+	signal(SIGINT, &handler_sigint_sigquit);
+	signal(SIGQUIT, &handler_sigint_sigquit);
 }

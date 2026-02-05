@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 15:28:47 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 19:29:51 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include "here_doc.h"
 #include "sig.h"
 #include "execute.h"
+
+#include <signal.h>
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -106,7 +108,11 @@ int    main(int argc, char **argv, char **env)
 					ft_clean_ctx(&ctx);
 					break ;
 				}
+				signal(SIGINT, SIG_IGN);
+				signal(SIGQUIT, SIG_IGN);
 				ft_execute(&ctx);
+    			sig_mini_shell();
+				
 			}
 			ft_clean_ctx(&ctx);
 

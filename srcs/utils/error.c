@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 14:54:16 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 15:59:13 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void    ft_cmd_not_found(t_ctx *ctx, char *binary, char **env)
 {
 	pid_t   cpid;
 	char    **bin_tmp;
-	int		status;	
+	int		status;
+
 	if (access("/usr/lib/command-not-found", X_OK) != 0)
 	{
 		ft_putstr_fd("minishell: ", 2);

@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 09:37:13 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 15:29:47 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 19:30:23 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "minishell.h"
 #include "execute.h"
 #include "utils.h"
+
+#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -74,11 +76,12 @@ static void	ft_check_fork(t_ctx *ctx, t_cmd *cmd, char *binary)
 	}
 	if (cmd->cpid == 0)
 	{
-		// sig child
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		ft_execute_chunk(ctx, cmd, binary);
 	}
-	else
-		ft_close_cmd_fds(cmd);
+	cmd->pipe_cmd[0] = -1;
+	ft_close_cmd_fds(cmd);
 }
 
 void	ft_execute_cmd(t_ctx *ctx, t_cmd *cmd)
