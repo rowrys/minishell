@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:16:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 17:54:28 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 15:58:12 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 #include "utils.h"
 #include "here_doc.h"
 #include "sig.h"
+
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdatomic.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <signal.h>
 
-extern bool g_was_killed;
+extern int g_was_killed;
 
 static bool	ft_get_here_doc(t_ctx *ctx, char *limiter, bool do_expand, int fd)
 {
@@ -37,9 +39,9 @@ static bool	ft_get_here_doc(t_ctx *ctx, char *limiter, bool do_expand, int fd)
 	while (1)
 	{
 		line = readline("> ");
-		if (g_was_killed)
+		if (g_was_killed == SIGINT)
 		{
-			g_was_killed = false;
+			g_was_killed = 0;
 			dup2(tmp_stdin, STDIN_FILENO);
 			close(tmp_stdin);
 			return (true);
@@ -71,10 +73,10 @@ static bool	ft_here_doc_token(t_ctx *ctx, t_cmd *cmd, char *block)
 	if (pipe(cmd->pipe_hd) == -1)
 		ft_error(ctx, "pipe: ", EXIT_FAILURE);
 	limiter = ft_get_limiter(ctx, block, &do_expand);
-	g_was_killed = false;
-	sig_here_doc();
+	g_was_killed = 0;
+	signal(SIGINT, &handler_sigint_here_doc);
 	was_killed = ft_get_here_doc(ctx, limiter, do_expand, cmd->pipe_hd[1]);
-	sig_mini_shell();
+	signal(SIGINT, &handler_sigint);
 	free(limiter);
 	ft_close(&cmd->pipe_hd[1]);
 	return (was_killed);

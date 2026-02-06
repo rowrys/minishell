@@ -3,22 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   sig.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 10:41:01 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/30 14:47:23 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 16:11:07 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIG_H
 # define SIG_H
 
-# include <stdbool.h>
-
-/*sig_mini_shell*/
-void	sig_mini_shell(void);
-
-/*sig_here_doc*/
-void	sig_here_doc(void);
+void	ft_signal_init(void);
+void	ft_signal_child(void);
+void	handler_sigint(int sig);
+void	handler_sigint_here_doc(int sig);
 
 #endif

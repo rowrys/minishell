@@ -21,8 +21,7 @@ SOURCES =	$(SRCS_DIR)minishell.c					\
 			$(SRCS_DIR)utils/error.c				\
 			$(SRCS_DIR)utils/free.c					\
 			$(SRCS_DIR)utils/exec_utils.c			\
-			$(SRCS_DIR)sig/sig_mini_shell.c			\
-			$(SRCS_DIR)sig/sig_here_doc.c			\
+			$(SRCS_DIR)sig/signal.c					\
 			$(SRCS_DIR)here_doc/here_doc.c			\
 			$(SRCS_DIR)here_doc/parse_limiter.c		\
 			$(SRCS_DIR)execute/cmd_to_arg.c			\

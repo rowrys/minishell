@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 19:29:51 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 16:28:27 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ int    main(int argc, char **argv, char **env)
     t_ctx    ctx;
     size_t    i;
 
-    (void)argv;
+	(void)argv;
     ft_init_ctx(&ctx, argc, env);
 
         //////////////////////
         int j = 0;
         ////////////////////////
 
-	sig_mini_shell();
+	ft_signal_init();
     while (1)
     {
         ctx.line = readline("minishell$ ");
@@ -109,10 +109,8 @@ int    main(int argc, char **argv, char **env)
 					break ;
 				}
 				signal(SIGINT, SIG_IGN);
-				signal(SIGQUIT, SIG_IGN);
 				ft_execute(&ctx);
-    			sig_mini_shell();
-				
+				signal(SIGINT, &handler_sigint);
 			}
 			ft_clean_ctx(&ctx);
 

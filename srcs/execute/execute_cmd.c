@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 09:37:13 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 19:30:23 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 16:03:19 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minishell.h"
 #include "execute.h"
 #include "utils.h"
+#include "sig.h"
 
 #include <signal.h>
 #include <stdbool.h>
@@ -76,8 +77,7 @@ static void	ft_check_fork(t_ctx *ctx, t_cmd *cmd, char *binary)
 	}
 	if (cmd->cpid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		ft_signal_child();
 		ft_execute_chunk(ctx, cmd, binary);
 	}
 	cmd->pipe_cmd[0] = -1;

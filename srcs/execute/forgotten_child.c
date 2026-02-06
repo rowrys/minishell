@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 11:04:45 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/06 09:25:59 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:11:51 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "minishell.h"
 #include "execute.h"
 #include "utils.h"
+#include "sig.h"
 
 #include <signal.h>
 #include <stdbool.h>
@@ -31,8 +32,7 @@ static void	ft_forgotten_fork(t_ctx *ctx, t_cmd *cmd)
 		exit(EXIT_FAILURE);				
 	if (cpid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		ft_signal_child();
 		ft_manage_redir(ctx, cmd, REDIR_FORKED);
 		ft_destroy_ctx(ctx);
 		exit(EXIT_SUCCESS);
@@ -46,8 +46,7 @@ static void	ft_child_fork(t_ctx *ctx, t_cmd *cmd)
 		ft_error(ctx, "fork: ", EXIT_FAILURE);			
 	if (cmd->cpid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		ft_signal_child();
 		ft_manage_redir(ctx, cmd, REDIR_FORKED);
 		ft_destroy_ctx(ctx);
 		exit(EXIT_SUCCESS);

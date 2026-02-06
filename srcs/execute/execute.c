@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:32:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 19:51:28 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 16:27:15 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "utils.h"
 #include "execute.h"
+#include "sig.h"
 
 #include <signal.h>
 #include <stdint.h>
@@ -62,7 +63,7 @@ static void    ft_wait(t_ctx *ctx)
     if (have_sigint)
         write(1, "\n", 1);
     if (ctx->last_error == SIGQUIT + DELTA_SIG_STATUS)
-        write(2, "Quit\n", 5);
+        write(2, "^\\Quit\n", 7);
 }
 
 static void    ft_fork(t_ctx *ctx, t_cmd *cmd)
@@ -72,8 +73,7 @@ static void    ft_fork(t_ctx *ctx, t_cmd *cmd)
         ft_error(ctx, "fork: ", EXIT_FAILURE);
     else if (cmd->cpid == 0)
     {
-        signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+        ft_signal_child();
         ft_execute_cmd(ctx, cmd);
     }
     cmd->pipe_cmd[0] = -1;
