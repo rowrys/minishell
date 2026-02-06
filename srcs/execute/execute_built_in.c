@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/06 18:26:35 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/06 20:36:33 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,31 @@
 #include "ctx.h"
 #include "execute.h"
 #include "utils.h"
+#include "sig.h"
 
 #include <stddef.h>
 
 #define CHILD  1
 #define PARENT 0
 
+static size_t	ft_get_argc(char **argv)
+{
+	size_t	result;
+
+	result = 0;
+	while (argv[result++])
+		;
+	return (result);
+}
+
 static int	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 {
-	const static void		(*built_in_fonction[])(t_ctx *, bool, char**) = {
+	const static void		(*built_in_fonction[])(t_ctx *, bool, size_t, char**) = {
 		&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env, &ft_exit
 	};
 	int						status;
-	char					**args;
+	char					**argv;
+	int						argc;
 	int						tmp_std_fileno[2];
 
 	tmp_std_fileno[0] = dup(STDIN_FILENO);
@@ -36,16 +48,17 @@ static int	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 		ft_error(ctx, "dup: ", EXIT_FAILURE);
 	if (ft_dup(cmd->fd_out, STDOUT_FILENO) == -1)
 		ft_error(ctx, "dup: ", EXIT_FAILURE);
-	args = ft_cmd_to_arg(ctx, cmd);
+	argv = ft_cmd_to_arg(ctx, cmd);
+	argc = ft_get_argc(argv);
 	if (cmd->cpid == -2)
-		built_in_fonction[built_in_type - 1](ctx, PARENT, args);
+		built_in_fonction[built_in_type - 1](ctx, PARENT, argc, argv);
 	else
-		built_in_fonction[built_in_type - 1](ctx, CHILD, args);
+		built_in_fonction[built_in_type - 1](ctx, CHILD, argc, argv);
 	if (ft_dup(tmp_std_fileno[0], STDIN_FILENO) == -1)
-		ft_free_db_error(args, ctx, "dup: ", EXIT_FAILURE);
+		ft_free_db_and_error(argv, ctx, "dup: ", EXIT_FAILURE);
 	if (ft_dup(tmp_std_fileno[1], STDOUT_FILENO) == -1)
-		ft_free_db_error(args, ctx, "dup: ", EXIT_FAILURE);
-	ft_free_double(&args);
+		ft_free_db_and_error(argv, ctx, "dup: ", EXIT_FAILURE);
+	ft_free_double(&argv);
 	return (status);
 }
 

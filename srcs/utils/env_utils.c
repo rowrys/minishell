@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:58:15 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 19:24:15 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 20:30:24 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils.h"
 #include <string.h>
 
-static char	*ft_triple_join(t_ctx *ctx, char *key, char *sep, char *value)
+char	*ft_triple_join(t_ctx *ctx, char *key, char *sep, char *value)
 {
 	char	*result;
 	char	*tmp;
