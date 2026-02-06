@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 14:03:48 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 15:07:18 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 09:24:27 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ static void ft_parse_token(t_ctx *ctx, t_list **new_list, t_token *old_token)
     char    *tmp_value;
 
     if (ft_is_redir_key(old_token->type) && ft_is_ambigous(ctx, new_list, old_token))
-    {
-        ft_add_token(ctx, new_list, old_token->type, NULL);
         return ;
-    }
     tmp_token = malloc(sizeof(t_token));
     if (!tmp_token)
         ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);

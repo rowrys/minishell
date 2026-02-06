@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:04:57 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 10:00:00 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 09:34:50 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static bool	ft_redir(t_cmd *cmd, t_token *token)
     if (token->type == KEY_LREDIR)
     {
         ft_close(&cmd->fd_in);
-        cmd->fd_in = open(token->value, O_RDONLY);
+        if (token->value)
+            cmd->fd_in = open(token->value, O_RDONLY);
         if (cmd->fd_in < 0)
             return (false);
         return (true);
@@ -57,10 +58,10 @@ static bool	ft_redir(t_cmd *cmd, t_token *token)
     else
     {
         ft_close(&cmd->fd_out);
-        if (token->type == KEY_APPEND)
+        if (token->type == KEY_APPEND && token->value)
             cmd->fd_out = open(token->value, O_WRONLY | O_CREAT | O_APPEND,
         		    0644);
-        else
+        else if (token->value)
             cmd->fd_out = open(token->value, O_WRONLY | O_CREAT | O_TRUNC,
 					0644);
     }

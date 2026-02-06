@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 15:59:13 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/05 21:52:26 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void    ft_error(t_ctx *ctx, char *msg, int code)
     if (code == 2)
     {
         ft_putendl_fd(msg_cpy, 2);
-        code = 1;
+        code = EXIT_FAILURE;
     }
     else
 	{

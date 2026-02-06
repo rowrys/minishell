@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_chunk.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 16:36:41 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 15:16:52 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 10:01:38 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,8 @@
 
 #include <errno.h>
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
 
-static bool	ft_is_reg(char *bin)
-{
-	struct stat bin_stat;
-	
-	if (stat(bin, &bin_stat) == 0 && S_ISREG(bin_stat.st_mode))
-			return (true);
-	return (false);
-}
-
-
-static bool	ft_is_dir(char *bin)
-{
-	struct stat bin_stat;
-	
-	if (stat(bin, &bin_stat) == 0 && S_ISDIR(bin_stat.st_mode))
-		return (true);
-	return (false);
-}
 
 static char    **ft_get_path_split(t_ctx *ctx)
 {
@@ -69,44 +45,6 @@ static char    **ft_get_path_split(t_ctx *ctx)
 	if(!result)
 		ft_error(ctx, "Malloc exploded, how did you do that???", EXIT_FAILURE);
 	return (result);
-}
-
-static char	*ft_check_bin_denied_42_angouleme(t_ctx *ctx, char **splited_path, size_t i,
-	char *binary)
-{
-	char	*bin;
-	char	*path_part;
-
-	path_part = ft_strjoin(splited_path[i], "/");
-	if (!path_part)
-		ft_free_db_and_error(splited_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
-	bin = ft_strjoin(path_part, binary);
-	free(path_part);
-	if (!bin)
-		ft_free_db_and_error(splited_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
-	if (bin && access(bin,F_OK) == 0 && !ft_is_dir(bin) && ft_is_reg(bin))
-			return (bin);
-	free(bin);
-	return (NULL);
-}
-
-static char	*ft_check_bin_42_angouleme(t_ctx *ctx, char **splited_path, size_t i,
-	char *binary)
-{
-	char	*bin;
-	char	*path_part;
-
-	path_part = ft_strjoin(splited_path[i], "/");
-	if (!path_part)
-		ft_free_db_and_error(splited_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
-	bin = ft_strjoin(path_part, binary);
-	free(path_part);
-	if (!bin)
-		ft_free_db_and_error(splited_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
-	if (bin && access(bin,X_OK) == 0 && ft_is_reg(bin) && !ft_is_dir(bin))
-			return (bin);
-	free(bin);
-	return (NULL);
 }
 
 static char    *ft_get_bin_path(t_ctx *ctx, char **splited_path, char *binary, char **env)
@@ -153,39 +91,25 @@ static char	*ft_get_bin(t_ctx *ctx, char *binary, char **env)
 	return (result);
 }
 
-static char	*ft_is_valid_binary(t_ctx *ctx, char *binary, char **env)
+static char	*ft_is_valid_binary(t_ctx *ctx, char *bin, char **env)
 {
     char    *result;
 	bool	is_dir;
 	bool	is_reg;
 
-	is_dir = ft_is_dir(binary);
-	is_reg = ft_is_reg(binary);
+	is_dir = ft_is_dir(bin);
+	is_reg = ft_is_reg(bin);
 	if (is_dir)
 	{
 		ft_free_double(&env);
-		result = ft_strdup(binary);
+		result = ft_strdup(bin);
 		if (!result)
 			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-		ft_error_execve(ctx, result,  EISDIR);		
+		ft_error_execve(ctx, result,  EISDIR);
 	}
-	else if (!access(binary, X_OK) && !is_dir && is_reg)
-		return (binary);
-	else if (ft_strchr(binary, '/'))
-		return (binary);
-	// else if (!*binary)
-	// 	ft_cmd_not_found(ctx, binary, env);
-	result = ft_get_bin(ctx, binary, env);
-	return (result);
-}
-
-static int	ft_dup(int fd, int fd2)
-{
-	int	result;
-	
-	result = 0;
-	if (fd != -1)
-		result = dup2(fd, fd2);
+	else if (!access(bin, X_OK) && !is_dir && is_reg && ft_strchr(bin, '/'))
+		return (bin);
+	result = ft_get_bin(ctx, bin, env);
 	return (result);
 }
 

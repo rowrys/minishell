@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:50:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 11:38:34 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/06 09:57:45 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ char    **ft_split_expand(t_ctx *ctx, char *str);
 int		ft_go_to(char *str, char c);
 int		ft_skip(char *str, char *charset);
 bool	ft_is_redir_key(t_key key);
+
+/*exec_utils*/
+int	    ft_dup(int fd, int fd2);
+char	*ft_check_bin_42_angouleme(t_ctx *ctx, char **splited_path, size_t i,
+	                                char *binary);
+char	*ft_check_bin_denied_42_angouleme(t_ctx *ctx, char **splited_path, size_t i,
+	                                char *binary);
+bool	ft_is_dir(char *bin);
+bool	ft_is_reg(char *bin);
 
 /*close*/
 void	ft_replace_fd(int *old_fd, int new_fd);
