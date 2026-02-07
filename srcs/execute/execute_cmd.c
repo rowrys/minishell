@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 09:37:13 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/06 16:03:19 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/07 09:51:04 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "execute.h"
 #include "utils.h"
 #include "sig.h"
+#include "built_in.h"
 
 #include <signal.h>
 #include <stdbool.h>
@@ -92,8 +93,7 @@ void	ft_execute_cmd(t_ctx *ctx, t_cmd *cmd)
 	first_chunk = ft_get_first_chunk(cmd);
 	built_in_type = ft_is_built_in(first_chunk);
 	if (first_chunk && built_in_type)
-		return ;
-		//ft_execute_built_in(ctx, cmd, built_in_type);
+		ft_execute_built_in(ctx, cmd, built_in_type);
 	else if (first_chunk)
 		ft_check_fork(ctx, cmd, first_chunk);
 	else

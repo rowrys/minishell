@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 19:54:04 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/06 20:40:00 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 10:44:53 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 static void    ft_builtin_error(t_ctx *ctx, bool is_clone)
 {
     if (is_clone == false)
-        ft_error(ctx, "format: env: do not add arguments\n", 2);
+        ft_error(ctx, "format: env: do not add arguments", 2);
     ctx->last_error = 2;
     ft_putstr_fd("format: env: do not add arguments\n", 2);
 }

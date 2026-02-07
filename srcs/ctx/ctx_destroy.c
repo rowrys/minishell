@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctx_destroy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:54:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 14:39:25 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 10:29:52 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	ft_clean_ctx(t_ctx *ctx)
 		return ;
 	free(ctx->line);
 	ctx->line = NULL;
+	ft_close(&ctx->stdin_fileno);
+	ft_close(&ctx->stdout_fileno);
 	if (ctx->cmd_lst)
 		ft_lstclear(&ctx->cmd_lst, &ft_cmd_destroy);	
 	ctx->cmd_lst = NULL;

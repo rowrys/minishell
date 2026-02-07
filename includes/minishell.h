@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/02 14:59:33 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 10:25:49 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define PART_LIMITER "$'\"\0"
 
 # include "libft.h"
+#include <sys/types.h>
 
 typedef enum e_key
 {
@@ -73,6 +74,8 @@ typedef struct s_ctx
 	t_list	*cmd_lst;
 	t_list	*env_dict;
 	int		last_error;
+	int		stdin_fileno;
+	int		stdout_fileno;
 }			t_ctx;
 
 #endif

@@ -30,6 +30,8 @@ SOURCES =	$(SRCS_DIR)minishell.c					\
 			$(SRCS_DIR)execute/execute_cmd.c		\
 			$(SRCS_DIR)execute/forgotten_child.c	\
 			$(SRCS_DIR)execute/manage_redir.c		\
+			$(SRCS_DIR)execute/execute_built_in.c	\
+			$(SRCS_DIR)built_in/env.c				\
 
 OBJ_DIR = .build/
 OBJS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
@@ -54,6 +56,7 @@ make_dir:
 	@mkdir -p .build/sig
 	@mkdir -p .build/here_doc
 	@mkdir -p .build/execute
+	@mkdir -p .build/built_in
 
 $(OBJ_DIR)%.o:  $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@

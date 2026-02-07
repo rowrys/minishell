@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/06 20:36:33 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 10:43:38 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,71 @@
 #include "execute.h"
 #include "utils.h"
 #include "sig.h"
+#include "built_in.h"
 
 #include <stddef.h>
 
 #define CHILD  1
 #define PARENT 0
 
+static void ft_exit(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+{
+	(void)argc;
+	(void)is_child;
+	ft_free_db_and_error(argv, ctx, "noob", 69);
+}
+static void ft_unset(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+{
+	(void)argc;
+	(void)is_child;
+	ft_free_db_and_error(argv, ctx, "noob", 69);
+}
+static void ft_export(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+{
+	(void)argc;
+	(void)is_child;
+	ft_free_db_and_error(argv, ctx, "noob", 69);
+}
+
+static void ft_pwd(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+{
+	(void)argc;
+	(void)is_child;
+	ft_free_db_and_error(argv, ctx, "noob", 69);
+}
+
+static void ft_cd(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+{
+	(void)argc;
+	(void)is_child;
+	ft_free_db_and_error(argv, ctx, "noob", 69);
+}
+
+static void ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+{
+	(void)argc;
+	(void)is_child;
+	ft_free_db_and_error(argv, ctx, "noob", 69);
+}
+
 static size_t	ft_get_argc(char **argv)
 {
 	size_t	result;
 
 	result = 0;
-	while (argv[result++])
-		;
+	while (argv[result])
+		result++;
 	return (result);
 }
 
-static int	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
+static void	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 {
-	const static void		(*built_in_fonction[])(t_ctx *, bool, size_t, char**) = {
-		&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env, &ft_exit
-	};
-	int						status;
+	static void		(*built_in_fonction[])(t_ctx *, bool, size_t, char**) = {&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env, &ft_exit};
 	char					**argv;
 	int						argc;
-	int						tmp_std_fileno[2];
 
-	tmp_std_fileno[0] = dup(STDIN_FILENO);
-	tmp_std_fileno[1] = dup(STDOUT_FILENO);
+	ctx->stdin_fileno = dup(STDIN_FILENO);
+	ctx->stdout_fileno = dup(STDOUT_FILENO);
 	if (ft_dup(cmd->fd_in, STDIN_FILENO) == -1)
 		ft_error(ctx, "dup: ", EXIT_FAILURE);
 	if (ft_dup(cmd->fd_out, STDOUT_FILENO) == -1)
@@ -54,12 +91,10 @@ static int	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 		built_in_fonction[built_in_type - 1](ctx, PARENT, argc, argv);
 	else
 		built_in_fonction[built_in_type - 1](ctx, CHILD, argc, argv);
-	if (ft_dup(tmp_std_fileno[0], STDIN_FILENO) == -1)
+	if (ft_dup(ctx->stdin_fileno, STDIN_FILENO) == -1)
 		ft_free_db_and_error(argv, ctx, "dup: ", EXIT_FAILURE);
-	if (ft_dup(tmp_std_fileno[1], STDOUT_FILENO) == -1)
+	if (ft_dup(ctx->stdout_fileno, STDOUT_FILENO) == -1)
 		ft_free_db_and_error(argv, ctx, "dup: ", EXIT_FAILURE);
-	ft_free_double(&argv);
-	return (status);
 }
 
 void	ft_execute_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
@@ -78,5 +113,7 @@ void	ft_execute_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 		exit(EXIT_SUCCESS);
 	}
 	cmd->pipe_cmd[0] = -1;
+	ft_close(&ctx->stdin_fileno);
+	ft_close(&ctx->stdout_fileno);
 	ft_close_cmd_fds(cmd);
 }

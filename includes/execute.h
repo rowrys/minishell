@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 10:48:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 14:17:16 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 09:51:36 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_execute_cmd(t_ctx *ctx, t_cmd *cmd);
 void ft_execute_chunk(t_ctx *ctx, t_cmd *cmd, char *binary);
 
 /*execute_built_in*/
-//void	ft_execute_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type);
+void	ft_execute_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type);
 
 /*forgotten_child*/
 void	ft_forgotten_child(t_ctx *ctx, t_cmd *cmd);
