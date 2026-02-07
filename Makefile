@@ -1,39 +1,42 @@
 CC=cc
 NAME = minishell
 SRCS_DIR = srcs/
-SOURCES =	$(SRCS_DIR)minishell.c					\
-			$(SRCS_DIR)ctx/ctx_destroy.c			\
-			$(SRCS_DIR)ctx/ctx_init.c				\
-			$(SRCS_DIR)parse/parse.c				\
-			$(SRCS_DIR)parse/parse_line.c			\
-			$(SRCS_DIR)parse/parse_token_list.c		\
- 			$(SRCS_DIR)parse/expand.c				\
-			$(SRCS_DIR)parse/valid_line.c			\
-			$(SRCS_DIR)parse/syntax_error.c			\
-			$(SRCS_DIR)parse/get_next_token.c		\
-			$(SRCS_DIR)parse/parse_block.c			\
-			$(SRCS_DIR)utils/utils.c				\
-			$(SRCS_DIR)utils/env_utils.c			\
-			$(SRCS_DIR)utils/parse_utils.c			\
-			$(SRCS_DIR)utils/ft_split_expand.c		\
-			$(SRCS_DIR)utils/ft_split_readline.c	\
-			$(SRCS_DIR)utils/close.c				\
-			$(SRCS_DIR)utils/error.c				\
-			$(SRCS_DIR)utils/free.c					\
-			$(SRCS_DIR)utils/exec_utils.c			\
-			$(SRCS_DIR)sig/signal.c					\
-			$(SRCS_DIR)here_doc/here_doc.c			\
-			$(SRCS_DIR)here_doc/parse_limiter.c		\
-			$(SRCS_DIR)execute/cmd_to_arg.c			\
-			$(SRCS_DIR)execute/execute.c			\
-			$(SRCS_DIR)execute/execute_chunk.c		\
-			$(SRCS_DIR)execute/execute_cmd.c		\
-			$(SRCS_DIR)execute/forgotten_child.c	\
-			$(SRCS_DIR)execute/manage_redir.c		\
-			$(SRCS_DIR)execute/execute_built_in.c	\
-			$(SRCS_DIR)built_in/env.c				\
-			$(SRCS_DIR)built_in/exit/exit.c			\
-			$(SRCS_DIR)built_in/exit/exit_utils.c	\
+SOURCES =	minishell.c					\
+			ctx/ctx_destroy.c			\
+			ctx/ctx_init.c				\
+			parse/parse.c				\
+			parse/parse_line.c			\
+			parse/parse_token_list.c	\
+ 			parse/expand.c				\
+			parse/valid_line.c			\
+			parse/syntax_error.c		\
+			parse/get_next_token.c		\
+			parse/parse_block.c			\
+			utils/utils.c				\
+			utils/env_utils.c			\
+			utils/parse_utils.c			\
+			utils/ft_split_expand.c		\
+			utils/ft_split_readline.c	\
+			utils/close.c				\
+			utils/error.c				\
+			utils/free.c				\
+			utils/exec_utils.c			\
+			sig/signal.c				\
+			here_doc/here_doc.c			\
+			here_doc/parse_limiter.c	\
+			execute/cmd_to_arg.c		\
+			execute/execute.c			\
+			execute/execute_chunk.c		\
+			execute/execute_cmd.c		\
+			execute/forgotten_child.c	\
+			execute/manage_redir.c		\
+			execute/execute_built_in.c	\
+			built_in/env.c				\
+			built_in/exit/exit.c		\
+			built_in/exit/exit_utils.c	\
+			built_in/echo.c				\
+
+SOURCES	:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 OBJ_DIR = .build/
 OBJS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
