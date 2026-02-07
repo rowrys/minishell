@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:58:15 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/06 20:30:24 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 23:15:06 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,45 @@ char	**ft_env_to_array(t_ctx *ctx, t_list *env_dict)
 		env_dict = env_dict->next;
 	}
 	return (result);
+}
+
+void	ft_replace_entry_value(t_ctx *ctx, char *key, char *new_ptr)
+{
+	t_list          *env_dict;
+    t_dict_entry    *entry;
+
+    env_dict = ctx->env_dict;
+    while (env_dict)
+    {
+        entry = env_dict->content;
+        if (!ft_strcmp(entry->key, key))
+        {
+            entry->value = new_ptr;
+            break ;
+        }
+        env_dict = env_dict->next;
+    }
+}
+
+char *ft_get_entry_ptr(t_ctx *ctx, char *key)
+{
+    t_list          *env_dict;
+    t_dict_entry    *entry;
+    char            *cd_path;
+
+    env_dict = ctx->env_dict;
+    cd_path = NULL;
+    while (env_dict)
+    {
+        entry = env_dict->content;
+        if (!ft_strcmp(entry->key, key))
+        {
+            cd_path = entry->value;
+            break ;
+        }
+        env_dict = env_dict->next;
+    }
+    return (cd_path);
 }
 
 char	*ft_get_dict_value(t_ctx *ctx, t_list *tmp_dict, char *name)

@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/05 21:52:26 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/07 23:03:03 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
+
+void ft_cd_error(bool is_child, t_ctx *ctx, char *msg, int code)
+{
+    if (is_child)
+        ft_error(ctx, msg, code);
+    ft_putendl_fd(msg, 2);
+    if (code == 2)
+        code = EXIT_FAILURE;
+    ctx->last_error = code;
+}
 
 static char	**ft_get_bin_tmp(t_ctx *ctx, char *binary, char **env)
 {

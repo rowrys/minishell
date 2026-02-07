@@ -35,6 +35,9 @@ SOURCES =	minishell.c					\
 			built_in/exit/exit.c		\
 			built_in/exit/exit_utils.c	\
 			built_in/echo.c				\
+			built_in/pwd.c				\
+			built_in/cd/cd.c			\
+			built_in/cd/cd_utils.c		\
 
 SOURCES	:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
@@ -63,6 +66,7 @@ make_dir:
 	@mkdir -p .build/execute
 	@mkdir -p .build/built_in
 	@mkdir -p .build/built_in/exit
+	@mkdir -p .build/built_in/cd
 
 $(OBJ_DIR)%.o:  $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@

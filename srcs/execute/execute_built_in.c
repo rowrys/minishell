@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 20:38:52 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 23:32:04 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,6 @@ static void ft_unset(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 	ft_free_db_and_error(argv, ctx, "noob", 69);
 }
 static void ft_export(t_ctx *ctx, bool is_child, size_t argc, char **argv)
-{
-	(void)argc;
-	(void)is_child;
-	ft_free_db_and_error(argv, ctx, "noob", 69);
-}
-
-static void ft_pwd(t_ctx *ctx, bool is_child, size_t argc, char **argv)
-{
-	(void)argc;
-	(void)is_child;
-	ft_free_db_and_error(argv, ctx, "noob", 69);
-}
-
-static void ft_cd(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 {
 	(void)argc;
 	(void)is_child;

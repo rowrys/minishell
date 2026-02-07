@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 09:49:20 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/07 20:17:22 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 23:31:39 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef void	(*t_builtin_func)(t_ctx *, bool, size_t, char**);
 #define LLONG_MIN 9223372036854775808
 #define NB_DIGIT_LL	19
 
-/*ENV*/
+/*env*/
 void    ft_env(t_ctx *ctx, bool is_clone, size_t argc, char **argv);
 
 /*exit*/
@@ -38,5 +38,12 @@ bool	ft_is_overflow(char *str, bool is_neg);
 /*echo*/
 void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv);
 
+/*pwd*/
+void    ft_pwd(t_ctx *ctx, bool is_clone, size_t argc, char **argv);
+
+/*cd*/
+void    ft_cd(t_ctx *ctx, bool is_child, size_t argc, char **argv);
+void    ft_manage_cdpath(t_ctx *ctx, bool is_child, char **cdpath,
+                            char **argv);
 
 #endif

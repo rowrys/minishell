@@ -1,0 +1,152 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/07 14:30:38 by ykolacze          #+#    #+#             */
+/*   Updated: 2026/02/08 00:30:09 by ykolacze         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include "minishell.h"
+#include "ctx.h"
+#include "utils.h"
+#include "built_in.h"
+
+#include <stdbool.h>
+
+static void ft_cd_switch(t_ctx *ctx, bool is_child, char *key1, char *key2)
+{
+    char    *ptr_pwd;
+    char    *ptr_oldpwd;
+
+    ptr_oldpwd = ft_get_entry_ptr(ctx, key1);
+    if (!ptr_oldpwd)
+    {
+        ft_cd_error(is_child, ctx, "minishell: cd: OLDPWD not set", 2);
+        return ;
+    }
+    if (chdir(ptr_oldpwd) == -1)
+        ft_cd_error(is_child, ctx, "minishell: chdir: ", EXIT_FAILURE);
+    ptr_pwd = ft_get_entry_ptr(ctx, key2);
+    ft_replace_entry_value(ctx, "PWD", ptr_oldpwd);
+    ft_replace_entry_value(ctx, "OLDPWD", ptr_pwd);
+    if (is_child)
+    {
+        ft_destroy_ctx(ctx);
+        exit (EXIT_SUCCESS);
+    }
+    ctx->last_error = EXIT_SUCCESS;
+}
+
+static void ft_only_cd(t_ctx *ctx, bool is_child)
+{
+        char    *tmp_pwd;
+        char    *ptr_oldpwd;
+        char    *tmp_home;    
+
+        tmp_home = ft_get_entry_ptr(ctx, "HOME");
+        if (!tmp_home)
+            ft_cd_error(is_child, ctx, "minishell: cd: HOME not set", 2);
+        tmp_home = ft_strdup(tmp_home);
+        if (!tmp_home)
+            ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+        tmp_pwd = ft_get_entry_ptr(ctx, "PWD");
+        ft_replace_entry_value(ctx, "PWD", tmp_home);
+        ptr_oldpwd = ft_get_entry_ptr(ctx, "OLDPWD");
+        ft_replace_entry_value(ctx, "OLDPWD", tmp_pwd);
+        free(ptr_oldpwd);
+        if (chdir(tmp_home) == -1)
+                ft_cd_error(is_child, ctx, "minishell: chdir: ", EXIT_FAILURE);
+        else if (is_child)
+        {
+            ft_destroy_ctx(ctx);
+            exit (EXIT_SUCCESS);
+        }
+        else
+            ctx->last_error = EXIT_SUCCESS;
+}
+
+static bool ft_is_valid(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+{
+    if (argc == 2 && (argv[1][1] || argv[1][0] != '-'))
+        return (true);
+    ft_free_double(&argv);
+    if (argc > 2)
+        ft_cd_error(is_child, ctx, "minishell: cd: too many arguments", 2);
+    else if (argc == 1)
+        ft_only_cd(ctx, is_child);
+    else
+    {
+        if (!ft_get_entry_ptr(ctx, "OLDPWD"))
+            ft_cd_error(is_child, ctx, "minishell: cd: HOME not set", 2);
+        else
+            ft_cd_switch(ctx, is_child, "OLDPWD", "PWD");
+        if (is_child)
+            ft_destroy_ctx(ctx);
+        if (is_child)
+            exit (EXIT_SUCCESS);
+        ctx->last_error = EXIT_SUCCESS;
+    }
+    return (false);
+}
+
+static void    ft_chdir_argv(t_ctx *ctx, bool is_child, char **argv)
+{
+    char    *tmp;
+
+    if (chdir(argv[1]) == -1)
+    {
+        ft_free_double(&argv);
+        ft_cd_error(is_child, ctx, "minishell: chdir: ", EXIT_FAILURE);
+    }
+    else 
+    {
+        tmp = ft_get_entry_ptr(ctx, "OLDPWD");
+        ft_replace_entry_value(ctx, "OLDPWD", ft_get_entry_ptr(ctx, "PWD"));
+        free(tmp);
+        tmp = ft_strdup(argv[1]);
+        ft_free_double(&argv);
+        if (!tmp)
+            ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+        ft_replace_entry_value(ctx, "PWD", tmp);
+        if (is_child)
+        {
+            ft_destroy_ctx(ctx);
+            exit (EXIT_SUCCESS);
+        }
+        ctx->last_error = EXIT_SUCCESS;
+    }
+}
+
+
+void    ft_cd(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+{
+    char    **cd_path;
+    char    *tmp_cdpath;
+
+    if (ft_is_valid(ctx, is_child, argc, argv) == false)
+        return ;
+    if (*argv[1] == '/' || *argv[1] == '.')
+    {
+        ft_chdir_argv(ctx, is_child, argv);
+        return ;
+    }
+    tmp_cdpath = ft_get_entry_ptr(ctx, "CDPATH");
+    cd_path = NULL;
+    if (tmp_cdpath)
+        cd_path = ft_split(tmp_cdpath, ':');
+    if (tmp_cdpath && !cd_path)
+        ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
+    else
+    {
+        cd_path = ft_calloc(2, sizeof(char *));
+        if (!cd_path)
+            ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
+        *cd_path = getcwd(NULL, 0);
+    }
+    ft_manage_cdpath(ctx, is_child, cd_path, argv);
+}
