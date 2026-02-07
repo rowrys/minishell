@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 10:25:49 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:18:39 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ typedef enum e_key
 
 typedef enum e_built_in
 {
-	BUILT_IN_ECHO = 1,
+	BUILT_IN_ECHO,
 	BUILT_IN_CD,
 	BUILT_IN_PWD,
 	BUILT_IN_EXPORT,
-	BUILT_IN_UNSET,
 	BUILT_IN_ENV,
-	BUILT_IN_EXIT
+	BUILT_IN_EXIT,
+	BUILT_IN_UNSET,
+	BUILT_IN_ENUM_MAX,
 }	t_built_in;
 
 typedef struct s_dict_entry

@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 10:43:38 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:22:33 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 #include "ctx.h"
 #include "execute.h"
@@ -23,12 +22,6 @@
 #define CHILD  1
 #define PARENT 0
 
-static void ft_exit(t_ctx *ctx, bool is_child, size_t argc, char **argv)
-{
-	(void)argc;
-	(void)is_child;
-	ft_free_db_and_error(argv, ctx, "noob", 69);
-}
 static void ft_unset(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 {
 	(void)argc;
@@ -63,6 +56,17 @@ static void ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 	ft_free_db_and_error(argv, ctx, "noob", 69);
 }
 
+static const t_builtin_func	g_built_in_function[BUILT_IN_ENUM_MAX] = 
+{
+	[BUILT_IN_ECHO]   = ft_echo,
+	[BUILT_IN_CD]     = ft_cd,
+	[BUILT_IN_PWD]    = ft_pwd,
+	[BUILT_IN_EXPORT] = ft_export,
+	[BUILT_IN_UNSET]  = ft_unset,
+	[BUILT_IN_ENV]    = ft_env,
+	[BUILT_IN_EXIT]   = ft_exit,
+};
+
 static size_t	ft_get_argc(char **argv)
 {
 	size_t	result;
@@ -75,9 +79,8 @@ static size_t	ft_get_argc(char **argv)
 
 static void	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 {
-	static void		(*built_in_fonction[])(t_ctx *, bool, size_t, char**) = {&ft_echo, &ft_cd, &ft_pwd, &ft_export, &ft_unset, &ft_env, &ft_exit};
-	char					**argv;
-	int						argc;
+	char	**argv;
+	int		argc;
 
 	ctx->stdin_fileno = dup(STDIN_FILENO);
 	ctx->stdout_fileno = dup(STDOUT_FILENO);
@@ -88,9 +91,9 @@ static void	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 	argv = ft_cmd_to_arg(ctx, cmd);
 	argc = ft_get_argc(argv);
 	if (cmd->cpid == -2)
-		built_in_fonction[built_in_type - 1](ctx, PARENT, argc, argv);
+		g_built_in_function[built_in_type](ctx, PARENT, argc, argv);
 	else
-		built_in_fonction[built_in_type - 1](ctx, CHILD, argc, argv);
+		g_built_in_function[built_in_type](ctx, CHILD, argc, argv);
 	if (ft_dup(ctx->stdin_fileno, STDIN_FILENO) == -1)
 		ft_free_db_and_error(argv, ctx, "dup: ", EXIT_FAILURE);
 	if (ft_dup(ctx->stdout_fileno, STDOUT_FILENO) == -1)

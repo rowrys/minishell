@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 09:37:13 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 09:51:04 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/07 18:28:54 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "sig.h"
 #include "built_in.h"
 
-#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -45,12 +44,12 @@ static char	*ft_get_first_chunk(t_cmd *cmd)
 
 /*
 return the first chunk(the binary) otherwise
-return NULL if no chunk was found
+return -1 if no chunk was found
  */
 static int	ft_is_built_in(char *chunk)
 {
 	if (!chunk)
-		return (0);
+		return (-1);
 	else if (!ft_strcmp(chunk, "echo"))
 		return (BUILT_IN_ECHO);
 	else if (!ft_strcmp(chunk, "cd"))
@@ -65,7 +64,7 @@ static int	ft_is_built_in(char *chunk)
 		return (BUILT_IN_ENV);
 	else if (!ft_strcmp(chunk, "exit"))
 		return (BUILT_IN_EXIT);
-	return (0);
+	return (-1);
 }
 
 static void	ft_check_fork(t_ctx *ctx, t_cmd *cmd, char *binary)
@@ -92,7 +91,7 @@ void	ft_execute_cmd(t_ctx *ctx, t_cmd *cmd)
 
 	first_chunk = ft_get_first_chunk(cmd);
 	built_in_type = ft_is_built_in(first_chunk);
-	if (first_chunk && built_in_type)
+	if (first_chunk && built_in_type != -1)
 		ft_execute_built_in(ctx, cmd, built_in_type);
 	else if (first_chunk)
 		ft_check_fork(ctx, cmd, first_chunk);

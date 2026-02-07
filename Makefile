@@ -32,6 +32,8 @@ SOURCES =	$(SRCS_DIR)minishell.c					\
 			$(SRCS_DIR)execute/manage_redir.c		\
 			$(SRCS_DIR)execute/execute_built_in.c	\
 			$(SRCS_DIR)built_in/env.c				\
+			$(SRCS_DIR)built_in/exit/exit.c			\
+			$(SRCS_DIR)built_in/exit/exit_utils.c	\
 
 OBJ_DIR = .build/
 OBJS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
@@ -57,6 +59,7 @@ make_dir:
 	@mkdir -p .build/here_doc
 	@mkdir -p .build/execute
 	@mkdir -p .build/built_in
+	@mkdir -p .build/built_in/exit
 
 $(OBJ_DIR)%.o:  $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@
