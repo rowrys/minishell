@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 18:45:27 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 18:45:59 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 19:46:41 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	ft_exit(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 		ft_exit_really(ctx, argv[1], argv);
 	if (argc == 3)
 	{
-		if (ft_str_only_containe(argv[1], VALID_CHAR))
+		if (ft_str_only_contain(argv[1], VALID_CHAR))
 		{
 			write(2, "exit\nminishell: exit: too many arguments\n", 41);
 			ft_free_double(&argv);

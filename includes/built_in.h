@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 09:49:20 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/07 18:42:07 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 20:17:22 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ void    ft_env(t_ctx *ctx, bool is_clone, size_t argc, char **argv);
 void	ft_exit(t_ctx *ctx, bool is_child, size_t argc, char **argv);
 
 /*exit_utils*/
-char	ft_str_only_containe(const char *s1, const char *s2);
+char	ft_str_only_contain(const char *s1, const char *s2);
 bool	ft_is_overflow(char *str, bool is_neg);
+
+/*echo*/
+void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv);
 
 
 #endif

@@ -6,10 +6,9 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 18:38:26 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 18:42:10 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 20:09:15 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "built_in.h"
 #include <stdbool.h>
@@ -38,7 +37,7 @@ bool	ft_is_overflow(char *str, bool is_neg)
 	return (false);
 }
 
-char	ft_str_only_containe(const char *s1, const char *s2)
+char	ft_str_only_contain(const char *s1, const char *s2)
 {
 	size_t	i;
 
