@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 19:18:59 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 20:44:12 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/07 21:08:23 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ static void	ft_end_echo(t_ctx *ctx, bool is_child, char **argv, bool delete_new_
 {
 	if (delete_new_line != true)
 	{
-		if (write(1, "\n", 1))
+		if (write(1, "\n", 1) == -1)
+		{
 			ft_write_error(ctx, is_child, argv);
+			return ;
 		}
+	}
 	if (is_child)
 	{
 		ft_free_double(&argv);
@@ -45,7 +48,7 @@ static void	ft_end_echo(t_ctx *ctx, bool is_child, char **argv, bool delete_new_
 	ctx->last_error = 0;
 }
 
-static bool	ft_check_option(char *str, bool *delete_new_line)
+static bool	ft_check_str_option(char *str, bool *delete_new_line)
 {
 	size_t	i;
 
@@ -53,16 +56,30 @@ static bool	ft_check_option(char *str, bool *delete_new_line)
 	if (str[i++] == '-')
 	{
 		if (str[i] != 'n')
-			return (true);
+			return (false);
 		while (str[i] == 'n')
 			i++;
 		if (!str[i])
 		{
 			*delete_new_line = true;
-			return (false);
+			return (true);
 		}
 	}
-	return (true);
+	return (false);
+}
+
+static size_t	ft_check_option(char **argv, bool *delete_new_line)
+{
+	size_t	i;
+
+	i = 1;
+	while (argv[i])
+	{
+		if (!ft_check_str_option(argv[i], delete_new_line))
+			return (i);
+		i++;
+	}
+	return (1);
 }
 
 void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
@@ -72,22 +89,23 @@ void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 	(void)argc;
 
 	delete_new_line = false;
-	i = 1;
+	i = ft_check_option(argv, &delete_new_line);
 	while (argv[i])
 	{
-		if (ft_check_option(argv[i], &delete_new_line))
+		if (write(1, argv[i], ft_strlen(argv[i])) == -1)
 		{
-			if (write(1, argv[i], ft_strlen(argv[i])))
-				ft_write_error(ctx, is_child, argv);
-			i++;
-			if (argv[i])
+			ft_write_error(ctx, is_child, argv);
+			return ;	
+		}
+		i++;
+		if (argv[i])
+		{
+			if (write(1, " ", 1) == -1)
 			{
-				if (write(1, " ", 1))
-					ft_write_error(ctx, is_child, argv);
+				ft_write_error(ctx, is_child, argv);
+				return ;				
 			}
 		}
-		else
-			i++;
 	}
 	ft_end_echo(ctx, is_child, argv, delete_new_line);
 }
