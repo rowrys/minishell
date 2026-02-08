@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 14:15:17 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/08 18:26:48 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 19:21:39 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 
 #include <stdbool.h>
 
-static char **ft_envdup(t_ctx *ctx, char **env, bool free_42, size_t size)
+static char **ft_envdup(t_ctx *ctx, char **env, size_t size)
 {
     char    **result;
     size_t  i;
 
-    if (free_42)
-        return (env);
     result = ft_calloc(size + 1, sizeof(char *));
     if (!result)
         ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
@@ -74,7 +72,9 @@ static char **ft_sort_env(t_ctx *ctx, char **tmp_env, bool free_42_angouleme)
     size_t  i;
 
     size = ft_get_argc(tmp_env);
-    env = ft_envdup(ctx, tmp_env, free_42_angouleme, size);
+    env = tmp_env;
+    if (free_42_angouleme == false)
+        env = ft_envdup(ctx, tmp_env, size);
     result = ft_calloc(size + 1, sizeof(char *));
     if (!result)
         ft_free_db_and_error(env, ctx, MALLOC_ERROR, EXIT_FAILURE);
@@ -122,10 +122,6 @@ void	ft_declare_x_init(t_ctx *ctx, char **tmp_env, bool free_42_angouleme)
 	ctx->declare_x = NULL;
 	i = 0;
     env = ft_sort_env(ctx, tmp_env, free_42_angouleme);
-    #include <stdio.h>
-	printf("%p\n", env);
-    if (free_42_angouleme)
-	    ft_free_double(&tmp_env);
 	while (env[i])
 	{
 		declare_x_entry = ft_declare_x_entry(ctx, env, env[i]);

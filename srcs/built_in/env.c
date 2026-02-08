@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 19:54:04 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/07 10:44:53 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 19:42:26 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ static void    ft_builtin_error(t_ctx *ctx, bool is_clone)
     ft_putstr_fd("format: env: do not add arguments\n", 2);
 }
 
-static void    ft_put_entry(t_ctx *ctx, t_dict_entry *entry)
-{
-    char    *result;
-
-    result = ft_triple_join(ctx, entry->key, "=", entry->value);
-    ft_putendl_fd(result, 1);
-    free(result);
-}
-
 void    ft_env(t_ctx *ctx, bool is_clone, size_t argc, char **argv)
 {
     t_list          *env_dict;
@@ -49,7 +40,9 @@ void    ft_env(t_ctx *ctx, bool is_clone, size_t argc, char **argv)
     while (env_dict)
     {
         entry = env_dict->content;
-        ft_put_entry(ctx, entry);
+        ft_putstr_fd(entry->key, 1);
+        ft_putstr_fd("=", 1);
+        ft_putendl_fd(entry->value, 1);
         env_dict = env_dict->next;
     }
     if (is_clone)

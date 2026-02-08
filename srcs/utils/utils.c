@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:52:28 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 16:55:08 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 19:26:00 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_triple_join(t_ctx *ctx, char *key, char *sep, char *value)
 		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	tmp = ft_strjoin(result, sep);
 	free(result);
-	if (!result)
+	if (!tmp)
 		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	result = ft_strjoin(tmp, value);
 	free(tmp);
