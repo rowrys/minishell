@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 09:49:20 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/08 12:01:52 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 18:33:41 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef void	(*t_builtin_func)(t_ctx *, bool, size_t, char**);
 #define NB_DIGIT_LL	19
 
 #define NO_DIRECTORY "minishell: cd: No such file or directory"
+
+#define EXPORT_LIMITER "'\"=\t\n\v\f\r ?"
 
 /*env*/
 void    ft_env(t_ctx *ctx, bool is_clone, size_t argc, char **argv);
@@ -53,5 +55,12 @@ void    ft_cd_check_dir(t_ctx *ctx, bool is_child, char *path, char **argv);
 
 /*cd_utils2*/
 void    ft_set_pwd(t_ctx *ctx, char **argv);
+
+/*ft_export*/
+void    ft_export(t_ctx *ctx, bool is_clone, size_t argc, char **argv);
+bool	ft_is_valid_identifier(char *str);
+char	*ft_get_key(t_ctx *ctx, char **argv, char *str);
+char	*ft_get_value(t_ctx *ctx, char **argv, char *str, char *free_42_angouleme);
+
 
 #endif
