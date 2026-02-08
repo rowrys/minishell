@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 09:49:20 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/08 10:52:17 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 12:01:52 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef void	(*t_builtin_func)(t_ctx *, bool, size_t, char**);
 #define LLONG_MAX 9223372036854775807
 #define LLONG_MIN 9223372036854775808
 #define NB_DIGIT_LL	19
+
+#define NO_DIRECTORY "minishell: cd: No such file or directory"
 
 /*env*/
 void    ft_env(t_ctx *ctx, bool is_clone, size_t argc, char **argv);

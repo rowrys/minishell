@@ -4,6 +4,8 @@ SRCS_DIR = srcs/
 SOURCES =	minishell.c					\
 			ctx/ctx_destroy.c			\
 			ctx/ctx_init.c				\
+			ctx/env_init_default.c		\
+			ctx/declare_x.c				\
 			parse/parse.c				\
 			parse/parse_line.c			\
 			parse/parse_token_list.c	\

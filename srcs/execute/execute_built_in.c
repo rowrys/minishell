@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 23:32:04 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 15:24:56 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static const t_builtin_func	g_built_in_function[BUILT_IN_ENUM_MAX] =
 	[BUILT_IN_EXIT]   = ft_exit,
 };
 
-static size_t	ft_get_argc(char **argv)
+size_t	ft_get_argc(char **argv)
 {
 	size_t	result;
 

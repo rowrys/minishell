@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:54:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 10:29:52 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 17:32:43 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_destroy_ctx(t_ctx *ctx)
 	if (ctx->line_split)
 		ft_free_double(&ctx->line_split);
 	ctx->line_split = NULL;
-	if (ctx->env_dict)
-		ft_lstclear(&ctx->env_dict, &ft_destroy_dict_entry);
+	ft_lstclear(&ctx->env_dict, &ft_destroy_dict_entry);
+	ft_lstclear(&ctx->declare_x, &ft_destroy_dict_entry);
 	ctx->env_dict = NULL;		
 }

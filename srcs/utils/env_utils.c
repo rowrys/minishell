@@ -6,33 +6,15 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:58:15 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 23:15:06 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 14:14:08 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
-#include <string.h>
 
-char	*ft_triple_join(t_ctx *ctx, char *key, char *sep, char *value)
-{
-	char	*result;
-	char	*tmp;
-	
-	result = strdup(key);
-	if (!result)
-		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-	tmp = ft_strjoin(result, sep);
-	free(result);
-	if (!result)
-		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-	result = ft_strjoin(tmp, value);
-	free(tmp);
-	if (!result)
-		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-	return (result);
-}
+#include <string.h>
 
 char	**ft_env_to_array(t_ctx *ctx, t_list *env_dict)
 {

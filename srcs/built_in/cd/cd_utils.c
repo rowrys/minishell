@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 22:54:01 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/08 10:51:56 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 12:02:52 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minishell.h"
 #include "ctx.h"
 #include "utils.h"
+#include "built_in.h"
 
 #include <stdbool.h>
 #include <sys/stat.h>
@@ -66,7 +67,7 @@ void    ft_cd_check_dir(t_ctx *ctx, bool is_child, char *path, char **argv)
     if (chdir(tmp) == -1)
     {
         free(tmp);
-        ft_cd_error(is_child, ctx, "minishell: chdir: ", EXIT_FAILURE);
+        ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
         return ;
     }
     free(ft_get_entry_ptr(ctx, "OLDPWD"));
@@ -88,7 +89,7 @@ static void    ft_chdir_cdpath(t_ctx *ctx, bool is_child, char *cdpath,
     if (chdir(cdpath) == -1)
     {
         free(cdpath);
-        ft_cd_error(is_child, ctx, "minishell: chdir: ", EXIT_FAILURE);
+        ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
         return ;
     }
     tmp = ft_get_entry_ptr(ctx, "OLDPWD");

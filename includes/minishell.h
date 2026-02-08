@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 18:18:39 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/08 12:58:56 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_ctx
 	char	**line_split;
 	t_list	*cmd_lst;
 	t_list	*env_dict;
+	t_list	*declare_x;
 	int		last_error;
 	int		stdin_fileno;
 	int		stdout_fileno;

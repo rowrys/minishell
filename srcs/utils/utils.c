@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:52:28 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/02 13:52:30 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/08 16:55:08 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+#include "utils.h"
+
 #include <stdbool.h>
 
 bool	ft_is_redir_key(t_key key)
@@ -46,4 +48,23 @@ int	ft_skip(char *str, char *charset)
 	while (str[i] && ft_strchr(charset, str[i]))
 		i++;
 	return (i);
+}
+
+char	*ft_triple_join(t_ctx *ctx, char *key, char *sep, char *value)
+{
+	char	*result;
+	char	*tmp;
+	
+	result = ft_strdup(key);
+	if (!result)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+	tmp = ft_strjoin(result, sep);
+	free(result);
+	if (!result)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+	result = ft_strjoin(tmp, value);
+	free(tmp);
+	if (!result)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+	return (result);
 }

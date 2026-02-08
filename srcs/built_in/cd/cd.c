@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 14:30:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/08 10:52:23 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 12:01:59 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "built_in.h"
 
 #include <stdbool.h>
+
+#define NO_DIRECTORY "minishell: cd: No such file or directory"
 
 static void ft_cd_switch(t_ctx *ctx, bool is_child, char *key1, char *key2)
 {
@@ -30,7 +32,7 @@ static void ft_cd_switch(t_ctx *ctx, bool is_child, char *key1, char *key2)
         return ;
     }
     if (chdir(ptr_oldpwd) == -1)
-        ft_cd_error(is_child, ctx, "minishell: chdir: ", EXIT_FAILURE);
+        ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
     ptr_pwd = ft_get_entry_ptr(ctx, key2);
     ft_replace_entry_value(ctx, "PWD", ptr_oldpwd);
     ft_replace_entry_value(ctx, "OLDPWD", ptr_pwd);
@@ -60,7 +62,7 @@ static void ft_only_cd(t_ctx *ctx, bool is_child)
         ft_replace_entry_value(ctx, "OLDPWD", tmp_pwd);
         free(ptr_oldpwd);
         if (chdir(tmp_home) == -1)
-                ft_cd_error(is_child, ctx, "minishell: chdir: ", EXIT_FAILURE);
+                ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
         else if (is_child)
         {
             ft_destroy_ctx(ctx);
@@ -101,7 +103,7 @@ static void    ft_chdir_argv(t_ctx *ctx, bool is_child, char **argv)
     if (chdir(argv[1]) == -1)
     {
         ft_free_double(&argv);
-        ft_cd_error(is_child, ctx, "minishell: chdir: ", EXIT_FAILURE);
+        ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
     }
     else 
     {
