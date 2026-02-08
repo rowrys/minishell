@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 19:18:59 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 21:08:23 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/08 10:19:15 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 
 static void	ft_write_error(t_ctx *ctx, bool is_child, char **argv)
 {
+	ft_free_double(&argv);
 	if (is_child)
 	{
-		ft_free_double(&argv);
 		ft_destroy_ctx(ctx);
 		exit(1);
 	}
@@ -39,9 +39,9 @@ static void	ft_end_echo(t_ctx *ctx, bool is_child, char **argv, bool delete_new_
 			return ;
 		}
 	}
+	ft_free_double(&argv);
 	if (is_child)
 	{
-		ft_free_double(&argv);
 		ft_destroy_ctx(ctx);
 		exit(0);
 	}
@@ -79,7 +79,7 @@ static size_t	ft_check_option(char **argv, bool *delete_new_line)
 			return (i);
 		i++;
 	}
-	return (1);
+	return (i);
 }
 
 void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
@@ -95,7 +95,7 @@ void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 		if (write(1, argv[i], ft_strlen(argv[i])) == -1)
 		{
 			ft_write_error(ctx, is_child, argv);
-			return ;	
+			return ;
 		}
 		i++;
 		if (argv[i])
@@ -103,7 +103,7 @@ void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 			if (write(1, " ", 1) == -1)
 			{
 				ft_write_error(ctx, is_child, argv);
-				return ;				
+				return ;			
 			}
 		}
 	}

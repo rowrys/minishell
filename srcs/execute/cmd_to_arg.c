@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 14:52:28 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 17:46:23 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/08 09:45:15 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_arg_cpy(t_ctx *ctx, t_cmd *cmd, char **buffer)
 	while (origin)
 	{
 		token = origin->content;
-		if (token->type == KEY_CHUNK)
+		if (token->type == KEY_CHUNK && token->value)
 		{
 			buffer[i] = ft_strdup(token->value);
 			if (!buffer[i])
@@ -52,7 +52,7 @@ char	**ft_cmd_to_arg(t_ctx *ctx, t_cmd *cmd)
 	while (token_list)
 	{
 		token = token_list->content;
-		if (token->type == KEY_CHUNK)
+		if (token->type == KEY_CHUNK && token->value)
 			nb_chunk++;
 		token_list = token_list->next;
 	}
