@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 14:30:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/08 00:30:09 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 10:52:23 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,7 @@ static void    ft_chdir_argv(t_ctx *ctx, bool is_child, char **argv)
         tmp = ft_get_entry_ptr(ctx, "OLDPWD");
         ft_replace_entry_value(ctx, "OLDPWD", ft_get_entry_ptr(ctx, "PWD"));
         free(tmp);
-        tmp = ft_strdup(argv[1]);
-        ft_free_double(&argv);
-        if (!tmp)
-            ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-        ft_replace_entry_value(ctx, "PWD", tmp);
+        ft_set_pwd(ctx, argv);
         if (is_child)
         {
             ft_destroy_ctx(ctx);
@@ -136,17 +132,15 @@ void    ft_cd(t_ctx *ctx, bool is_child, size_t argc, char **argv)
         return ;
     }
     tmp_cdpath = ft_get_entry_ptr(ctx, "CDPATH");
-    cd_path = NULL;
-    if (tmp_cdpath)
-        cd_path = ft_split(tmp_cdpath, ':');
-    if (tmp_cdpath && !cd_path)
-        ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
-    else
+    if (!tmp_cdpath)
     {
-        cd_path = ft_calloc(2, sizeof(char *));
-        if (!cd_path)
-            ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
-        *cd_path = getcwd(NULL, 0);
+        tmp_cdpath = getcwd(NULL, 0);
+        ft_cd_check_dir(ctx, is_child, tmp_cdpath, argv);
+        return ;
     }
+    cd_path = NULL;
+    cd_path = ft_split(tmp_cdpath, ':');
+    if (!cd_path)
+        ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
     ft_manage_cdpath(ctx, is_child, cd_path, argv);
 }

@@ -38,6 +38,7 @@ SOURCES =	minishell.c					\
 			built_in/pwd.c				\
 			built_in/cd/cd.c			\
 			built_in/cd/cd_utils.c		\
+			built_in/cd/cd_utils2.c		\
 
 SOURCES	:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 

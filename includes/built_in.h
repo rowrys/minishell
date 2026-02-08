@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 09:49:20 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/07 23:31:39 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/08 10:52:17 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ void    ft_pwd(t_ctx *ctx, bool is_clone, size_t argc, char **argv);
 
 /*cd*/
 void    ft_cd(t_ctx *ctx, bool is_child, size_t argc, char **argv);
+
+/*cd_utils*/
 void    ft_manage_cdpath(t_ctx *ctx, bool is_child, char **cdpath,
                             char **argv);
+void    ft_cd_check_dir(t_ctx *ctx, bool is_child, char *path, char **argv);
+
+/*cd_utils2*/
+void    ft_set_pwd(t_ctx *ctx, char **argv);
 
 #endif
