@@ -26,6 +26,7 @@ SOURCES =	minishell.c						\
 			sig/signal.c					\
 			here_doc/here_doc.c				\
 			here_doc/parse_limiter.c		\
+			here_doc/get_here_doc.c			\
 			execute/cmd_to_arg.c			\
 			execute/execute.c				\
 			execute/execute_chunk.c			\

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_to_arg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 14:52:28 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 09:45:15 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 08:49:28 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
+
 #include <stdlib.h>
 
 static void	ft_arg_cpy(t_ctx *ctx, t_cmd *cmd, char **buffer)
@@ -45,7 +46,7 @@ char	**ft_cmd_to_arg(t_ctx *ctx, t_cmd *cmd)
 	t_list	*token_list;
 	t_token	*token;
 	size_t	nb_chunk;
-	char 	**result;
+	char	**result;
 
 	nb_chunk = 0;
 	token_list = cmd->token;

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 09:37:13 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 18:28:54 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 08:49:46 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "built_in.h"
+#include "execute.h"
 #include "libft.h"
 #include "minishell.h"
-#include "execute.h"
-#include "utils.h"
 #include "sig.h"
-#include "built_in.h"
+#include "utils.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -72,7 +72,7 @@ static void	ft_check_fork(t_ctx *ctx, t_cmd *cmd, char *binary)
 	if (cmd->cpid == -2)
 	{
 		cmd->cpid = fork();
-		if(cmd->cpid == -1)
+		if (cmd->cpid == -1)
 			ft_error(ctx, "fork: ", EXIT_FAILURE);
 	}
 	if (cmd->cpid == 0)

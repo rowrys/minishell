@@ -3,41 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 18:52:15 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 08:51:32 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "built_in.h"
 #include "ctx.h"
 #include "execute.h"
-#include "utils.h"
+#include "minishell.h"
 #include "sig.h"
-#include "built_in.h"
+#include "utils.h"
 
 #include <stddef.h>
 
-#define CHILD  1
+#define CHILD 1
 #define PARENT 0
 
-static void ft_unset(t_ctx *ctx, bool is_child, size_t argc, char **argv)
+static void	ft_unset(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 {
 	(void)argc;
 	(void)is_child;
 	ft_free_db_and_error(argv, ctx, "noob", 69);
 }
 
-static const t_builtin_func	g_built_in_function[BUILT_IN_ENUM_MAX] = 
-{
-	[BUILT_IN_ECHO]   = ft_echo,
-	[BUILT_IN_CD]     = ft_cd,
-	[BUILT_IN_PWD]    = ft_pwd,
-	[BUILT_IN_EXPORT] = ft_export,
-	[BUILT_IN_UNSET]  = ft_unset,
-	[BUILT_IN_ENV]    = ft_env,
-	[BUILT_IN_EXIT]   = ft_exit,
+static const t_builtin_func	g_built_in_function[BUILT_IN_ENUM_MAX] = {
+[BUILT_IN_ECHO] = ft_echo,
+[BUILT_IN_CD] = ft_cd,
+[BUILT_IN_PWD] = ft_pwd,
+[BUILT_IN_EXPORT] = ft_export,
+[BUILT_IN_UNSET] = ft_unset,
+[BUILT_IN_ENV] = ft_env,
+[BUILT_IN_EXIT] = ft_exit,
 };
 
 size_t	ft_get_argc(char **argv)

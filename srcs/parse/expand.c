@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 18:00:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/04 11:08:43 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 09:08:32 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
+
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -45,7 +46,7 @@ char	*ft_expand(t_ctx *ctx, char *str, size_t size)
 
 size_t	ft_explen(char *str)
 {
-	size_t size;
+	size_t	size;
 
 	if (!str)
 		return (0);
@@ -57,7 +58,8 @@ size_t	ft_explen(char *str)
 	return (size);
 }
 
-static void	ft_insert_expand(t_ctx *ctx, char **str, char **origin, char **result)
+static void	ft_insert_expand(t_ctx *ctx, char **str, char **origin,
+		char **result)
 {
 	char	*tmp;
 	size_t	size;

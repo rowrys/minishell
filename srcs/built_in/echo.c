@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 19:18:59 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 10:19:15 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 09:21:07 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ctx.h"
 #include "libft.h"
 #include "minishell.h"
-#include "ctx.h"
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -29,7 +29,8 @@ static void	ft_write_error(t_ctx *ctx, bool is_child, char **argv)
 	ctx->last_error = 1;
 }
 
-static void	ft_end_echo(t_ctx *ctx, bool is_child, char **argv, bool delete_new_line)
+static void	ft_end_echo(t_ctx *ctx, bool is_child, char **argv,
+		bool delete_new_line)
 {
 	if (delete_new_line != true)
 	{
@@ -86,8 +87,8 @@ void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 {
 	size_t	i;
 	bool	delete_new_line;
-	(void)argc;
 
+	(void)argc;
 	delete_new_line = false;
 	i = ft_check_option(argv, &delete_new_line);
 	while (argv[i])
@@ -103,7 +104,7 @@ void	ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 			if (write(1, " ", 1) == -1)
 			{
 				ft_write_error(ctx, is_child, argv);
-				return ;			
+				return ;
 			}
 		}
 	}

@@ -6,24 +6,25 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:54:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 19:32:58 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 08:47:06 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "ctx.h"
 #include "libft.h"
+#include "minishell.h"
 #include "utils.h"
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdbool.h>
 
-void ft_malloc_env_error(t_ctx *ctx, t_dict_entry *dict_entry, char **to_free)
+void	ft_malloc_env_error(t_ctx *ctx, t_dict_entry *dict_entry,
+		char **to_free)
 {
 	if (dict_entry)
 		ft_destroy_dict_entry(dict_entry);
-	if(to_free)
+	if (to_free)
 		ft_free_double(&to_free);
 	ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 }
@@ -32,7 +33,7 @@ static t_dict_entry	*ft_init_new_dict_entry(t_ctx *ctx, char *env)
 {
 	size_t			i;
 	t_dict_entry	*new_dict_entry;
-	
+
 	new_dict_entry = NULL;
 	i = 0;
 	if (!*env)

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   valid_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:59:51 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/04 10:55:05 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 09:09:03 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "utils.h"
 #include "parse.h"
-#include <stdbool.h>
+#include "utils.h"
 
+#include <stdbool.h>
 
 static char	*ft_expand_vl(t_ctx *ctx, char *str, size_t size)
 {
@@ -39,7 +39,8 @@ static char	*ft_expand_vl(t_ctx *ctx, char *str, size_t size)
 	return (result);
 }
 
-static void	ft_insert_expand_vl(t_ctx *ctx, char **str, char **origin, char **result)
+static void	ft_insert_expand_vl(t_ctx *ctx, char **str, char **origin,
+		char **result)
 {
 	char	*tmp;
 	size_t	size;
@@ -48,7 +49,7 @@ static void	ft_insert_expand_vl(t_ctx *ctx, char **str, char **origin, char **re
 	if (*origin != *str && !tmp)
 	{
 		free(*result);
-		ft_free_and_error(*str, ctx, MALLOC_ERROR, EXIT_FAILURE);	
+		ft_free_and_error(*str, ctx, MALLOC_ERROR, EXIT_FAILURE);
 	}
 	*result = ft_add_part(ctx, *result, tmp);
 	size = ft_explen(*str + 1);
@@ -114,8 +115,8 @@ bool	ft_is_valid_line(t_ctx *ctx, char *str)
 		return (false);
 	if (ft_is_syntax_error_quote(str))
 	{
-		ft_putendl_fd(
-			"minishell: syntax error near unexpected token 'quote'", 2);		
+		ft_putendl_fd("minishell: syntax error near unexpected token 'quote'",
+			2);
 		ctx->last_error = 2;
 		is_valid = false;
 	}

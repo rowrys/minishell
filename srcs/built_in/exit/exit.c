@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 18:45:27 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 19:46:41 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 09:21:01 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "built_in.h"
+#include "ctx.h"
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
-#include "ctx.h"
-#include "built_in.h"
 
 #include <stdbool.h>
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 static void	ft_exit_error(t_ctx *ctx, char *str, char **argv)
@@ -60,7 +60,7 @@ static bool	ft_skip_undesirable(t_ctx *ctx, char *nptr, size_t *i, char **argv)
 	return (is_negative);
 }
 
-static size_t ft_atoll(t_ctx *ctx,  char *nptr, char **argv)
+static size_t	ft_atoll(t_ctx *ctx, char *nptr, char **argv)
 {
 	long long	res;
 	size_t		i;
@@ -89,7 +89,6 @@ static void	ft_exit_really(t_ctx *ctx, char *str, char **argv)
 	ft_destroy_ctx(ctx);
 	exit(result);
 }
-
 
 void	ft_exit(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 {

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:07:23 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 15:09:06 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 09:08:55 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ctx.h"
 #include "minishell.h"
 #include "parse.h"
-#include "ctx.h"
 
 static void	ft_parse_cmd(t_ctx *ctx)
 {
@@ -20,7 +20,7 @@ static void	ft_parse_cmd(t_ctx *ctx)
 	t_list	*old_token_list;
 	t_cmd	*current_cmd;
 	t_list	*cmd_lst;
-	
+
 	cmd_lst = ctx->cmd_lst;
 	while (cmd_lst)
 	{

@@ -6,15 +6,16 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:48:24 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/06 17:40:58 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:12:47 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <readline/readline.h>
 #include <signal.h>
 #include <unistd.h>
-#include <readline/readline.h>
+#include <stdbool.h>
 
-int g_was_killed;
+int	g_was_killed;
 
 void	handler_sigint(int sig)
 {
@@ -27,15 +28,15 @@ void	handler_sigint(int sig)
 
 void	handler_sigint_here_doc(int sig)
 {
-    g_was_killed = sig;
-    write(1, "^C", 2);
-    close(STDIN_FILENO);
+	g_was_killed = sig;
+	write(1, "^C", 2);
+	close(STDIN_FILENO);
 }
 
-void    ft_signal_child(void)
+void	ft_signal_child(void)
 {
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	ft_signal_init(void)

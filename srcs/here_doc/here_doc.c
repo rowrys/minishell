@@ -6,61 +6,25 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:16:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/06 15:58:12 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:06:00 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "here_doc.h"
 #include "libft.h"
 #include "minishell.h"
 #include "parse.h"
-#include "utils.h"
-#include "here_doc.h"
 #include "sig.h"
+#include "utils.h"
 
-#include <readline/readline.h>
 #include <readline/history.h>
+#include <readline/readline.h>
+#include <signal.h>
 #include <stdatomic.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <signal.h>
 
-extern int g_was_killed;
-
-static bool	ft_get_here_doc(t_ctx *ctx, char *limiter, bool do_expand, int fd)
-{
-	char	*line;
-	bool	was_killed;
-	int		total_size_write;
-	int		tmp_stdin;
-
-	total_size_write = 0;
-	was_killed = false;
-	tmp_stdin = dup(STDIN_FILENO);
-	while (1)
-	{
-		line = readline("> ");
-		if (g_was_killed == SIGINT)
-		{
-			g_was_killed = 0;
-			dup2(tmp_stdin, STDIN_FILENO);
-			close(tmp_stdin);
-			return (true);
-		}
-		// ft_checkdouble
-		if (ft_check_limiter(line, limiter, &total_size_write))
-		{
-			close(tmp_stdin);
-			return (was_killed);
-		}
-		if (do_expand)
-			line = ft_manage_expand(ctx, line, 0);
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
-	close(tmp_stdin);
-	return (was_killed);
-}
+extern int	g_was_killed;
 
 static bool	ft_here_doc_token(t_ctx *ctx, t_cmd *cmd, char *block)
 {
@@ -126,7 +90,8 @@ bool	ft_here_doc(t_ctx *ctx)
 	killed = false;
 	if (ft_is_syntax_error_pipe(ctx->line))
 	{
-		ft_putendl_fd("minishell: syntax error near unexpected token 'pipe'", 2);		
+		ft_putendl_fd("minishell: syntax error near unexpected token 'pipe'",
+			2);
 		ctx->last_error = 2;
 		is_syntax_error = true;
 	}
@@ -135,7 +100,8 @@ bool	ft_here_doc(t_ctx *ctx)
 		ctx->last_error = 130;
 	if (!killed && ft_is_syntax_error_redir(ctx->line))
 	{
-		ft_putendl_fd("minishell: syntax error near unexpected token 'redir'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token 'redir'",
+			2);
 		ctx->last_error = 2;
 		is_syntax_error = true;
 	}

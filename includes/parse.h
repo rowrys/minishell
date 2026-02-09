@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:52 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 15:09:23 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 09:33:57 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	ft_parse(t_ctx *ctx);
 void	ft_parse_line(t_ctx *ctx);
 
 /*parse_block*/
-bool ft_parse_expand(t_ctx *ctx, t_list **new_list, t_token *token,
-    char **result);
-void ft_parse_block(t_ctx *ctx, t_token *token, char **result);
-void ft_parse_quote(t_ctx *ctx, t_token *token, char **result);
+bool	ft_parse_expand(t_ctx *ctx, t_list **new_list, t_token *token,
+			char **result);
+void	ft_parse_block(t_ctx *ctx, t_token *token, char **result);
+void	ft_parse_quote(t_ctx *ctx, t_token *token, char **result);
 
 /*valid_line*/
 bool	ft_is_empty(t_ctx *ctx, char *str);
@@ -43,9 +43,9 @@ char	*ft_expand(t_ctx *ctx, char *str, size_t size);
 size_t	ft_explen(char *str);
 
 /*get_next_token*/
-t_list *ft_get_next_token(t_ctx *ctx, t_key key, size_t *i);
+t_list	*ft_get_next_token(t_ctx *ctx, t_key key, size_t *i);
 
 /*parse_token_list*/
-t_list *ft_parse_token_list(t_ctx *ctx, t_list *old_lst);
+t_list	*ft_parse_token_list(t_ctx *ctx, t_list *old_lst);
 
 #endif

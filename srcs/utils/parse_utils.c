@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/03 15:15:08 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 09:19:22 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
-#include <stddef.h>
+
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 
-bool  ft_is_inside_quote(char *str)
+bool	ft_is_inside_quote(char *str)
 {
-    if (*str == '"' && str[ft_strlen(str) - 1] == '"')
-        return (true);
-    if (*str == '\'' && str[ft_strlen(str) - 1] == '\'')
-        return (true);
-    return (false);
+	if (*str == '"' && str[ft_strlen(str) - 1] == '"')
+		return (true);
+	if (*str == '\'' && str[ft_strlen(str) - 1] == '\'')
+		return (true);
+	return (false);
 }
 
 int	ft_get_redir_key(char *str)
@@ -87,5 +88,3 @@ char	*ft_add_part(t_ctx *ctx, char *result, char *part)
 		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	return (to_return);
 }
-
-

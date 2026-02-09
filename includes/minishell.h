@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:03:14 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 12:58:56 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:25:38 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # define PART_LIMITER "$'\"\0"
 
 # include "libft.h"
-#include <sys/types.h>
+
+# include <sys/types.h>
 
 typedef enum e_key
 {
@@ -32,7 +33,7 @@ typedef enum e_key
 	KEY_RREDIR,
 	KEY_APPEND,
 	KEY_HERE_DOC
-}	t_key;
+}			t_key;
 
 typedef enum e_built_in
 {
@@ -44,7 +45,7 @@ typedef enum e_built_in
 	BUILT_IN_EXIT,
 	BUILT_IN_UNSET,
 	BUILT_IN_ENUM_MAX,
-}	t_built_in;
+}			t_built_in;
 
 typedef struct s_dict_entry
 {

@@ -6,21 +6,20 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 16:36:41 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/06 10:01:38 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 08:49:41 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execute.h"
 #include "libft.h"
 #include "minishell.h"
-#include "execute.h"
 #include "utils.h"
 
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
-
-static char    **ft_get_path_split(t_ctx *ctx)
+static char	**ft_get_path_split(t_ctx *ctx)
 {
 	t_list			*env_dict;
 	t_dict_entry	*entry;
@@ -42,26 +41,27 @@ static char    **ft_get_path_split(t_ctx *ctx)
 	if (!temp || !*temp)
 		return (NULL);
 	result = ft_split(temp, ':');
-	if(!result)
+	if (!result)
 		ft_error(ctx, "Malloc exploded, how did you do that???", EXIT_FAILURE);
 	return (result);
 }
 
-static char    *ft_get_bin_path(t_ctx *ctx, char **splited_path, char *binary, char **env)
+static char	*ft_get_bin_path(t_ctx *ctx, char **splited_path, char *binary,
+		char **env)
 {
-    char    *bin;
+	char	*bin;
 	char	*bin_denied;
-    size_t	i;
+	size_t	i;
 
 	i = 0;
 	bin = NULL;
 	bin_denied = NULL;
 	while (splited_path[i] && !bin)
-    {
+	{
 		bin = ft_check_bin_42_angouleme(ctx, splited_path, i, binary);
 		if (!bin_denied)
-			bin_denied = ft_check_bin_denied_42_angouleme(ctx,
-				splited_path, i, binary);
+			bin_denied = ft_check_bin_denied_42_angouleme(ctx, splited_path, i,
+					binary);
 		i++;
 	}
 	if (!bin && bin_denied)
@@ -93,7 +93,7 @@ static char	*ft_get_bin(t_ctx *ctx, char *binary, char **env)
 
 static char	*ft_is_valid_binary(t_ctx *ctx, char *bin, char **env)
 {
-    char    *result;
+	char	*result;
 	bool	is_dir;
 	bool	is_reg;
 
@@ -105,7 +105,7 @@ static char	*ft_is_valid_binary(t_ctx *ctx, char *bin, char **env)
 		result = ft_strdup(bin);
 		if (!result)
 			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-		ft_error_execve(ctx, result,  EISDIR);
+		ft_error_execve(ctx, result, EISDIR);
 	}
 	else if (!access(bin, X_OK) && !is_dir && is_reg && ft_strchr(bin, '/'))
 		return (bin);
@@ -113,7 +113,7 @@ static char	*ft_is_valid_binary(t_ctx *ctx, char *bin, char **env)
 	return (result);
 }
 
-void ft_execute_chunk(t_ctx *ctx, t_cmd *cmd, char *binary)
+void	ft_execute_chunk(t_ctx *ctx, t_cmd *cmd, char *binary)
 {
 	char	**args;
 	char	**env;
@@ -126,7 +126,7 @@ void ft_execute_chunk(t_ctx *ctx, t_cmd *cmd, char *binary)
 	if (ft_dup(cmd->fd_in, STDIN_FILENO) == -1)
 		ft_free_db_and_error(env, ctx, "dup2: ", EXIT_FAILURE);
 	if (ft_dup(cmd->fd_out, STDOUT_FILENO) == -1)
-		ft_free_db_and_error(env, ctx, "dup2: ", EXIT_FAILURE);		
+		ft_free_db_and_error(env, ctx, "dup2: ", EXIT_FAILURE);
 	args = ft_cmd_to_arg(ctx, cmd);
 	ft_close_cmd_fds(cmd);
 	execve(path_binary, args, env);

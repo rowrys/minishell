@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:58:15 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 14:14:08 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:20:14 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_env_to_array(t_ctx *ctx, t_list *env_dict)
 {
 	t_list			*env_list;
 	t_dict_entry	*entry;
-	char 			**result;
+	char			**result;
 	size_t			i;
 
 	env_list = ctx->env_dict;
@@ -42,48 +42,48 @@ char	**ft_env_to_array(t_ctx *ctx, t_list *env_dict)
 
 void	ft_replace_entry_value(t_ctx *ctx, char *key, char *new_ptr)
 {
-	t_list          *env_dict;
-    t_dict_entry    *entry;
+	t_list			*env_dict;
+	t_dict_entry	*entry;
 
-    env_dict = ctx->env_dict;
-    while (env_dict)
-    {
-        entry = env_dict->content;
-        if (!ft_strcmp(entry->key, key))
-        {
-            entry->value = new_ptr;
-            break ;
-        }
-        env_dict = env_dict->next;
-    }
+	env_dict = ctx->env_dict;
+	while (env_dict)
+	{
+		entry = env_dict->content;
+		if (!ft_strcmp(entry->key, key))
+		{
+			entry->value = new_ptr;
+			break ;
+		}
+		env_dict = env_dict->next;
+	}
 }
 
-char *ft_get_entry_ptr(t_ctx *ctx, char *key)
+char	*ft_get_entry_ptr(t_ctx *ctx, char *key)
 {
-    t_list          *env_dict;
-    t_dict_entry    *entry;
-    char            *cd_path;
+	t_list			*env_dict;
+	t_dict_entry	*entry;
+	char			*cd_path;
 
-    env_dict = ctx->env_dict;
-    cd_path = NULL;
-    while (env_dict)
-    {
-        entry = env_dict->content;
-        if (!ft_strcmp(entry->key, key))
-        {
-            cd_path = entry->value;
-            break ;
-        }
-        env_dict = env_dict->next;
-    }
-    return (cd_path);
+	env_dict = ctx->env_dict;
+	cd_path = NULL;
+	while (env_dict)
+	{
+		entry = env_dict->content;
+		if (!ft_strcmp(entry->key, key))
+		{
+			cd_path = entry->value;
+			break ;
+		}
+		env_dict = env_dict->next;
+	}
+	return (cd_path);
 }
 
 char	*ft_get_dict_value(t_ctx *ctx, t_list *tmp_dict, char *name)
 {
 	char			*result;
 	t_dict_entry	*entry;
-	
+
 	result = NULL;
 	while (tmp_dict)
 	{

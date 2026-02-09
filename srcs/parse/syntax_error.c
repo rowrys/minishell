@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:44:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/01/29 14:51:39 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 09:08:58 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
 #include "libft.h"
 #include "minishell.h"
 #include "parse.h"
 #include "utils.h"
+#include <stdbool.h>
 
 bool	ft_is_syntax_error_redir(char *str)
 {
@@ -45,7 +45,7 @@ bool	ft_is_syntax_error_pipe(char *str)
 	if (*str == '|')
 		return (true);
 	while (*str)
-	{	
+	{
 		if (*str == '\'' || *str == '"')
 			str += ft_go_to(str + 1, *str) + 2;
 		else if (*str == '|')

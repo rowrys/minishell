@@ -6,32 +6,32 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/07 23:03:03 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 09:16:46 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ctx.h"
 #include "execute.h"
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
-#include "ctx.h"
 
 #include <errno.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-void ft_cd_error(bool is_child, t_ctx *ctx, char *msg, int code)
+void	ft_cd_error(bool is_child, t_ctx *ctx, char *msg, int code)
 {
-    if (is_child)
-        ft_error(ctx, msg, code);
-    ft_putendl_fd(msg, 2);
-    if (code == 2)
-        code = EXIT_FAILURE;
-    ctx->last_error = code;
+	if (is_child)
+		ft_error(ctx, msg, code);
+	ft_putendl_fd(msg, 2);
+	if (code == 2)
+		code = EXIT_FAILURE;
+	ctx->last_error = code;
 }
 
 static char	**ft_get_bin_tmp(t_ctx *ctx, char *binary, char **env)
@@ -61,10 +61,10 @@ static char	**ft_get_bin_tmp(t_ctx *ctx, char *binary, char **env)
 	return (result);
 }
 
-void    ft_cmd_not_found(t_ctx *ctx, char *binary, char **env)
+void	ft_cmd_not_found(t_ctx *ctx, char *binary, char **env)
 {
-	pid_t   cpid;
-	char    **bin_tmp;
+	pid_t	cpid;
+	char	**bin_tmp;
 	int		status;
 
 	if (access("/usr/lib/command-not-found", X_OK) != 0)
@@ -107,26 +107,26 @@ void	ft_error_execve(t_ctx *ctx, char *msg, int errno_tmp)
 	ft_error(ctx, "execve: ", EXIT_FAILURE);
 }
 
-void    ft_error(t_ctx *ctx, char *msg, int code)
+void	ft_error(t_ctx *ctx, char *msg, int code)
 {
-    char    *msg_cpy;
+	char	*msg_cpy;
 	int		errno_tmp;
 
-    errno_tmp = errno;
+	errno_tmp = errno;
 	msg_cpy = ft_strdup(msg);
-    if (!msg_cpy && msg)
-        ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-    ft_destroy_ctx(ctx);
-    if (code == 2)
-    {
-        ft_putendl_fd(msg_cpy, 2);
-        code = EXIT_FAILURE;
-    }
-    else
+	if (!msg_cpy && msg)
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+	ft_destroy_ctx(ctx);
+	if (code == 2)
+	{
+		ft_putendl_fd(msg_cpy, 2);
+		code = EXIT_FAILURE;
+	}
+	else
 	{
 		errno = errno_tmp;
 		perror(msg_cpy);
 	}
-    free(msg_cpy);
-    exit(code);
+	free(msg_cpy);
+	exit(code);
 }
