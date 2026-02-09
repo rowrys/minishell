@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 14:30:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 09:20:48 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 17:49:32 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 #include "utils.h"
 
 #include <stdbool.h>
+#include <unistd.h>
 
 #define NO_DIRECTORY "minishell: cd: No such file or directory"
+#define NO_PARENT_DIR "cd: error retrieving current directory: \
+getcwd: cannot access parent directories: No such file or directory"
 
 static void	ft_cd_switch(t_ctx *ctx, bool is_child, char *key1, char *key2)
 {
@@ -104,6 +107,11 @@ static void	ft_chdir_argv(t_ctx *ctx, bool is_child, char **argv)
 	{
 		ft_free_double(&argv);
 		ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
+	}
+	else if (ft_is_valid_parent(argv[1]) == false)
+	{
+		ft_free_double(&argv);
+		ft_cd_error(is_child, ctx, NO_PARENT_DIR, EXIT_FAILURE);
 	}
 	else
 	{
