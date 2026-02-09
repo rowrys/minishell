@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 09:49:20 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 09:25:14 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:52:56 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILT_IN_H
 # define BUILT_IN_H
 
+#include "libft.h"
 # include "minishell.h"
 
 # include <stdbool.h>
@@ -58,11 +59,18 @@ void			ft_cd_check_dir(t_ctx *ctx, bool is_child, char *path,
 /*cd_utils2*/
 void			ft_set_pwd(t_ctx *ctx, char **argv);
 
-/*ft_export*/
-void			ft_export(t_ctx *ctx, bool is_clone, size_t argc, char **argv);
-bool			ft_is_valid_identifier(char *str);
-char			*ft_get_key(t_ctx *ctx, char **argv, char *str);
-char			*ft_get_value(t_ctx *ctx, char **argv, char *str,
-					char *free_42_angouleme);
+/*export*/
+void	ft_export(t_ctx *ctx, bool is_clone, size_t argc, char **argv);
+
+/*export_declare_x*/
+void	ft_replace_node_dict_entry(t_list *current, t_list *new_node);
+void	ft_put_in_declare_x(t_ctx *ctx, t_list *new_node);
+
+/*expend_parse*/
+t_list	*ft_creat_lst_dict_entry(t_ctx *ctx, char **argv, char *str);
+bool	ft_is_valid_identifier(char *str);
+
+/*unset*/
+void	ft_unset(t_ctx *ctx, bool is_child, size_t argc, char **argv);
 
 #endif

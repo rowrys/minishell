@@ -6,13 +6,15 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 17:21:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 17:47:52 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 16:52:07 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 #include "built_in.h"
 #include "utils.h"
+#include "ctx.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -39,7 +41,7 @@ bool	ft_is_valid_identifier(char *str)
 	return (false);
 }
 
-char	*ft_get_value(t_ctx *ctx, char **argv, char *str, char *free_42_angouleme)
+static char	*ft_get_value(t_ctx *ctx, char **argv, char *str, char *free_42_angouleme)
 {
 	char	*value;
 
@@ -55,7 +57,7 @@ char	*ft_get_value(t_ctx *ctx, char **argv, char *str, char *free_42_angouleme)
 	return (value);
 }
 
-char	*ft_get_key(t_ctx *ctx, char **argv, char *str)
+static char	*ft_get_key(t_ctx *ctx, char **argv, char *str)
 {
 	char	*key;
 	size_t	size;
@@ -69,4 +71,31 @@ char	*ft_get_key(t_ctx *ctx, char **argv, char *str)
 	if (!key)
 		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
 	return (key);
+}
+
+t_list	*ft_creat_lst_dict_entry(t_ctx *ctx, char **argv, char *str)
+{
+	char 			*key;
+	char 			*value;
+	t_dict_entry	*dict_entry;
+	t_list			*result;
+
+	key = ft_get_key(ctx, argv, str);
+	value = ft_get_value(ctx, argv, str, key);
+	dict_entry = ft_calloc(1, sizeof(t_dict_entry));
+	if (!dict_entry)
+	{
+		free(value);
+		free(key);
+		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);	
+	}
+	dict_entry->key = key;
+	dict_entry->value = value;
+	result = ft_lstnew(dict_entry);
+	if (!result)
+	{
+		ft_destroy_dict_entry(dict_entry);
+		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);	
+	}
+	return (result);
 }

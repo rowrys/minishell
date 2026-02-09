@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 13:21:08 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 14:39:46 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 17:08:26 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <stdbool.h>
 
-static void	ft_unset_declare_x(t_ctx *ctx, char key)
+static void	ft_unset_declare_x(t_ctx *ctx, char *key)
 {
 	t_list			*prev;
 	t_list			*current;
@@ -28,7 +28,7 @@ static void	ft_unset_declare_x(t_ctx *ctx, char key)
 		if (ft_strcmp(key, entry->key) == 0)
 		{
 			if (!prev)
-				ctx->env_dict = current->next;
+				ctx->declare_x = current->next;
 			else
 				prev->next = current->next;
 			ft_lstdelone(current, &ft_destroy_dict_entry);
@@ -39,7 +39,7 @@ static void	ft_unset_declare_x(t_ctx *ctx, char key)
 	}
 }
 
-static void	ft_unset_env(t_ctx *ctx, char key)
+static void	ft_unset_env(t_ctx *ctx, char *key)
 {
 	t_list			*prev;
 	t_list			*current;
@@ -73,6 +73,7 @@ void	ft_unset(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 	{
 		ft_unset_env(ctx, argv[i]);
 		ft_unset_declare_x(ctx, argv[i]);
+		i++;
 	}
 	ft_free_double(&argv);
 	if (is_child)

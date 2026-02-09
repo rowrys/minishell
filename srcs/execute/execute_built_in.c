@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 08:51:32 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:52:29 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@
 
 #define CHILD 1
 #define PARENT 0
-
-static void	ft_unset(t_ctx *ctx, bool is_child, size_t argc, char **argv)
-{
-	(void)argc;
-	(void)is_child;
-	ft_free_db_and_error(argv, ctx, "noob", 69);
-}
 
 static const t_builtin_func	g_built_in_function[BUILT_IN_ENUM_MAX] = {
 [BUILT_IN_ECHO] = ft_echo,

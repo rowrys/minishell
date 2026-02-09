@@ -6,7 +6,7 @@
 /*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 14:13:52 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 18:43:39 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 16:52:12 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "minishell.h"
 #include "ctx.h"
 #include "built_in.h"
-#include "utils.h"
 
 #include <limits.h>
 #include <stdbool.h>
@@ -22,74 +21,61 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-static void	ft_put_in_env(t_ctx *ctx, char **argv, t_dict_entry *dict_entry)
+static void	ft_put_in_env(t_ctx *ctx, t_list *new_node)
 {
 	t_dict_entry	*current_dict_entry;
 	t_list			*current_node;
-	t_list			*new_node;
+	t_dict_entry	*dict_entry;
 
+	dict_entry = new_node->content;
 	current_node = ctx->env_dict;
 	while (current_node)
 	{
 		current_dict_entry = current_node->content;
 		if (!ft_strcmp(dict_entry->key, current_dict_entry->key))
 		{
-			free(current_dict_entry->key);
-			current_dict_entry->key = dict_entry->key;
-			free(current_dict_entry->value);
-			current_dict_entry->value = dict_entry->value;
-			free(dict_entry);
+			ft_replace_node_dict_entry(current_node, new_node);
 			return ;
 		}
 		current_node = current_node->next;
 	}
-	new_node = ft_lstnew(dict_entry);
-	if (!new_node)
-	{
-		free(dict_entry->key);
-		free(dict_entry->value);
-		free(dict_entry);
-		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
-	}
 	ft_lstadd_back(&ctx->env_dict, new_node);
 }
 
-void	ft_add_to_list(t_ctx *ctx, char **argv, char *str)
+static void	ft_add_to_list(t_ctx *ctx, char **argv, char *str)
 {
-	char			*key;
-	char			*value;
-	t_dict_entry	*dict_entry;
+	t_list	*new_node;
+	bool	have_value;
 
-	key = ft_get_key(ctx, argv, str);
-	value = ft_get_value(ctx, argv, str, key);
-	dict_entry = malloc(sizeof(t_dict_entry));
-	if (!dict_entry)
+	(void)argv;
+	have_value = false;
+	new_node = ft_creat_lst_dict_entry(ctx, argv, str);
+	if (((t_dict_entry *)new_node->content)->value)
+		have_value = true;
+	ft_put_in_declare_x(ctx, new_node);
+	if (have_value)
 	{
-		free(value);
-		free(key);
-		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);		
+		new_node = ft_creat_lst_dict_entry(ctx, argv, str);
+		ft_put_in_env(ctx, new_node);
 	}
-	dict_entry->key = key;
-	dict_entry->value = value;
-	// ft_put_in_declar_x();
-	if (dict_entry->value)
-		ft_put_in_env(ctx, argv, dict_entry);
 }
 
 static void	ft_export_display_declar_x(t_ctx *ctx, bool is_clone, char **free_42_angouleme)
 {
     t_list          *env_dict;
     t_dict_entry    *entry;
-	char			*result;
 
 	ft_free_double(&free_42_angouleme);
     env_dict = ctx->declare_x;
     while (env_dict)
     {
         entry = env_dict->content;
-		result = ft_triple_join(ctx, entry->key, "=", entry->value);
-		ft_putendl_fd(result, 1);
-		free(result);
+    	ft_putstr_fd("declare ", 1);
+    	ft_putstr_fd(entry->key, 1);
+    	ft_putstr_fd("=", 1);
+    	ft_putstr_fd("\"", 1);
+    	ft_putstr_fd(entry->value, 1);
+    	ft_putendl_fd("\"", 1);
         env_dict = env_dict->next;
     }
     if (is_clone)
