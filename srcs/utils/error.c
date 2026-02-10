@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:16:46 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 08:56:10 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	ft_error(t_ctx *ctx, char *msg, int code)
 	if (!msg_cpy && msg)
 		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	ft_destroy_ctx(ctx);
-	if (code == 2)
+	if (code == 2 || errno_tmp == EXIT_SUCCESS)
 	{
 		ft_putendl_fd(msg_cpy, 2);
 		code = EXIT_FAILURE;

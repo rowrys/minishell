@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/08 12:58:55 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 11:45:30 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,102 +27,52 @@
 #include <string.h>
 #include <strings.h>
 
-/*************************************************************/ 
-	// chech the file utils.c !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-/*************************************************************/
-//  * REMOVE THIS */
+extern int	g_was_killed;
 
-const char	*t_key_tostr(t_key k)
+static void	ft_manage_line(t_ctx *ctx)
 {
-	switch (k)
-	{
-		case KEY_END: return "KEY_END";
-		case KEY_PIPE: return "KEY_PIPE";
-		case KEY_CHUNK: return "KEY_CHUNK";
-		case KEY_REDIR: return "KEY_REDIR";
-		case KEY_LREDIR: return "KEY_LREDIR";
-		case KEY_RREDIR: return "KEY_RREDIR";
-		case KEY_APPEND: return "KEY_APPEND";
-		case KEY_HERE_DOC: return "KEY_HERE_DOC";
-	}
-	return "UNKNOWN";
-}
+	size_t    i;
 
-#include <stdio.h>
-/***********************************************************/
+	ft_split_readline(ctx);
+	i = 0;
+	while (ctx->line_split[i])
+	{
+		ctx->line = ft_strdup(ctx->line_split[i]);
+		if (!ctx->line)
+			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
+		if (*ctx->line)
+			add_history(ctx->line);
+		if (ft_is_valid_line(ctx, ctx->line))
+		{
+			ft_parse(ctx);
+			if (!ft_here_doc(ctx))
+			{
+				signal(SIGINT, SIG_IGN);
+				ft_execute(ctx);
+				signal(SIGINT, &handler_sigint);
+			}
+		}
+		ft_clean_ctx(ctx);
+		i++;
+	}
+	ft_free_double(&ctx->line_split);
+}
 
 int    main(int argc, char **argv, char **env)
 {
     t_ctx    ctx;
-    size_t    i;
 
-	(void)argv;
-    ft_init_ctx(&ctx, argc, env);
-
-        //////////////////////
-        int j = 0;
-        ////////////////////////
-
+    ft_init_ctx(&ctx, argc, argv, env);
 	ft_signal_init();
     while (1)
     {
-        ctx.line = readline("minishell$ ");
-        if (!ctx.line)
-            break ;
-        ft_split_readline(&ctx);
-		i = 0;
-        while (ctx.line_split[i])
-		{
-			ctx.line = ft_strdup(ctx.line_split[i]);
-			if (!ctx.line)
-				ft_error(&ctx, MALLOC_ERROR, EXIT_FAILURE);
-			if (*ctx.line)
-           		add_history(ctx.line);
-			if (ft_is_valid_line(&ctx, ctx.line))
-			{
-				ft_parse(&ctx);
-				
-
-				t_list    *cmd_lst;
-				t_list    *token_lst;
-				t_token    *token;
-				t_cmd    *cmd;
-
-				cmd_lst = ctx.cmd_lst;
-				while (cmd_lst)
-				{
-					cmd = cmd_lst->content;
-					token_lst = cmd->token;                
-					while (token_lst)
-					{
-						token = token_lst->content;
-						printf("%d:%s:[%s]\n", j, t_key_tostr(token->type), token->value);
-						token_lst = token_lst->next;
-					}
-					cmd_lst = cmd_lst->next;
-				}
-
-
-				if (ft_here_doc(&ctx))
-				{
-					ft_clean_ctx(&ctx);
-					break ;
-				}
-				signal(SIGINT, SIG_IGN);
-				ft_execute(&ctx);
-				signal(SIGINT, &handler_sigint);
-			}
-			ft_clean_ctx(&ctx);
-
-			
-			/////////////////
-			j++;
-			///////////////////////
-
-			
-			i++;
-		}
-		ft_free_double(&ctx.line_split);
+		ctx.line = readline("minishell$ ");
+		if (g_was_killed == SIGINT)
+			ctx.last_error = 130;
+		if (!ctx.line)
+			break ;
+		ft_manage_line(&ctx);
+		g_was_killed = 0;
     }
     ft_destroy_ctx(&ctx);
     rl_clear_history();

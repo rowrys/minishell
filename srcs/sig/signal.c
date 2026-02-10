@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:48:24 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 09:12:47 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 11:29:03 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	g_was_killed;
 
 void	handler_sigint(int sig)
 {
-	(void)sig;
+	g_was_killed = sig;
 	write(1, "^C\n", 3);
 	rl_replace_line("", 0);
 	rl_on_new_line();

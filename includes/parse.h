@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:52 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:33:57 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 09:35:30 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ bool	ft_is_valid_line(t_ctx *ctx, char *str);
 bool	ft_is_syntax_error_quote(char *str);
 bool	ft_is_syntax_error_pipe(char *str);
 bool	ft_is_syntax_error_redir(char *str);
+bool	ft_is_syntax_error_redir_here_doc(char *str);
+
 
 /*expand*/
 char	*ft_manage_expand(t_ctx *ctx, char *str, bool skip_quote);

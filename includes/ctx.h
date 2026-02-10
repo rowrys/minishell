@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 17:07:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:26:28 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 11:39:53 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_destroy_dict_entry(void *content);
 void	ft_token_destoy(void *content);
 
 /*ctx_init*/
-void	ft_init_ctx(t_ctx *ctx, int argc, char **env);
+void	ft_init_ctx(t_ctx *ctx, int argc, char **argv, char **env);
 void	ft_malloc_env_error(t_ctx *ctx, t_dict_entry *dict_entry,
 			char **to_free);
 

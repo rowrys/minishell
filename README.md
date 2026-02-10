@@ -182,4 +182,9 @@ valgrind --leak-check=full --trace-children=yes --track-fds=yes --show-leak-kind
 
 ## Ressources
 
+![First struct](Readme_Ressources/first_struct.png "Titre")
+
+![First struct](Readme_Ressources/first_parsing_rl.png "Titre")
+
+![First struct](Readme_Ressources/first_parsing_cmd.png "Titre")
 WIP

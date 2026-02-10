@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 19:54:04 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 09:21:11 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 08:54:15 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 
 static void	ft_builtin_error(t_ctx *ctx, bool is_clone)
 {
-	if (is_clone == false)
+	if (is_clone)
 		ft_error(ctx, "format: env: do not add arguments", 2);
-	ctx->last_error = 2;
+	ctx->last_error = EXIT_FAILURE;
 	ft_putstr_fd("format: env: do not add arguments\n", 2);
 }
 

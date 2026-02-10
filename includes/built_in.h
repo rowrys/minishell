@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 09:49:20 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 17:48:41 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 19:44:21 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void			ft_cd_check_dir(t_ctx *ctx, bool is_child, char *path,
 
 /*cd_utils2*/
 void			ft_set_pwd(t_ctx *ctx, char **argv);
-bool			ft_is_valid_parent(char *parent);
 
 
 /*export*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 14:30:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 17:49:32 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/09 19:47:40 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #include <unistd.h>
 
 #define NO_DIRECTORY "minishell: cd: No such file or directory"
-#define NO_PARENT_DIR "cd: error retrieving current directory: \
-getcwd: cannot access parent directories: No such file or directory"
+#define NO_PARENT_DIR "cd: error retrieving current directory: getcwd: \
+cannot access parent directories: No such file or directory"
 
 static void	ft_cd_switch(t_ctx *ctx, bool is_child, char *key1, char *key2)
 {
@@ -99,26 +99,26 @@ static bool	ft_is_valid(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 	return (false);
 }
 
-static void	ft_chdir_argv(t_ctx *ctx, bool is_child, char **argv)
+static void	ft_chdir_argv(t_ctx *ctx, bool is_child, char **av)
 {
 	char	*tmp;
 
-	if (chdir(argv[1]) == -1)
+	if (chdir(av[1]) == -1)
 	{
-		ft_free_double(&argv);
+		ft_free_double(&av);
 		ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
 	}
-	else if (ft_is_valid_parent(argv[1]) == false)
+	else if (av[1][0] == '.' && access(ft_get_entry_ptr(ctx, "PWD"), X_OK))
 	{
-		ft_free_double(&argv);
-		ft_cd_error(is_child, ctx, NO_PARENT_DIR, EXIT_FAILURE);
+		ft_free_double(&av);
+		ft_cd_error(is_child, ctx, NO_PARENT_DIR, 2);
 	}
 	else
 	{
 		tmp = ft_get_entry_ptr(ctx, "OLDPWD");
 		ft_replace_entry_value(ctx, "OLDPWD", ft_get_entry_ptr(ctx, "PWD"));
 		free(tmp);
-		ft_set_pwd(ctx, argv);
+		ft_set_pwd(ctx, av);
 		if (is_child)
 		{
 			ft_destroy_ctx(ctx);

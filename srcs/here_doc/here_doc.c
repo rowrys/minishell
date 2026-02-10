@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:16:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:06:00 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 09:45:19 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 #include <stdatomic.h>
 #include <stdbool.h>
 #include <stdlib.h>
+
+#define SYNTAX_PIPE "minishell: syntax error near unexpected token 'pipe'"
+#define SYNTAX_REDIR "minishell: syntax error near unexpected token 'redir'"
+#define SYNTAX_HERE_DOC "minishell: syntax error near unexpected token '<<'"
 
 extern int	g_was_killed;
 
@@ -81,6 +85,24 @@ static bool	ft_manage_here_doc(t_ctx *ctx)
 	return (was_killed);
 }
 
+static bool	ft_check_syntax_error(t_ctx *ctx)
+{
+	
+	if (ft_is_syntax_error_pipe(ctx->line))
+	{
+			ft_putendl_fd(SYNTAX_PIPE, 2);
+			ctx->last_error = 2;
+			return (true);
+	}
+	if (ft_is_syntax_error_redir_here_doc(ctx->line))
+	{
+			ft_putendl_fd(SYNTAX_HERE_DOC, 2);
+			ctx->last_error = 2;
+			return (true);
+	}
+	return (false);
+}
+
 bool	ft_here_doc(t_ctx *ctx)
 {
 	bool	is_syntax_error;
@@ -88,20 +110,14 @@ bool	ft_here_doc(t_ctx *ctx)
 
 	is_syntax_error = false;
 	killed = false;
-	if (ft_is_syntax_error_pipe(ctx->line))
-	{
-		ft_putendl_fd("minishell: syntax error near unexpected token 'pipe'",
-			2);
-		ctx->last_error = 2;
-		is_syntax_error = true;
-	}
+	if (ft_check_syntax_error(ctx))
+		return (true);
 	killed = ft_manage_here_doc(ctx);
 	if (killed)
 		ctx->last_error = 130;
 	if (!killed && ft_is_syntax_error_redir(ctx->line))
 	{
-		ft_putendl_fd("minishell: syntax error near unexpected token 'redir'",
-			2);
+		ft_putendl_fd(SYNTAX_REDIR, 2);
 		ctx->last_error = 2;
 		is_syntax_error = true;
 	}
