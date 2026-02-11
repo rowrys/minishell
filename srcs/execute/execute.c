@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:32:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 08:49:52 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 14:09:46 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define DELTA_SIG_STATUS 0xFF - 0x7F
+#define DELTA_SIG_STATUS 128
 
 int	ft_check_status(int status)
 {
@@ -43,9 +43,7 @@ static void	ft_wait(t_ctx *ctx)
 	bool	have_sigint;
 	int		status;
 
-	/* à insérer dans le code pour de potentielle conditional jump*/
-	// status = 0;
-	/*                                                            */
+	status = 0;
 	cmd_lst = ctx->cmd_lst;
 	have_sigint = false;
 	while (cmd_lst)

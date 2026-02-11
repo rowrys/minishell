@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 22:54:01 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 09:20:39 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 14:03:27 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,74 +37,26 @@ static void	ft_check_perm_denied(t_ctx *ctx, bool is_child, char **argv,
 	ctx->last_error = EXIT_FAILURE;
 }
 
-static void	ft_perm_denied(t_ctx *ctx, bool is_child, char *path, char **argv)
-{
-	ft_putstr_fd("minishell: cd: ", 2);
-	ft_putstr_fd(argv[1], 2);
-	ft_putendl_fd(": Permission denied", 2);
-	ft_free_double(&argv);
-	free(path);
-	if (is_child)
-	{
-		ft_destroy_ctx(ctx);
-		exit(EXIT_FAILURE);
-	}
-	ctx->last_error = EXIT_FAILURE;
-}
-
-void	ft_cd_check_dir(t_ctx *ctx, bool is_child, char *path, char **argv)
-{
-	char	*tmp;
-
-	tmp = ft_triple_join(ctx, path, "/", argv[1]);
-	free(path);
-	if ((access(tmp, X_OK) == -1))
-	{
-		ft_perm_denied(ctx, is_child, tmp, argv);
-		return ;
-	}
-	ft_free_double(&argv);
-	if (chdir(tmp) == -1)
-	{
-		free(tmp);
-		ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
-		return ;
-	}
-	free(ft_get_entry_ptr(ctx, "OLDPWD"));
-	ft_replace_entry_value(ctx, "OLDPWD", ft_get_entry_ptr(ctx, "PWD"));
-	ft_replace_entry_value(ctx, "PWD", tmp);
-	if (is_child)
-		ft_destroy_ctx(ctx);
-	if (is_child)
-		exit(EXIT_SUCCESS);
-	ctx->last_error = EXIT_SUCCESS;
-}
-
-static void	ft_chdir_cdpath(t_ctx *ctx, bool is_child, char *cdpath,
-		char **argv)
+static void	ft_chdir_cdpath(t_ctx *ctx, bool is_child, char *path, char **argv)
 {
 	char	*tmp;
 
 	ft_free_double(&argv);
-	if (chdir(cdpath) == -1)
+	tmp = getcwd(NULL, 0);
+	if (chdir(path) == -1)
 	{
-		free(cdpath);
-		ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
+		ft_free_lst_db_strs(NULL, NULL, tmp, path);
+		ft_cd_error(is_child, ctx, CHDIR_ERROR, 2);
 		return ;
 	}
-	tmp = ft_get_entry_ptr(ctx, "OLDPWD");
-	ft_replace_entry_value(ctx, "OLDPWD", ft_get_entry_ptr(ctx, "PWD"));
-	free(tmp);
-	tmp = ft_strdup(cdpath);
-	free(cdpath);
-	if (!tmp)
-		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-	ft_replace_entry_value(ctx, "PWD", tmp);
-	ft_putendl_fd(tmp, 1);
+	ft_repl_entry_value(ctx, "OLDPWD", tmp, NULL);
+	ft_repl_entry_value(ctx, "PWD", path, NULL);
+	ft_putendl_fd(path, 1);
 	if (is_child)
+	{
 		ft_destroy_ctx(ctx);
-	if (is_child)
 		exit(EXIT_SUCCESS);
+	}
 	ctx->last_error = EXIT_SUCCESS;
 }
 

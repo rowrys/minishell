@@ -42,6 +42,7 @@ SOURCES =	minishell.c							\
 			built_in/cd/cd.c					\
 			built_in/cd/cd_utils.c				\
 			built_in/cd/cd_utils2.c				\
+			built_in/cd/cd_utils3.c				\
 			built_in/export/export.c			\
 			built_in/export/export_parse.c		\
 			built_in/export/export_declare_x.c	\

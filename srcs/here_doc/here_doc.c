@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:16:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/10 09:45:19 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 22:44:35 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,17 @@ static bool	ft_manage_here_doc(t_ctx *ctx)
 
 static bool	ft_check_syntax_error(t_ctx *ctx)
 {
-	
 	if (ft_is_syntax_error_pipe(ctx->line))
 	{
-			ft_putendl_fd(SYNTAX_PIPE, 2);
-			ctx->last_error = 2;
-			return (true);
+		ft_putendl_fd(SYNTAX_PIPE, 2);
+		ctx->last_error = 2;
+		return (true);
 	}
 	if (ft_is_syntax_error_redir_here_doc(ctx->line))
 	{
-			ft_putendl_fd(SYNTAX_HERE_DOC, 2);
-			ctx->last_error = 2;
-			return (true);
+		ft_putendl_fd(SYNTAX_HERE_DOC, 2);
+		ctx->last_error = 2;
+		return (true);
 	}
 	return (false);
 }

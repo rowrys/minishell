@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:50:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:25:53 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 09:06:22 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define UTILS_H
 
 # include "minishell.h"
-
 # include <stdbool.h>
 
 # define EXIT_CMD_NOT_FOUND 127
@@ -64,12 +63,15 @@ void	ft_cd_error(bool is_child, t_ctx *ctx, char *msg, int code);
 /*free*/
 void	ft_free_and_error(char *to_free, t_ctx *ctx, char *msg, int code);
 void	ft_free_db_and_error(char **to_free, t_ctx *ctx, char *msg, int code);
+void	ft_lst_db_str_malloc(t_ctx *ctx, t_list *lst_42, char **db_str_42,
+			char *str_42);
+void	ft_free_lst_db_strs(t_list *lst_42, char **db_str_42, char *str_42,
+			char *str42_2);
 
 /*env_utils*/
 char	*ft_triple_join(t_ctx *ctx, char *key, char *sep, char *value);
 char	*ft_get_dict_value(t_ctx *ctx, t_list *tmp_dict, char *name);
 char	**ft_env_to_array(t_ctx *ctx, t_list *env_dict);
 char	*ft_get_entry_ptr(t_ctx *ctx, char *key);
-void	ft_replace_entry_value(t_ctx *ctx, char *key, char *new_ptr);
 
 #endif

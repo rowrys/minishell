@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:44:19 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/10 11:42:12 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 22:47:56 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 #include "minishell.h"
 #include "parse.h"
 #include "utils.h"
+
 #include <stdbool.h>
 
-# define HERE_DOC_LIMITER "|<>\0"
+#define HERE_DOC_LIMITER "|<>\0"
 
 bool	ft_is_syntax_error_redir_here_doc(char *str)
 {

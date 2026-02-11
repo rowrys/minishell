@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/10 08:56:10 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 14:00:54 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ void	ft_cd_error(bool is_child, t_ctx *ctx, char *msg, int code)
 {
 	if (is_child)
 		ft_error(ctx, msg, code);
-	ft_putendl_fd(msg, 2);
+	if (msg && code != 2)
+		ft_putendl_fd(msg, 2);
 	if (code == 2)
+	{
+		if (msg)
+			ft_putstr_fd(msg, 2);
+		perror(NULL);
 		code = EXIT_FAILURE;
+	}
 	ctx->last_error = code;
 }
 
@@ -119,7 +125,8 @@ void	ft_error(t_ctx *ctx, char *msg, int code)
 	ft_destroy_ctx(ctx);
 	if (code == 2 || errno_tmp == EXIT_SUCCESS)
 	{
-		ft_putendl_fd(msg_cpy, 2);
+		if (msg)
+			ft_putendl_fd(msg_cpy, 2);
 		code = EXIT_FAILURE;
 	}
 	else

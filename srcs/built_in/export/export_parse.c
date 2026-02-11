@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 17:21:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 16:52:07 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/10 22:45:19 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "built_in.h"
+#include "ctx.h"
 #include "libft.h"
 #include "minishell.h"
-#include "built_in.h"
 #include "utils.h"
-#include "ctx.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -41,7 +41,8 @@ bool	ft_is_valid_identifier(char *str)
 	return (false);
 }
 
-static char	*ft_get_value(t_ctx *ctx, char **argv, char *str, char *free_42_angouleme)
+static char	*ft_get_value(t_ctx *ctx, char **argv, char *str,
+		char *free_42_angouleme)
 {
 	char	*value;
 
@@ -52,7 +53,7 @@ static char	*ft_get_value(t_ctx *ctx, char **argv, char *str, char *free_42_ango
 	if (!value)
 	{
 		free(free_42_angouleme);
-		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);		
+		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
 	}
 	return (value);
 }
@@ -75,8 +76,8 @@ static char	*ft_get_key(t_ctx *ctx, char **argv, char *str)
 
 t_list	*ft_creat_lst_dict_entry(t_ctx *ctx, char **argv, char *str)
 {
-	char 			*key;
-	char 			*value;
+	char			*key;
+	char			*value;
 	t_dict_entry	*dict_entry;
 	t_list			*result;
 
@@ -87,7 +88,7 @@ t_list	*ft_creat_lst_dict_entry(t_ctx *ctx, char **argv, char *str)
 	{
 		free(value);
 		free(key);
-		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);	
+		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
 	}
 	dict_entry->key = key;
 	dict_entry->value = value;
@@ -95,7 +96,7 @@ t_list	*ft_creat_lst_dict_entry(t_ctx *ctx, char **argv, char *str)
 	if (!result)
 	{
 		ft_destroy_dict_entry(dict_entry);
-		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);	
+		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
 	}
 	return (result);
 }

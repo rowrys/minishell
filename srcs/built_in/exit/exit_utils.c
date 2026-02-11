@@ -6,13 +6,14 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 18:38:26 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:20:56 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/10 21:14:39 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
 
 #include <stdbool.h>
+#include <stdio.h>
 
 bool	ft_is_overflow(char *str, bool is_neg)
 {
@@ -33,7 +34,7 @@ bool	ft_is_overflow(char *str, bool is_neg)
 			return (true);
 		return (false);
 	}
-	if (ft_strcmp(str, "9223372036854775807") < 0)
+	if (ft_strcmp(str, "9223372036854775807") > 0)
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 14:30:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 19:47:40 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 14:06:23 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,77 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-#define NO_DIRECTORY "minishell: cd: No such file or directory"
-#define NO_PARENT_DIR "cd: error retrieving current directory: getcwd: \
-cannot access parent directories: No such file or directory"
-
-static void	ft_cd_switch(t_ctx *ctx, bool is_child, char *key1, char *key2)
+static void	ft_change_dir(t_ctx *ctx, bool is_child, char **argv)
 {
-	char	*ptr_pwd;
-	char	*ptr_oldpwd;
+	char	*current;
+	char	*next;
 
-	ptr_oldpwd = ft_get_entry_ptr(ctx, key1);
-	if (!ptr_oldpwd)
+	current = getcwd(NULL, 0);
+	if (chdir(argv[1]) == -1)
 	{
-		ft_cd_error(is_child, ctx, "minishell: cd: OLDPWD not set", 2);
+		ft_free_lst_db_strs(NULL, argv, current, NULL);
+		ft_cd_error(is_child, ctx, CHDIR_ERROR, 2);
+	}
+	ft_repl_entry_value(ctx, "OLDPWD", current, argv);
+	next = getcwd(NULL, 0);
+	if (!next)
+	{
+		ft_cd_no_parent(argv, current, ctx, is_child);
 		return ;
 	}
-	if (chdir(ptr_oldpwd) == -1)
-		ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
-	ptr_pwd = ft_get_entry_ptr(ctx, key2);
-	ft_replace_entry_value(ctx, "PWD", ptr_oldpwd);
-	ft_replace_entry_value(ctx, "OLDPWD", ptr_pwd);
+	ft_repl_entry_value(ctx, "PWD", next, argv);
+	if (is_child)
+		ft_destroy_ctx(ctx);
+	if (is_child)
+		exit(EXIT_SUCCESS);
+	ft_free_double(&argv);
+	ctx->last_error = EXIT_SUCCESS;
+}
+
+static char	*ft_join_path(t_ctx *ctx, char *path, char **argv)
+{
+	char	*result;
+	char	*tmp;
+
+	result = ft_strjoin("/", argv[1]);
+	if (!result && argv[1])
+	{
+		free(path);
+		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
+	}
+	if (path)
+	{
+		tmp = result;
+		result = ft_strjoin(path, tmp);
+		free(tmp);
+		free(path);
+		if (!result)
+			ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
+	}
+	return (result);
+}
+
+static void	ft_cd_current_dir(t_ctx *ctx, bool is_child, char *path,
+		char **argv)
+{
+	char	*tmp_path;
+	char	*pwd;
+
+	tmp_path = ft_join_path(ctx, path, argv);
+	ft_free_double(&argv);
+	pwd = getcwd(NULL, 0);
+	if (chdir(tmp_path) == -1)
+	{
+		ft_free_lst_db_strs(NULL, argv, tmp_path, pwd);
+		ft_cd_error(is_child, ctx, CHDIR_ERROR, 2);
+		return ;
+	}
+	if (!pwd)
+		pwd = ft_strdup(ft_get_entry_ptr(ctx, "PWD"));
+	if (!pwd && ft_get_entry_ptr(ctx, "PWD"))
+		ft_free_and_error(tmp_path, ctx, MALLOC_ERROR, EXIT_FAILURE);
+	ft_repl_entry_value(ctx, "OLDPWD", pwd, NULL);
+	ft_repl_entry_value(ctx, "PWD", tmp_path, NULL);
 	if (is_child)
 	{
 		ft_destroy_ctx(ctx);
@@ -47,109 +98,30 @@ static void	ft_cd_switch(t_ctx *ctx, bool is_child, char *key1, char *key2)
 	ctx->last_error = EXIT_SUCCESS;
 }
 
-static void	ft_only_cd(t_ctx *ctx, bool is_child)
-{
-	char	*tmp_pwd;
-	char	*ptr_oldpwd;
-	char	*tmp_home;
-
-	tmp_home = ft_get_entry_ptr(ctx, "HOME");
-	if (!tmp_home)
-		ft_cd_error(is_child, ctx, "minishell: cd: HOME not set", 2);
-	tmp_home = ft_strdup(tmp_home);
-	if (!tmp_home)
-		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
-	tmp_pwd = ft_get_entry_ptr(ctx, "PWD");
-	ft_replace_entry_value(ctx, "PWD", tmp_home);
-	ptr_oldpwd = ft_get_entry_ptr(ctx, "OLDPWD");
-	ft_replace_entry_value(ctx, "OLDPWD", tmp_pwd);
-	free(ptr_oldpwd);
-	if (chdir(tmp_home) == -1)
-		ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
-	else if (is_child)
-	{
-		ft_destroy_ctx(ctx);
-		exit(EXIT_SUCCESS);
-	}
-	else
-		ctx->last_error = EXIT_SUCCESS;
-}
-
-static bool	ft_is_valid(t_ctx *ctx, bool is_child, size_t argc, char **argv)
-{
-	if (argc == 2 && (argv[1][1] || argv[1][0] != '-'))
-		return (true);
-	ft_free_double(&argv);
-	if (argc > 2)
-		ft_cd_error(is_child, ctx, "minishell: cd: too many arguments", 2);
-	else if (argc == 1)
-		ft_only_cd(ctx, is_child);
-	else
-	{
-		if (!ft_get_entry_ptr(ctx, "OLDPWD"))
-			ft_cd_error(is_child, ctx, "minishell: cd: HOME not set", 2);
-		else
-			ft_cd_switch(ctx, is_child, "OLDPWD", "PWD");
-		if (is_child)
-			ft_destroy_ctx(ctx);
-		if (is_child)
-			exit(EXIT_SUCCESS);
-		ctx->last_error = EXIT_SUCCESS;
-	}
-	return (false);
-}
-
-static void	ft_chdir_argv(t_ctx *ctx, bool is_child, char **av)
-{
-	char	*tmp;
-
-	if (chdir(av[1]) == -1)
-	{
-		ft_free_double(&av);
-		ft_cd_error(is_child, ctx, NO_DIRECTORY, EXIT_FAILURE);
-	}
-	else if (av[1][0] == '.' && access(ft_get_entry_ptr(ctx, "PWD"), X_OK))
-	{
-		ft_free_double(&av);
-		ft_cd_error(is_child, ctx, NO_PARENT_DIR, 2);
-	}
-	else
-	{
-		tmp = ft_get_entry_ptr(ctx, "OLDPWD");
-		ft_replace_entry_value(ctx, "OLDPWD", ft_get_entry_ptr(ctx, "PWD"));
-		free(tmp);
-		ft_set_pwd(ctx, av);
-		if (is_child)
-		{
-			ft_destroy_ctx(ctx);
-			exit(EXIT_SUCCESS);
-		}
-		ctx->last_error = EXIT_SUCCESS;
-	}
-}
-
 void	ft_cd(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 {
-	char	**cd_path;
-	char	*tmp_cdpath;
+	char	**split_path;
+	char	*cdpath;
 
-	if (ft_is_valid(ctx, is_child, argc, argv) == false)
+	if (ft_is_valid_cd(ctx, is_child, argc, argv) == false)
 		return ;
 	if (*argv[1] == '/' || *argv[1] == '.')
 	{
-		ft_chdir_argv(ctx, is_child, argv);
+		ft_change_dir(ctx, is_child, argv);
 		return ;
 	}
-	tmp_cdpath = ft_get_entry_ptr(ctx, "CDPATH");
-	if (!tmp_cdpath)
+	cdpath = ft_get_entry_ptr(ctx, "CDPATH");
+	if (!cdpath)
 	{
-		tmp_cdpath = getcwd(NULL, 0);
-		ft_cd_check_dir(ctx, is_child, tmp_cdpath, argv);
+		cdpath = getcwd(NULL, 0);
+		if (cdpath)
+			ft_cd_current_dir(ctx, is_child, cdpath, argv);
+		else
+			ft_cd_no_parent(argv, NULL, ctx, is_child);
 		return ;
 	}
-	cd_path = NULL;
-	cd_path = ft_split(tmp_cdpath, ':');
-	if (!cd_path)
+	split_path = ft_split(cdpath, ':');
+	if (!split_path)
 		ft_free_db_and_error(argv, ctx, MALLOC_ERROR, EXIT_FAILURE);
-	ft_manage_cdpath(ctx, is_child, cd_path, argv);
+	ft_manage_cdpath(ctx, is_child, split_path, argv);
 }
