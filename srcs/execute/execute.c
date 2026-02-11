@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:32:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:46 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:38:29 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "sig.h"
 #include "utils.h"
 
-#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -23,12 +22,19 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define DELTA_SIG_STATUS 128
-
-int	ft_check_status(int status)
+static int	ft_get_sig(int status, bool *have_sigint, bool *have_sigquit)
 {
+	int result;
+
 	if (WIFSIGNALED(status))
-		return (WTERMSIG(status) + DELTA_SIG_STATUS);
+	{
+		result = WTERMSIG(status) + DELTA_SIG_STATUS;
+		if (result == 130)
+			*have_sigint = true;
+		if (result == 131)
+			*have_sigquit = true;
+		return (result);
+	}
 	else if (WIFSTOPPED(status))
 		return (WSTOPSIG(status) + DELTA_SIG_STATUS);
 	else if (WIFEXITED(status))
@@ -41,27 +47,27 @@ static void	ft_wait(t_ctx *ctx)
 	t_list	*cmd_lst;
 	t_cmd	*cmd;
 	bool	have_sigint;
+	bool	have_sigquit;
 	int		status;
 
 	status = 0;
 	cmd_lst = ctx->cmd_lst;
 	have_sigint = false;
+	have_sigquit = false;
 	while (cmd_lst)
 	{
 		cmd = cmd_lst->content;
 		if (cmd->cpid != -2)
 		{
 			waitpid(cmd->cpid, &status, 0);
-			if (status == SIGINT)
-				have_sigint = true;
-			ctx->last_error = ft_check_status(status);
+			ctx->last_error = ft_get_sig(status, &have_sigint, &have_sigquit);
 		}
 		cmd_lst = cmd_lst->next;
 	}
 	if (have_sigint)
 		write(1, "\n", 1);
-	if (ctx->last_error == SIGQUIT + DELTA_SIG_STATUS)
-		write(2, "^\\Quit\n", 7);
+	if (have_sigquit)
+		write(2, "Quit\n", 5);
 }
 
 static void	ft_fork(t_ctx *ctx, t_cmd *cmd)

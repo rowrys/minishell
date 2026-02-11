@@ -62,24 +62,12 @@ LIB = libft/libft.a
 
 all: $(NAME)
 
-$(NAME): make_dir $(OBJS)
+$(NAME): $(OBJS)
 	$(MAKE) --no-print-directory -C libft/
 	$(CC) $(OBJS) $(CFLAGS) -lreadline  $(INCLUDE) $(LIB) -o $(NAME)
 
-make_dir:
-	@mkdir -p .build/
-	@mkdir -p .build/parse
-	@mkdir -p .build/ctx
-	@mkdir -p .build/utils
-	@mkdir -p .build/sig
-	@mkdir -p .build/here_doc
-	@mkdir -p .build/execute
-	@mkdir -p .build/built_in
-	@mkdir -p .build/built_in/exit
-	@mkdir -p .build/built_in/cd
-	@mkdir -p .build/built_in/export
-
-$(OBJ_DIR)%.o:  $(SRCS_DIR)%.c
+$(OBJ_DIR)%.o: $(SRCS_DIR)%.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDE) $< -c -o $@
 
 gdb: $(NAME)

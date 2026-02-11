@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:50:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/11 09:06:22 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:26:16 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define EXIT_PERMISSION_DENIED 126
 
 # define MALLOC_ERROR "Malloc exploded, how did you do that???"
+
+# define DELTA_SIG_STATUS 128
 
 /*parse_utils*/
 int		ft_get_redir_key(char *str);
@@ -38,6 +40,7 @@ char	**ft_split_expand(t_ctx *ctx, char *str);
 int		ft_go_to(char *str, char c);
 int		ft_skip(char *str, char *charset);
 bool	ft_is_redir_key(t_key key);
+int		ft_check_status(int status);
 
 /*exec_utils*/
 int		ft_dup(int fd, int fd2);
@@ -67,6 +70,8 @@ void	ft_lst_db_str_malloc(t_ctx *ctx, t_list *lst_42, char **db_str_42,
 			char *str_42);
 void	ft_free_lst_db_strs(t_list *lst_42, char **db_str_42, char *str_42,
 			char *str42_2);
+void	ft_free_all(t_ctx *ctx, t_list *lst_42, char **db_str_42,
+			char *str_42);
 
 /*env_utils*/
 char	*ft_triple_join(t_ctx *ctx, char *key, char *sep, char *value);

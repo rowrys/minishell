@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 09:37:13 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 08:49:46 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 19:50:49 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*ft_get_first_chunk(t_cmd *cmd)
 	while (origin)
 	{
 		token = origin->content;
-		if (token->type == KEY_CHUNK)
+		if (token->type == KEY_CHUNK && token->value)
 			return (token->value);
 		origin = origin->next;
 	}

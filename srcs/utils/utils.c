@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:52:28 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:17:24 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:25:52 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 #include "utils.h"
 
 #include <stdbool.h>
+
+int	ft_check_status(int status)
+{
+	if (WIFSIGNALED(status))
+		return (WTERMSIG(status) + DELTA_SIG_STATUS);
+	else if (WIFSTOPPED(status))
+		return (WSTOPSIG(status) + DELTA_SIG_STATUS);
+	else if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (0);
+}
 
 bool	ft_is_redir_key(t_key key)
 {

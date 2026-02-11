@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 09:49:20 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/11 14:09:14 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:05:08 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void			ft_exit(t_ctx *ctx, bool is_child, size_t argc, char **argv);
 /*exit_utils*/
 char			ft_str_only_contain(const char *s1, const char *s2);
 bool			ft_is_overflow(char *str, bool is_neg);
+void			ft_exit_write_error(bool is_child);
 
 /*echo*/
 void			ft_echo(t_ctx *ctx, bool is_child, size_t argc, char **argv);

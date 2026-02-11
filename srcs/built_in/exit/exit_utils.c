@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 18:38:26 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/10 21:14:39 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:04:17 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+
+void	ft_exit_write_error(bool is_child)
+{
+	if (!is_child)
+		write(2, "exit\n", 5);
+	write(2, "minishell: exit: too many arguments\n", 36);
+}
 
 bool	ft_is_overflow(char *str, bool is_neg)
 {

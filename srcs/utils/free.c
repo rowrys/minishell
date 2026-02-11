@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 10:20:35 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/11 11:19:19 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:01:11 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
+#include "libft.h"
 #include "minishell.h"
 #include "utils.h"
+
+void	ft_free_all(t_ctx *ctx, t_list *lst_42, char **db_str_42, char *str_42)
+{
+	if (str_42)
+		free(str_42);
+	if (db_str_42)
+		ft_free_double(&db_str_42);
+	if (lst_42)
+		ft_lstclear(&lst_42, &ft_destroy_dict_entry);
+	ft_destroy_ctx(ctx);
+}
 
 void	ft_free_lst_db_strs(t_list *lst_42, char **db_str_42, char *str_42,
 		char *str42_2)

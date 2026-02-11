@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:16:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/10 22:44:35 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 20:34:32 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ bool	ft_here_doc(t_ctx *ctx)
 	is_syntax_error = false;
 	killed = false;
 	if (ft_check_syntax_error(ctx))
-		return (true);
+		is_syntax_error = true;
 	killed = ft_manage_here_doc(ctx);
 	if (killed)
 		ctx->last_error = 130;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_chunk.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 16:36:41 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 08:49:41 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:56:28 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 static char	**ft_get_path_split(t_ctx *ctx)
 {
@@ -42,7 +43,7 @@ static char	**ft_get_path_split(t_ctx *ctx)
 		return (NULL);
 	result = ft_split(temp, ':');
 	if (!result)
-		ft_error(ctx, "Malloc exploded, how did you do that???", EXIT_FAILURE);
+		ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 	return (result);
 }
 
