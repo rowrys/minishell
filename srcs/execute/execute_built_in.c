@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 16:52:29 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/12 11:17:22 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	ft_execute_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 {
 	if (cmd->cpid == -2)
 	{
-		ft_manage_redir(ctx, cmd, REDIR_BUILT_IN);
-		ft_built_in(ctx, cmd, built_in_type);
+		if (ft_manage_redir_built_in(ctx, cmd, REDIR_BUILT_IN))
+			ft_built_in(ctx, cmd, built_in_type);
 	}
 	else if (cmd->cpid == 0)
 	{

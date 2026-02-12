@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 18:45:27 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/11 21:37:33 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/12 09:59:50 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	ft_exit_really(t_ctx *ctx, bool is_child, char *str, char **argv)
 void	ft_exit(t_ctx *ctx, bool is_child, size_t argc, char **argv)
 {
 	if (argc == 1)
-		ft_exit_really(ctx, is_child,  NULL, argv);
+		ft_exit_really(ctx, is_child, NULL, argv);
 	if (argc == 2)
 		ft_exit_really(ctx, is_child, argv[1], argv);
 	if (argc == 3)

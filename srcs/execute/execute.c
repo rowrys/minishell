@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:32:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/11 21:38:29 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/12 10:00:14 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 static int	ft_get_sig(int status, bool *have_sigint, bool *have_sigquit)
 {
-	int result;
+	int	result;
 
 	if (WIFSIGNALED(status))
 	{

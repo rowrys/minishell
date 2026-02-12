@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 10:48:50 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/11 21:26:03 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/12 11:16:40 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_forgotten_child(t_ctx *ctx, t_cmd *cmd);
 
 /*manage_redir*/
 void	ft_manage_redir(t_ctx *ctx, t_cmd *cmd, int mode);
+bool	ft_manage_redir_built_in(t_ctx *ctx, t_cmd *cmd, int mode);
 
 /*cmd_to_arg*/
 char	**ft_cmd_to_arg(t_ctx *ctx, t_cmd *cmd);

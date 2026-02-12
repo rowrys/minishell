@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_chunk.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 16:36:41 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/11 21:56:28 by mcolin           ###   ########.fr       */
+/*   Updated: 2026/02/12 10:04:38 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static char	*ft_is_valid_binary(t_ctx *ctx, char *bin, char **env)
 			ft_error(ctx, MALLOC_ERROR, EXIT_FAILURE);
 		ft_error_execve(ctx, result, EISDIR);
 	}
-	else if (!access(bin, X_OK) && !is_dir && is_reg && ft_strchr(bin, '/'))
+	else if (ft_strchr(bin, '/'))
 		return (bin);
 	result = ft_get_bin(ctx, bin, env);
 	return (result);
