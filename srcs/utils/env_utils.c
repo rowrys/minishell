@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 09:58:15 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/10 16:48:27 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:39:25 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
-
-#include <string.h>
 
 char	**ft_env_to_array(t_ctx *ctx, t_list *env_dict)
 {

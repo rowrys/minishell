@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:52:15 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:08:46 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:38:06 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 #include "parse.h"
 #include "utils.h"
 
-#include <assert.h>
-#include <readline/chardefs.h>
 #include <readline/readline.h>
 #include <stdbool.h>
-#include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 void	ft_add_command(t_ctx *ctx)

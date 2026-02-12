@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 11:26:55 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/10 22:42:02 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:44:07 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <string.h>
-#include <strings.h>
 
 extern int	g_was_killed;
 

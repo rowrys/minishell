@@ -3,26 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:17:20 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/11 14:00:54 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:40:13 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
-#include "execute.h"
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
 
 #include <errno.h>
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <sys/wait.h>
-#include <unistd.h>
 
 void	ft_cd_error(bool is_child, t_ctx *ctx, char *msg, int code)
 {

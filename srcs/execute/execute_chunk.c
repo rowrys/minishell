@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_chunk.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 16:36:41 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/12 10:04:38 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:15:42 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,8 @@ static char	*ft_is_valid_binary(t_ctx *ctx, char *bin, char **env)
 {
 	char	*result;
 	bool	is_dir;
-	bool	is_reg;
 
 	is_dir = ft_is_dir(bin);
-	is_reg = ft_is_reg(bin);
 	if (is_dir)
 	{
 		ft_free_double(&env);

@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:17:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 09:17:06 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:40:50 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "utils.h"
-
-#include <stdlib.h>
 
 static size_t	ft_blocklen(char *s)
 {

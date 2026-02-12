@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 16:22:38 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:19:22 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:41:16 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "utils.h"
 
 #include <stdbool.h>
-#include <stddef.h>
-#include <stdio.h>
 
 bool	ft_is_inside_quote(char *str)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_here_doc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 08:58:27 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 09:42:43 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:33:57 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include <signal.h>
 #include <stdbool.h>
-#include <readline/history.h>
 #include <readline/readline.h>
 
 extern int	g_was_killed;

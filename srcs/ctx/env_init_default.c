@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_init_default.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 12:30:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/09 09:23:42 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:17:37 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "minishell.h"
 #include "utils.h"
 
 #define DEFAULT_PATH "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin\

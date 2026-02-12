@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_built_in.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:58:18 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/12 11:17:22 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:32:15 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,20 @@
 #define CHILD 1
 #define PARENT 0
 
-static const t_builtin_func	g_built_in_function[BUILT_IN_ENUM_MAX] = {
-[BUILT_IN_ECHO] = ft_echo,
-[BUILT_IN_CD] = ft_cd,
-[BUILT_IN_PWD] = ft_pwd,
-[BUILT_IN_EXPORT] = ft_export,
-[BUILT_IN_UNSET] = ft_unset,
-[BUILT_IN_ENV] = ft_env,
-[BUILT_IN_EXIT] = ft_exit,
-};
+static t_builtin_func	*get_builtin_func_tab(void)
+{
+	static const t_builtin_func	built_in_function[BUILT_IN_ENUM_MAX] = {
+	[BUILT_IN_ECHO] = ft_echo,
+	[BUILT_IN_CD] = ft_cd,
+	[BUILT_IN_PWD] = ft_pwd,
+	[BUILT_IN_EXPORT] = ft_export,
+	[BUILT_IN_UNSET] = ft_unset,
+	[BUILT_IN_ENV] = ft_env,
+	[BUILT_IN_EXIT] = ft_exit,
+	};
+
+	return ((void *)&built_in_function);
+}
 
 size_t	ft_get_argc(char **argv)
 {
@@ -44,8 +49,9 @@ size_t	ft_get_argc(char **argv)
 
 static void	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 {
-	char	**argv;
-	int		argc;
+	char			**argv;
+	int				argc;
+	t_builtin_func	*builtin_func_tab;
 
 	ctx->stdin_fileno = dup(STDIN_FILENO);
 	ctx->stdout_fileno = dup(STDOUT_FILENO);
@@ -55,10 +61,11 @@ static void	ft_built_in(t_ctx *ctx, t_cmd *cmd, t_built_in built_in_type)
 		ft_error(ctx, "dup: ", EXIT_FAILURE);
 	argv = ft_cmd_to_arg(ctx, cmd);
 	argc = ft_get_argc(argv);
+	builtin_func_tab = get_builtin_func_tab();
 	if (cmd->cpid == -2)
-		g_built_in_function[built_in_type](ctx, PARENT, argc, argv);
+		builtin_func_tab[built_in_type](ctx, PARENT, argc, argv);
 	else
-		g_built_in_function[built_in_type](ctx, CHILD, argc, argv);
+		builtin_func_tab[built_in_type](ctx, CHILD, argc, argv);
 	if (ft_dup(ctx->stdin_fileno, STDIN_FILENO) == -1)
 		ft_free_db_and_error(argv, ctx, "dup: ", EXIT_FAILURE);
 	if (ft_dup(ctx->stdout_fileno, STDOUT_FILENO) == -1)

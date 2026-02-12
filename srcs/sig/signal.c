@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:48:24 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/10 11:29:03 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:38:57 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/readline.h>
 #include <signal.h>
 #include <unistd.h>
-#include <stdbool.h>
 
 int	g_was_killed;
 

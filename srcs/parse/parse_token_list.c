@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 14:03:48 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 09:11:18 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:37:56 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-#include <string.h>
 
 static void	ft_add_parsed_token(t_ctx *ctx, t_list **new_list, t_token *token)
 {

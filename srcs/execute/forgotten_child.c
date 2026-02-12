@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forgotten_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 11:04:45 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/09 08:50:04 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:32:42 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "utils.h"
 
 #include <fcntl.h>
-#include <signal.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <sys/wait.h>

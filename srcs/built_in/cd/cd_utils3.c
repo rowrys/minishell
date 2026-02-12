@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 17:18:44 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/11 14:14:11 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:16:18 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
-#include "ctx.h"
 #include "libft.h"
 #include "minishell.h"
 #include "utils.h"
