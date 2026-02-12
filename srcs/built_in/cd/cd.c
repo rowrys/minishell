@@ -6,7 +6,7 @@
 /*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/07 14:30:38 by ykolacze          #+#    #+#             */
-/*   Updated: 2026/02/11 14:06:23 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/02/12 14:12:49 by ykolacze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	ft_change_dir(t_ctx *ctx, bool is_child, char **argv)
 	current = getcwd(NULL, 0);
 	if (chdir(argv[1]) == -1)
 	{
-		ft_free_lst_db_strs(NULL, argv, current, NULL);
+		if (is_child)
+			ft_free_lst_db_strs(NULL, argv, current, NULL);
 		ft_cd_error(is_child, ctx, CHDIR_ERROR, 2);
 	}
 	ft_repl_entry_value(ctx, "OLDPWD", current, argv);
