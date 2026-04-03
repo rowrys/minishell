@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykolacze <ykolacze@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: mcolin <mcolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 18:45:27 by mcolin            #+#    #+#             */
-/*   Updated: 2026/02/12 09:59:50 by ykolacze         ###   ########.fr       */
+/*   Updated: 2026/03/06 11:02:27 by mcolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	ft_exit_really(t_ctx *ctx, bool is_child, char *str, char **argv)
 {
 	size_t	result;
 
-	result = 0;
+	result = ctx->last_error;
 	if (str)
 		result = ft_atoll(ctx, is_child, str, argv);
 	if (!is_child)
