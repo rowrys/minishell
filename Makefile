@@ -1,7 +1,7 @@
-CC=cc
-NAME = minishell
-SRCS_DIR = srcs/
-SOURCES =	minishell.c							\
+CC := cc
+NAME := minishell
+SRCS_DIR := srcs/
+SOURCES :=	minishell.c							\
 			ctx/ctx_destroy.c					\
 			ctx/ctx_init.c						\
 			ctx/env_init_default.c				\
@@ -51,14 +51,14 @@ SOURCES =	minishell.c							\
 
 SOURCES	:=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
-OBJ_DIR = .build/
-OBJS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
+OBJ_DIR := .build/
+OBJS := $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
 
-DEPS = $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.d)
+DEPS := $(SOURCES:$(SRCS_DIR)%.c=$(OBJ_DIR)%.d)
 
-CFLAGS = -MP -MMD -Wall -Werror -Wextra -g
-INCLUDE = -I includes/ -I libft/includes/
-LIB = libft/libft.a
+CFLAGS := -MP -MMD -Wall -Werror -Wextra -g
+INCLUDE := -I includes/ -I libft/includes/
+LIB := libft/libft.a
 
 all: $(NAME)
 
